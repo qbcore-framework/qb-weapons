@@ -145,7 +145,7 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
     if CurrentWeaponData ~= nil then
         if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
             local total = (GetAmmoInPedWeapon(ped, weapon))
-            local Skillbar = exports['qb-skillbar']:GetSkillbarObject()
+            --local Skillbar = exports['qb-skillbar']:GetSkillbarObject()
             local retval = GetMaxAmmoInClip(ped, weapon, 1)
             retval = tonumber(retval)
 
