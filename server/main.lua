@@ -167,7 +167,7 @@ AddEventHandler('weapons:server:UpdateWeaponQuality', function(data, RepeatAmoun
     Player.Functions.SetInventory(Player.PlayerData.items)
 end)
 
-QBCore.Commands.Add("repairweapon", "Repair weapon command for staf", {{name="hp", help="HP of ur weapon"}}, true, function(source, args)
+QBCore.Commands.Add("repairweapon", "Repair Weapon (God Only)", {{name="hp", help="HP of ur weapon"}}, true, function(source, args)
     TriggerClientEvent('weapons:client:SetWeaponQuality', source, tonumber(args[1]))
 end, "god")
 
