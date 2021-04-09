@@ -249,7 +249,7 @@ Citizen.CreateThread(function()
                                     local WeaponData = QBCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
                                     local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
                                     DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Wapen repareren, ~g~$'..Config.WeaponRepairCotsts[WeaponClass]..'~w~')
-                                    if IsControlJustPressed(0, Keys["E"]) then
+                                    if IsControlJustPressed(0, 38) then
                                         QBCore.Functions.TriggerCallback('weapons:server:RepairWeapon', function(HasMoney)
                                             if HasMoney then
                                                 CurrentWeaponData = {}
@@ -261,7 +261,7 @@ Citizen.CreateThread(function()
                                         DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'The repairshop is this moment ~r~NOT~w~ useble..')
                                     else
                                         DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] to take weapon back')
-                                        if IsControlJustPressed(0, Keys["E"]) then
+                                        if IsControlJustPressed(0, 38) then
                                             TriggerServerEvent('weapons:server:TakeBackWeapon', k, data)
                                         end
                                     end
@@ -271,7 +271,7 @@ Citizen.CreateThread(function()
                                     DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'You dont have a weapon in ur hands..')
                                 elseif data.RepairingData.CitizenId == PlayerData.citizenid then
                                     DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] to take weapon back')
-                                    if IsControlJustPressed(0, Keys["E"]) then
+                                    if IsControlJustPressed(0, 38) then
                                         TriggerServerEvent('weapons:server:TakeBackWeapon', k, data)
                                     end
                                 end
