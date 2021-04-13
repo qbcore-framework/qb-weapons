@@ -144,12 +144,11 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
     local weapon = GetSelectedPedWeapon(ped)
     if CurrentWeaponData ~= nil then
         if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
-            local total = (GetAmmoInPedWeapon(ped, weapon))
-            --local Skillbar = exports['qb-skillbar']:GetSkillbarObject()
+            local total = GetAmmoInPedWeapon(ped, weapon)
             local retval = GetMaxAmmoInClip(ped, weapon, 1)
             retval = tonumber(retval)
 
-            if (total + retval) <= (retval + 1) then
+            if (total + retval) <= (retval + 1000) then
                 QBCore.Functions.Progressbar("taking_bullets", "Loading bullets..", math.random(4000, 6000), false, true, {
                     disableMovement = false,
                     disableCarMovement = false,
@@ -157,24 +156,24 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
                     disableCombat = true,
                 }, {}, {}, {}, function() -- Done
                     if QBCore.Shared.Weapons[weapon] ~= nil then
-                        SetAmmoInClip(ped, weapon, 0)
-                        SetPedAmmo(ped, weapon, retval)
+                        AddAmmoToPed(ped,weapon,retval)
+                        TaskReloadWeapon(ped)
                         TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, retval)
                         TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
                         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], "remove")
-                        TriggerEvent('QBCore:Notify', retval.." Loading bullets!", "success")
+                        TriggerEvent('QBCore:Notify', 'Reloaded', "success")
                     end
                 end, function()
-                    QBCore.Functions.Notify("Canceled..", "error")
+                    QBCore.Functions.Notify("Canceled", "error")
                 end)
             else
-                QBCore.Functions.Notify("Your weapon is already looded..", "error")
+                QBCore.Functions.Notify("Max Ammo Capacity", "error")
             end
         else
-            QBCore.Functions.Notify("Your not holding a weapon..", "error")
+            QBCore.Functions.Notify("You Have No Weapon", "error")
         end
     else
-        QBCore.Functions.Notify("Your not holding a weapon..", "error")
+        QBCore.Functions.Notify("You Have No Weapon.", "error")
     end
 end)
 
