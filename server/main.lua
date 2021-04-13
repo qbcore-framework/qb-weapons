@@ -96,37 +96,6 @@ function IsWeaponBlocked(WeaponName)
     return retval
 end
 
--- RegisterServerEvent('weapons:server:UpdateWeaponQuality')
--- AddEventHandler('weapons:server:UpdateWeaponQuality', function(data)
---     local src = source
---     local Player = QBCore.Functions.GetPlayer(src)
---     local WeaponData = QBCore.Shared.Weapons[GetHashKey(data.name)]
---     local WeaponSlot = Player.PlayerData.items[data.slot]
---     local DecreaseAmount = Config.DurabilityMultiplier[data.name]
-    
---     if not IsWeaponBlocked(WeaponData.name) then
---         if WeaponSlot.info.quality ~= nil then
---             if WeaponSlot.info.quality - DecreaseAmount > 0 then
---                 WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
---             else
---                 WeaponSlot.info.quality = 0
---                 TriggerClientEvent('inventory:client:UseWeapon', src, data)
---                 TriggerClientEvent('QBCore:Notify', src, "Your weapon is broken, u need to repair it before u can use it again.", "error")
---             end
---         else
---             WeaponSlot.info.quality = 100
---             if WeaponSlot.info.quality - DecreaseAmount > 0 then
---                 WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
---             else
---                 WeaponSlot.info.quality = 0
---                 TriggerClientEvent('inventory:client:UseWeapon', src, data)
---                 TriggerClientEvent('QBCore:Notify', src, "Your weapon is broken, u need to repair it before u can use it again.", "error")
---             end
---         end
---         Player.Functions.SetInventory(Player.PlayerData.items)
---     end
--- end)
-
 RegisterServerEvent('weapons:server:UpdateWeaponQuality')
 AddEventHandler('weapons:server:UpdateWeaponQuality', function(data, RepeatAmount)
     local src = source
