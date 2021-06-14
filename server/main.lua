@@ -12,7 +12,7 @@ end)
 -- 	local src = source
 --     local Player = QBCore.Functions.GetPlayer(src)
 --     WeaponAmmo[Player.PlayerData.citizenid] = {}
---     QBCore.Functions.ExecuteSql(false, "SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(result)
+--     QBCore.Functions.ExecuteSql(false, nil, "SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(result)
 --         if result[1] ~= nil then
 --             local ammo = json.decode(result[1].ammo)
 --             if ammo ~= nil then
