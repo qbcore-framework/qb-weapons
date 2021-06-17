@@ -34,7 +34,7 @@ AddEventHandler('weapons:server:AddWeaponAmmo', function(CurrentWeaponData, amou
         if Player.PlayerData.items[CurrentWeaponData.slot] ~= nil then
             Player.PlayerData.items[CurrentWeaponData.slot].info.ammo = amount
         end
-        Player.Functions.SetInventory(Player.PlayerData.items)
+        Player.Functions.SetInventory(Player.PlayerData.items, true)
     end
 end)
 
@@ -47,7 +47,7 @@ AddEventHandler('weapons:server:UpdateWeaponAmmo', function(CurrentWeaponData, a
         if Player.PlayerData.items[CurrentWeaponData.slot] ~= nil then
             Player.PlayerData.items[CurrentWeaponData.slot].info.ammo = amount
         end
-        Player.Functions.SetInventory(Player.PlayerData.items)
+        Player.Functions.SetInventory(Player.PlayerData.items, true)
     end
 end)
 
@@ -133,7 +133,7 @@ AddEventHandler('weapons:server:UpdateWeaponQuality', function(data, RepeatAmoun
         end
     end
 
-    Player.Functions.SetInventory(Player.PlayerData.items)
+    Player.Functions.SetInventory(Player.PlayerData.items, true)
 end)
 
 QBCore.Commands.Add("repairweapon", "Repair Weapon (God Only)", {{name="hp", help="HP of ur weapon"}}, true, function(source, args)
@@ -148,7 +148,7 @@ AddEventHandler("weapons:server:SetWeaponQuality", function(data, hp)
     local WeaponSlot = Player.PlayerData.items[data.slot]
     local DecreaseAmount = Config.DurabilityMultiplier[data.name]
     WeaponSlot.info.quality = hp
-    Player.Functions.SetInventory(Player.PlayerData.items)
+    Player.Functions.SetInventory(Player.PlayerData.items, true)
 end)
 
 QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, cb, RepairPoint, data)
@@ -326,7 +326,7 @@ AddEventHandler("weapons:server:EquipAttachment", function(ItemData, CurrentWeap
                     label = AttachmentData.label,
                 })
                 TriggerClientEvent("addAttachment", src, AttachmentData.component)
-                Player.Functions.SetInventory(Player.PlayerData.items)
+                Player.Functions.SetInventory(Player.PlayerData.items, true)
                 Player.Functions.RemoveItem(ItemData.name, 1)
                 SetTimeout(1000, function()
                     TriggerClientEvent('inventory:client:ItemBox', src, ItemData, "remove")
@@ -341,7 +341,7 @@ AddEventHandler("weapons:server:EquipAttachment", function(ItemData, CurrentWeap
                 label = AttachmentData.label,
             })
             TriggerClientEvent("addAttachment", src, AttachmentData.component)
-            Player.Functions.SetInventory(Player.PlayerData.items)
+            Player.Functions.SetInventory(Player.PlayerData.items, true)
             Player.Functions.RemoveItem(ItemData.name, 1)
             SetTimeout(1000, function()
                 TriggerClientEvent('inventory:client:ItemBox', src, ItemData, "remove")
@@ -366,7 +366,7 @@ QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(sour
             local HasAttach, key = HasAttachment(AttachmentComponent.component, Inventory[ItemData.slot].info.attachments)
             if HasAttach then
                 table.remove(Inventory[ItemData.slot].info.attachments, key)
-                Player.Functions.SetInventory(Player.PlayerData.items)
+                Player.Functions.SetInventory(Player.PlayerData.items, true)
                 Player.Functions.AddItem(AttachmentComponent.item, 1)
                 TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[AttachmentComponent.item], "add")
                 TriggerClientEvent("QBCore:Notify", src, "You removed "..AttachmentComponent.label.." from your weapon!", "error")
