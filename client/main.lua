@@ -156,7 +156,7 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
                     if QBCore.Shared.Weapons[weapon] ~= nil then
                         AddAmmoToPed(ped,weapon,retval)
                         TaskReloadWeapon(ped)
-                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, retval)
+                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, retval + total)
                         TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
                         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], "remove")
                         TriggerEvent('QBCore:Notify', 'Reloaded', "success")
