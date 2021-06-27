@@ -32,7 +32,7 @@ AddEventHandler('weapons:server:AddWeaponAmmo', function(CurrentWeaponData, amou
 
     if CurrentWeaponData ~= nil then
         if Player.PlayerData.items[CurrentWeaponData.slot] ~= nil then
-            Player.PlayerData.items[CurrentWeaponData.slot].info.ammo = amount
+            Player.PlayerData.items[CurrentWeaponData.slot].info.ammo = Player.PlayerData.items[CurrentWeaponData.slot].info.ammo + amount
         end
         Player.Functions.SetInventory(Player.PlayerData.items, true)
     end
