@@ -7,23 +7,6 @@ QBCore.Functions.CreateCallback("weapons:server:GetConfig", function(source, cb)
     cb(Config.WeaponRepairPoints)
 end)
 
--- RegisterServerEvent("weapons:server:LoadWeaponAmmo")
--- AddEventHandler('weapons:server:LoadWeaponAmmo', function()
--- 	local src = source
---     local Player = QBCore.Functions.GetPlayer(src)
---     WeaponAmmo[Player.PlayerData.citizenid] = {}
---     QBCore.Functions.ExecuteSql(false, "SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(result)
---         if result[1] ~= nil then
---             local ammo = json.decode(result[1].ammo)
---             if ammo ~= nil then
---                 for ammotype, amount in pairs(ammo) do 
---                     WeaponAmmo[Player.PlayerData.citizenid][ammotype] = amount
---                 end
---             end
---         end
--- 	end)
--- end)
-
 RegisterServerEvent("weapons:server:AddWeaponAmmo")
 AddEventHandler('weapons:server:AddWeaponAmmo', function(CurrentWeaponData, amount)
     local src = source
