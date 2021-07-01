@@ -68,6 +68,10 @@ QBCore.Functions.CreateUseableItem("mg_ammo", function(source, item)
     TriggerClientEvent("weapon:client:AddAmmo", source, "AMMO_MG", 30, item)
 end)
 
+QBCore.Functions.CreateUseableItem("snp_ammo", function(source, item)
+    TriggerClientEvent("weapon:client:AddAmmo", source, "AMMO_SNIPER", 10, item)
+end)
+
 function IsWeaponBlocked(WeaponName)
     local retval = false
     for _, name in pairs(Config.DurabilityBlockedWeapons) do
