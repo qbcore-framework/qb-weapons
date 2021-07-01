@@ -1,0 +1,39 @@
+RegisterNetEvent('weapon:client:AddAmmo')
+AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
+    local ped = PlayerPedId()
+    local weapon = GetSelectedPedWeapon(ped)
+    if CurrentWeaponData ~= nil then
+        if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
+            local total = GetAmmoInPedWeapon(ped, weapon)
+            local retval = GetMaxAmmoInClip(ped, weapon, 1)
+            local total2 = total + retval
+            retval = tonumber(retval)
+
+            if (total + retval) <= (retval + 1000) then
+                QBCore.Functions.Progressbar("taking_bullets", "Loading bullets..", math.random(4000, 6000), false, true, {
+                    disableMovement = false,
+                    disableCarMovement = false,
+                    disableMouse = false,
+                    disableCombat = true,
+                }, {}, {}, {}, function() -- Done
+                    if QBCore.Shared.Weapons[weapon] ~= nil then
+                        AddAmmoToPed(ped,weapon,retval)
+                        TaskReloadWeapon(ped)
+                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total2)
+                        TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
+                        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], "remove")
+                        TriggerEvent('QBCore:Notify', 'Reloaded', "success")
+                    end
+                end, function()
+                    QBCore.Functions.Notify("Canceled", "error")
+                end)
+            else
+                QBCore.Functions.Notify("Max Ammo Capacity", "error")
+            end
+        else
+            QBCore.Functions.Notify("You Have No Weapon", "error")
+        end
+    else
+        QBCore.Functions.Notify("You Have No Weapon.", "error")
+    end
+end)
