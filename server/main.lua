@@ -1,6 +1,3 @@
-QBCore = nil
-TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
-
 local WeaponAmmo = {}
 
 QBCore.Functions.CreateCallback("weapons:server:GetConfig", function(source, cb)

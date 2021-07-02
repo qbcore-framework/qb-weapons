@@ -1,5 +1,3 @@
-QBCore = nil
-
 local isLoggedIn = true
 local CurrentWeaponData = {}
 local PlayerData = {}
@@ -19,13 +17,6 @@ function DrawText3Ds(x, y, z, text)
     DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
     ClearDrawOrigin()
 end
-
-Citizen.CreateThread(function() 
-    while QBCore == nil do
-        TriggerEvent("QBCore:GetObject", function(obj) QBCore = obj end)    
-        Citizen.Wait(200)
-    end
-end)
 
 Citizen.CreateThread(function() 
     while true do
