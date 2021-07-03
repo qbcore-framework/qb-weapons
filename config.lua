@@ -1,14 +1,9 @@
 Config = Config or {}
 
 Config.DurabilityBlockedWeapons = {
---[[     "weapon_pistol_mk2",
-    "weapon_pistol",
     "weapon_stungun",
-    "weapon_pumpshotgun",
-    "weapon_smg",
-    "weapon_carbinerifle",
     "weapon_nightstick",
-    "weapon_flashlight", ]]
+    "weapon_flashlight",
     "weapon_unarmed",
 }
 
