@@ -18,6 +18,7 @@ function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
+--[[
 Citizen.CreateThread(function() 
     while true do
         if isLoggedIn then
@@ -26,6 +27,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(60000)
     end
 end)
+]]
 
 Citizen.CreateThread(function()
     Wait(1000)
