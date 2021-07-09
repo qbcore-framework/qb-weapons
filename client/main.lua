@@ -18,21 +18,9 @@ function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
---[[
-Citizen.CreateThread(function() 
-    while true do
-        if isLoggedIn then
-            TriggerServerEvent("weapons:server:SaveWeaponAmmo")
-        end
-        Citizen.Wait(60000)
-    end
-end)
-]]
-
 Citizen.CreateThread(function()
     Wait(1000)
     if QBCore.Functions.GetPlayerData() ~= nil then
-        TriggerServerEvent("weapons:server:LoadWeaponAmmo")
         isLoggedIn = true
         PlayerData = QBCore.Functions.GetPlayerData()
 
