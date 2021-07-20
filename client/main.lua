@@ -126,8 +126,9 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
             local total = GetAmmoInPedWeapon(ped, weapon)
             local retval = GetMaxAmmoInClip(ped, weapon, 1)
             retval = tonumber(retval)
+            local found, maxAmmo = GetMaxAmmo(ped, weapon)
 
-            if (total + retval) <= (retval + 1000) then
+            if total < maxAmmo then
                 QBCore.Functions.Progressbar("taking_bullets", "Loading bullets..", math.random(4000, 6000), false, true, {
                     disableMovement = false,
                     disableCarMovement = false,
@@ -137,7 +138,7 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
                     if QBCore.Shared.Weapons[weapon] ~= nil then
                         AddAmmoToPed(ped,weapon,retval)
                         TaskReloadWeapon(ped)
-                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, retval)
+                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total + retval)
                         TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
                         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], "remove")
                         TriggerEvent('QBCore:Notify', 'Reloaded', "success")
