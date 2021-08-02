@@ -18,21 +18,6 @@ function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
-Citizen.CreateThread(function()
-    Wait(1000)
-    if QBCore.Functions.GetPlayerData() ~= nil then
-        isLoggedIn = true
-        PlayerData = QBCore.Functions.GetPlayerData()
-
-        QBCore.Functions.TriggerCallback("weapons:server:GetConfig", function(RepairPoints)
-            for k, data in pairs(RepairPoints) do
-                Config.WeaponRepairPoints[k].IsRepairing = data.IsRepairing
-                Config.WeaponRepairPoints[k].RepairingData = data.RepairingData
-            end
-        end)
-    end
-end)
-
 local MultiplierAmount = 0
 
 Citizen.CreateThread(function()
@@ -159,7 +144,6 @@ end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
-    TriggerServerEvent("weapons:server:LoadWeaponAmmo")
     isLoggedIn = true
     PlayerData = QBCore.Functions.GetPlayerData()
 
@@ -169,6 +153,21 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
             Config.WeaponRepairPoints[k].RepairingData = data.RepairingData
         end
     end)
+end)
+
+AddEventHandler('onResourceStart', function(resource)
+    if resource == GetCurrentResourceName() then
+        Wait(1000)
+        isLoggedIn = true
+        PlayerData = QBCore.Functions.GetPlayerData()
+
+        QBCore.Functions.TriggerCallback("weapons:server:GetConfig", function(RepairPoints)
+            for k, data in pairs(RepairPoints) do
+                Config.WeaponRepairPoints[k].IsRepairing = data.IsRepairing
+                Config.WeaponRepairPoints[k].RepairingData = data.RepairingData
+            end
+        end)
+    end
 end)
 
 RegisterNetEvent('weapons:client:SetCurrentWeapon')
