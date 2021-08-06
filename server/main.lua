@@ -23,7 +23,7 @@ AddEventHandler('weapons:server:UpdateWeaponAmmo', function(CurrentWeaponData, a
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local amount = tonumber(amount)
-    if CurrentWeaponData ~= nil then
+    if CurrentWeaponData and Player ~= nil then
         if Player.PlayerData.items[CurrentWeaponData.slot] ~= nil then
             Player.PlayerData.items[CurrentWeaponData.slot].info.ammo = amount
         end
