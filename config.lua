@@ -174,3 +174,7 @@ Config.WeaponAttachments = {
         },
     },
 }
+
+Config.Throwables = {
+    'weapon_molotov', 'weapon_stickybomb', 'weapon_snowball'
+}
