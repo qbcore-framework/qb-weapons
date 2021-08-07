@@ -20,6 +20,15 @@ end
 
 local MultiplierAmount = 0
 
+function isThrowable(name)
+    for a = 1, #Config.Throwables do
+        if QBCore.Shared.Weapons[name]["name"] == Config.Throwables[a] then
+            return true
+        end 
+    end
+    return false
+end
+
 Citizen.CreateThread(function()
     while true do
         if isLoggedIn then
@@ -29,8 +38,8 @@ Citizen.CreateThread(function()
                     if CanShoot then
                         local weapon = GetSelectedPedWeapon(ped)
                         local ammo = GetAmmoInPedWeapon(ped, weapon)
-                        if QBCore.Shared.Weapons[weapon]["name"] == "weapon_snowball" then
-                            TriggerServerEvent('QBCore:Server:RemoveItem', "snowball", 1)
+                        if isThrowable(weapon) then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', QBCore.Shared.Weapons[weapon]["name"], 1)
                         else
                             if ammo > 0 then
                                 MultiplierAmount = MultiplierAmount + 1
