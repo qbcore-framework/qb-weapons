@@ -39,7 +39,15 @@ Citizen.CreateThread(function()
                         local weapon = GetSelectedPedWeapon(ped)
                         local ammo = GetAmmoInPedWeapon(ped, weapon)
                         if isThrowable(weapon) then
-                            TriggerServerEvent('QBCore:Server:RemoveItem', QBCore.Shared.Weapons[weapon]["name"], 1)
+                            if IsControlReleased(1,24) then
+                            local ammo = GetAmmoInPedWeapon(ped, weapon)
+                                if ammo < 2 then
+                                    Citizen.Wait(100)
+                                    SetCurrentPedWeapon(PlayerPedId(), GetHashKey("WEAPON_UNARMED"), true)
+                                    TriggerServerEvent('QBCore:Server:RemoveItem', QBCore.Shared.Weapons[weapon]["name"], 1)
+                                end
+                                
+                            end
                         else
                             if ammo > 0 then
                                 MultiplierAmount = MultiplierAmount + 1
