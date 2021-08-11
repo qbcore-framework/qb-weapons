@@ -87,7 +87,6 @@ Config.DurabilityMultiplier = {
     ["weapon_pipebomb"] 			 = 0.15,
     ["weapon_poolcue"] 				 = 0.15,
     ["weapon_wrench"] 				 = 0.15,
-    ["weapon_autoshotgun"] 		 	 = 0.15,
     ["weapon_bread"] 				 = 0.15,
 }
 
