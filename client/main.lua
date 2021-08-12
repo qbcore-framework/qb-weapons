@@ -281,9 +281,9 @@ AddEventHandler("weapons:client:EquipAttachment", function(ItemData, attachment)
     
     if weapon ~= GetHashKey("WEAPON_UNARMED") then
         WeaponData.name = WeaponData.name:upper()
-        if Config.WeaponAttachments[WeaponData.name] ~= nil then
-            if Config.WeaponAttachments[WeaponData.name][attachment] ~= nil then
-                TriggerServerEvent("weapons:server:EquipAttachment", ItemData, CurrentWeaponData, Config.WeaponAttachments[WeaponData.name][attachment])
+        if WeaponAttachments[WeaponData.name] ~= nil then
+            if WeaponAttachments[WeaponData.name][attachment] ~= nil then
+                TriggerServerEvent("weapons:server:EquipAttachment", ItemData, CurrentWeaponData, WeaponAttachments[WeaponData.name][attachment])
             else
                 QBCore.Functions.Notify("This weapon does not support this attachment..", "error")
             end
