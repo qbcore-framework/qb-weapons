@@ -213,10 +213,10 @@ Citizen.CreateThread(function()
                     if distance < 1 then
                         if data.IsRepairing then
                             if data.RepairingData.CitizenId ~= PlayerData.citizenid then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'The repairshop is this moment  ~r~NOT~w~ useble..')
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'The repairshop is this moment  ~r~NOT~w~ usable..')
                             else
                                 if not data.RepairingData.Ready then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'Ur weapon wil be repaired')
+                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'Your weapon wil be repaired')
                                 else
                                     DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] to take weapon back')
                                 end
@@ -226,7 +226,7 @@ Citizen.CreateThread(function()
                                 if not data.RepairingData.Ready then
                                     local WeaponData = QBCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
                                     local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Wapen repareren, ~g~$'..Config.WeaponRepairCotsts[WeaponClass]..'~w~')
+                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Repair weapon, ~g~$'..Config.WeaponRepairCotsts[WeaponClass]..'~w~')
                                     if IsControlJustPressed(0, 38) then
                                         QBCore.Functions.TriggerCallback('weapons:server:RepairWeapon', function(HasMoney)
                                             if HasMoney then
@@ -236,7 +236,7 @@ Citizen.CreateThread(function()
                                     end
                                 else
                                     if data.RepairingData.CitizenId ~= PlayerData.citizenid then
-                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'The repairshop is this moment ~r~NOT~w~ useble..')
+                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'The repairshop is this moment ~r~NOT~w~ usable..')
                                     else
                                         DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] to take weapon back')
                                         if IsControlJustPressed(0, 38) then
