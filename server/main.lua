@@ -140,8 +140,8 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                         TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
                         TriggerEvent('qb-phone:server:sendNewMailToOffline', Player.PlayerData.citizenid, {
                             sender = "Tyrone",
-                            subject = "Reperatie",
-                            message = "Your "..WeaponData.label.." is repaid u can pick it up at the location. <br><br> Peace out madafaka"
+                            subject = "Repair",
+                            message = "Your "..WeaponData.label.." is repaired u can pick it up at the location. <br><br> Peace out madafaka"
                         })
                         SetTimeout(7 * 60000, function()
                             if Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready then
@@ -164,7 +164,7 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
             cb(false)
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, "You diddent have a weapon in ur hands..", "error")
+        TriggerClientEvent('QBCore:Notify', src, "You didn't have a weapon in ur hands..", "error")
         TriggerClientEvent('weapons:client:SetCurrentWeapon', src, {}, false)
         cb(false)
     end
@@ -245,7 +245,7 @@ AddEventHandler("weapons:server:EquipAttachment", function(ItemData, CurrentWeap
                     TriggerClientEvent('inventory:client:ItemBox', src, ItemData, "remove")
                 end)
             else
-                TriggerClientEvent("QBCore:Notify", src, "You already have "..AttachmentData.label:lower().." on your weapon.", "error", 3500)
+                TriggerClientEvent("QBCore:Notify", src, "You already have a "..AttachmentData.label:lower().." on your weapon.", "error", 3500)
             end
         else
             Inventory[CurrentWeaponData.slot].info.attachments = {}
