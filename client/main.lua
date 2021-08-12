@@ -216,7 +216,7 @@ Citizen.CreateThread(function()
                                 DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'The repairshop is this moment  ~r~NOT~w~ usable..')
                             else
                                 if not data.RepairingData.Ready then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'Your weapon wil be repaired')
+                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'Your weapon will be repaired')
                                 else
                                     DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] to take weapon back')
                                 end
