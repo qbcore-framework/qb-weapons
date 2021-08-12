@@ -164,7 +164,7 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
             cb(false)
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, "You didn't have a weapon in ur hands..", "error")
+        TriggerClientEvent('QBCore:Notify', src, "You don't have a weapon in your hands..", "error")
         TriggerClientEvent('weapons:client:SetCurrentWeapon', src, {}, false)
         cb(false)
     end
