@@ -227,9 +227,11 @@ AddEventHandler("weapons:server:EquipAttachment", function(ItemData, CurrentWeap
             if not HasAttach then
                 if AttachmentData.type ~=nil and currenttype == AttachmentData.type then
                     for k, v in pairs(Inventory[CurrentWeaponData.slot].info.attachments) do
-                        GiveBackItem = tostring(v.item):lower()
-                        table.remove(Inventory[CurrentWeaponData.slot].info.attachments, key)
-                        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[GiveBackItem], "add")
+                        if v.type ~= nil and v.type == currenttype then
+                            GiveBackItem = tostring(v.item):lower()
+                            table.remove(Inventory[CurrentWeaponData.slot].info.attachments, key)
+                            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[GiveBackItem], "add")
+                        end
                     end
                 end
                 table.insert(Inventory[CurrentWeaponData.slot].info.attachments, {
