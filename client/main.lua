@@ -300,3 +300,10 @@ AddEventHandler("addAttachment", function(component)
     local WeaponData = QBCore.Shared.Weapons[weapon]
     GiveWeaponComponentToPed(ped, GetHashKey(WeaponData.name), GetHashKey(component))
 end)
+
+RegisterNetEvent('weapons:client:EquipTint')
+AddEventHandler('weapons:client:EquipTint', function(tint)
+    local player = PlayerPedId()
+    local weapon = GetSelectedPedWeapon(player)
+    SetPedWeaponTintIndex(player, weapon, tint)
+end)
