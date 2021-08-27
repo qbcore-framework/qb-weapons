@@ -38,8 +38,7 @@ Citizen.CreateThread(function()
                         end
                     else
 			            local weapon = GetSelectedPedWeapon(ped)
-                        if weapon == -1569615261 then
-                        else
+                        if weapon ~= -1569615261 then
                             TriggerEvent('inventory:client:CheckWeapon', QBCore.Shared.Weapons[weapon]["name"])
                             QBCore.Functions.Notify("This weapon is broken and can not be used..", "error")
                             MultiplierAmount = 0
