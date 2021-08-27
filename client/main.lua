@@ -42,7 +42,6 @@ Citizen.CreateThread(function()
                         else
                             TriggerEvent('inventory:client:CheckWeapon', QBCore.Shared.Weapons[weapon]["name"])
                             QBCore.Functions.Notify("This weapon is broken and can not be used..", "error")
-                            print(GetSelectedPedWeapon(PlayerPedId()))
                             MultiplierAmount = 0
                         end
                     end
