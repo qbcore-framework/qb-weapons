@@ -643,7 +643,7 @@ WeaponAttachments = {
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP_02',
             label = 'Suppressor',
-            item = 'smg_suppressor',
+            item = 'rifle_suppressor',
         },
         ['grip'] = {
             component = 'COMPONENT_AT_AR_AFGRIP',
