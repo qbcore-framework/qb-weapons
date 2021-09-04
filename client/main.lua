@@ -309,3 +309,7 @@ AddEventHandler('weapons:client:EquipTint', function(tint)
     local weapon = GetSelectedPedWeapon(player)
     SetPedWeaponTintIndex(player, weapon, tint)
 end)
+
+exports("CanShoot", function ()
+    return CanShoot
+end)
