@@ -77,7 +77,7 @@ Citizen.CreateThread(function()
                 SetAmmoInClip(ped, GetHashKey(QBCore.Shared.Weapons[weapon]["name"]), 1)
             end
         end
-        
+
         Citizen.Wait(0)
     end
 end)
@@ -111,8 +111,6 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
     if CurrentWeaponData ~= nil then
         if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
             local total = GetAmmoInPedWeapon(ped, weapon)
-            local retval = GetMaxAmmoInClip(ped, weapon, 1)
-            retval = tonumber(retval)
             local found, maxAmmo = GetMaxAmmo(ped, weapon)
 
             if total < maxAmmo then
@@ -123,9 +121,9 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
                     disableCombat = true,
                 }, {}, {}, {}, function() -- Done
                     if QBCore.Shared.Weapons[weapon] ~= nil then
-                        AddAmmoToPed(ped,weapon,retval)
+                        AddAmmoToPed(ped,weapon,amount)
                         TaskReloadWeapon(ped)
-                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total + retval)
+                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total + amount)
                         TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
                         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], "remove")
                         TriggerEvent('QBCore:Notify', 'Reloaded', "success")
@@ -280,7 +278,7 @@ AddEventHandler("weapons:client:EquipAttachment", function(ItemData, attachment)
     local ped = PlayerPedId()
     local weapon = GetSelectedPedWeapon(ped)
     local WeaponData = QBCore.Shared.Weapons[weapon]
-    
+
     if weapon ~= GetHashKey("WEAPON_UNARMED") then
         WeaponData.name = WeaponData.name:upper()
         if WeaponAttachments[WeaponData.name] ~= nil then
