@@ -58,7 +58,7 @@ Citizen.CreateThread(function()
         local weapon = GetSelectedPedWeapon(ped)
         local ammo = GetAmmoInPedWeapon(ped, weapon)
 
-        if ammo == 1 then
+        if ammo < 1 then
             DisableControlAction(0, 24, true) -- Attack
             DisableControlAction(0, 257, true) -- Attack 2
             if IsPedInAnyVehicle(ped, true) then
@@ -73,8 +73,8 @@ Citizen.CreateThread(function()
         end
 
         if IsPedShooting(ped) then
-            if ammo - 1 < 1 then
-                SetAmmoInClip(ped, GetHashKey(QBCore.Shared.Weapons[weapon]["name"]), 1)
+            if ammo - 1 < 0 then
+                SetAmmoInClip(ped, GetHashKey(QBCore.Shared.Weapons[weapon]["name"]), 0)
             end
         end
 
