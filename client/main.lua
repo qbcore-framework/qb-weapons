@@ -57,8 +57,10 @@ Citizen.CreateThread(function()
         local player = PlayerId()
         local weapon = GetSelectedPedWeapon(ped)
         local ammo = GetAmmoInPedWeapon(ped, weapon)
+        local clipSize = GetWeaponClipSize(weapon)
 
-        if ammo < 1 then
+        -- Clip size will always be zero for melee weapons
+        if clipSize > 0 and ammo < 1 then
             DisableControlAction(0, 24, true) -- Attack
             DisableControlAction(0, 257, true) -- Attack 2
             if IsPedInAnyVehicle(ped, true) then
