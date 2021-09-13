@@ -212,7 +212,7 @@ WeaponAttachments = {
             item = 'pistol_flashlight',
         },
         ['suppressor'] = {
-            component = 'COMPONENT_AT_PI_SUPP',
+            component = 'COMPONENT_AT_AR_SUPP_02',
             label = 'Suppressor',
             item = 'pistol_suppressor',
         },
