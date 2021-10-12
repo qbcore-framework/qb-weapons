@@ -31,6 +31,12 @@ Citizen.CreateThread(function()
                         local ammo = GetAmmoInPedWeapon(ped, weapon)
                         if QBCore.Shared.Weapons[weapon]["name"] == "weapon_snowball" then
                             TriggerServerEvent('QBCore:Server:RemoveItem', "snowball", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_pipebomb" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_pipebomb", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_molotov" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_molotov", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_stickybomb" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_stickybomb", 1)								
                         else
                             if ammo > 0 then
                                 MultiplierAmount = MultiplierAmount + 1
