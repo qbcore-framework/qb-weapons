@@ -92,7 +92,6 @@ Citizen.CreateThread(function()
                 TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
             else
                 TriggerEvent('inventory:client:CheckWeapon')
-                TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, 0)
             end
 
             if MultiplierAmount > 0 then
