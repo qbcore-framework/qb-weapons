@@ -88,6 +88,11 @@ Config.DurabilityMultiplier = {
     ["weapon_poolcue"] 				 = 0.15,
     ["weapon_wrench"] 				 = 0.15,
     ["weapon_bread"] 				 = 0.15,
+    ["weapon_smg_mk2"] 				 = 0.15,
+    ["weapon_assaultrifle_mk2"]		= 0.15,
+    ["weapon_carbinerifle_mk2"]		= 0.15,
+    ["weapon_revolver_mk2"]			= 0.15,
+    ["weapon_doubleaction"]			= 0.15,
 }
 
 Config.WeaponRepairPoints = {
