@@ -67,11 +67,11 @@ Citizen.CreateThread(function()
         if IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24) then
             local weapon = GetSelectedPedWeapon(ped)
             local ammo = GetAmmoInPedWeapon(ped, weapon)
-            if ammo > 0 then
+            --if ammo > 0 then
                 TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
-            else
-                TriggerEvent('inventory:client:CheckWeapon')
-            end
+            --else
+                --TriggerEvent('inventory:client:CheckWeapon')
+            --end
 
             if MultiplierAmount > 0 then
                 TriggerServerEvent("weapons:server:UpdateWeaponQuality", CurrentWeaponData, MultiplierAmount)
