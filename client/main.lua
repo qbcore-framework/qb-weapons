@@ -57,35 +57,8 @@ Citizen.CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        local ped = PlayerPedId()
-        local player = PlayerId()
-        local weapon = GetSelectedPedWeapon(ped)
-        local ammo = GetAmmoInPedWeapon(ped, weapon)
-
-        if ammo == 1 then
-            DisableControlAction(0, 24, true) -- Attack
-            DisableControlAction(0, 257, true) -- Attack 2
-            if IsPedInAnyVehicle(ped, true) then
-                SetPlayerCanDoDriveBy(player, false)
-            end
-        else
-            EnableControlAction(0, 24, true) -- Attack
-			EnableControlAction(0, 257, true) -- Attack 2
-            if IsPedInAnyVehicle(ped, true) then
-                SetPlayerCanDoDriveBy(player, true)
-            end
-        end
-
-        if IsPedShooting(ped) then
-            if ammo - 1 < 1 then
-                SetAmmoInClip(ped, GetHashKey(QBCore.Shared.Weapons[weapon]["name"]), 1)
-            end
-        end
-
-        Citizen.Wait(0)
-    end
+Citizen.CreateThread(function() 
+    SetWeaponsNoAutoswap(true)
 end)
 
 Citizen.CreateThread(function()
