@@ -97,7 +97,7 @@ Config.DurabilityMultiplier = {
 
 Config.WeaponRepairPoints = {
     [1] = {
-        coords = vector4(964.02, -1267.41, 34.97, 35.5),
+        coords = vector3(964.02, -1267.41, 34.97),
         IsRepairing = false,
         RepairingData = {},
     }
@@ -138,7 +138,7 @@ WeaponAttachments = {
             component = 'COMPONENT_PISTOL_VARMOD_LUXE',
             label = 'Luxury Finish',
             item = 'pistol_luxuryfinish',
-        },                                                     
+        },
     },
     ['WEAPON_COMBATPISTOL'] = {
         ['defaultclip'] = {
