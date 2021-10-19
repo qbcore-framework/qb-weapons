@@ -80,7 +80,6 @@ RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
         if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
             local total = GetAmmoInPedWeapon(ped, weapon)
             local found, maxAmmo = GetMaxAmmo(ped, weapon)
-
             if total < maxAmmo then
                 QBCore.Functions.Progressbar("taking_bullets", "Loading Bullets", math.random(4000, 6000), false, true, {
                     disableMovement = false,

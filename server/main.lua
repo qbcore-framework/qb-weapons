@@ -35,7 +35,7 @@ end
 
 -- Callback
 
-QBCore.Functions.CreateCallback("weapons:server:GetConfig", function(cb)
+QBCore.Functions.CreateCallback("weapons:server:GetConfig", function(source, cb)
     cb(Config.WeaponRepairPoints)
 end)
 
