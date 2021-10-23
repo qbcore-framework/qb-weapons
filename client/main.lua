@@ -166,6 +166,18 @@ CreateThread(function()
                             TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_molotov", 1)
                         elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_stickybomb" then
                             TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_stickybomb", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_grenade" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_grenade", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_bzgas" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_bzgas", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_proxmine" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_proxmine", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_ball" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_ball", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_smokegrenade" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_smokegrenade", 1)
+                        elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_flare" then
+                            TriggerServerEvent('QBCore:Server:RemoveItem', "weapon_flare", 1)
                         else
                             if ammo > 0 then
                                 MultiplierAmount = MultiplierAmount + 1
