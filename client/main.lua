@@ -173,7 +173,7 @@ CreateThread(function()
                         end
                     else
 			            local weapon = GetSelectedPedWeapon(ped)
-                        if weapon ~= -1569615261 then
+                        if weapon ~= -1569615261 then --weapon_unarmed
                             TriggerEvent('inventory:client:CheckWeapon', QBCore.Shared.Weapons[weapon]["name"])
                             QBCore.Functions.Notify("This weapon is broken and can not be used.", "error")
                             MultiplierAmount = 0
