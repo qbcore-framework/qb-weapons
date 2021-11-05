@@ -113,7 +113,7 @@ RegisterNetEvent("weapons:client:EquipAttachment", function(ItemData, attachment
     local ped = PlayerPedId()
     local weapon = GetSelectedPedWeapon(ped)
     local WeaponData = QBCore.Shared.Weapons[weapon]
-    if weapon ~= `weapon_unarmed` then
+    if weapon ~= `WEAPON_UNARMED` then
         WeaponData.name = WeaponData.name:upper()
         if WeaponAttachments[WeaponData.name] then
             if WeaponAttachments[WeaponData.name][attachment]['item'] == ItemData.name then
