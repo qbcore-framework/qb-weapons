@@ -151,7 +151,7 @@ end)
 
 CreateThread(function()
     while true do
-        if LocalPlayer.state['isLoggedIn'] then
+        if LocalPlayer.state.isLoggedIn then
             local ped = PlayerPedId()
             if CurrentWeaponData and next(CurrentWeaponData) then
                 if IsPedShooting(ped) or IsControlJustPressed(0, 24) then
@@ -200,7 +200,7 @@ end)
 
 CreateThread(function()
     while true do
-        if LocalPlayer.state['isLoggedIn'] then
+        if LocalPlayer.state.isLoggedIn then
             local inRange = false
             local ped = PlayerPedId()
             local pos = GetEntityCoords(ped)
