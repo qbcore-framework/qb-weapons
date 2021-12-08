@@ -140,7 +140,7 @@ Config.WeaponRepairPoints = {
     }
 }
 
-Config.WeaponRepairCotsts = {
+Config.WeaponRepairCosts = {
     ["pistol"] = 1000,
     ["smg"] = 3000,
     ["rifle"] = 5000,
