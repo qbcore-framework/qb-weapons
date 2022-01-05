@@ -38,6 +38,10 @@ local function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
+local function HasWeaponEquipped(WeaponHash)
+    return GetSelectedPedWeapon(PlayerPedId()) == WeaponHash
+end
+
 -- Events
 
 RegisterNetEvent("weapons:client:SyncRepairShops", function(NewData, key)
