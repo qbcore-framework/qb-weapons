@@ -42,7 +42,7 @@ local Translations = {
     }
 }
 
-Lang = Locale:new({
+LangWeapons = Locale:new({
     phrases = Translations,
     warnOnMissing = true
 })
