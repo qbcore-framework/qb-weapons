@@ -260,9 +260,9 @@ WeaponAttachments = {
             item = 'revolver_vipvariant',
             type = 'skin',
         },
-        ['bossvariant'] = {
+        ['bodyguardvariant'] = {
             component = 'COMPONENT_REVOLVER_VARMOD_BOSS',
-            item = 'revolver_bossvariant',
+            item = 'revolver_bodyguardvariant',
             type = 'skin',
         },
     },
