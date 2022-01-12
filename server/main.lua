@@ -66,7 +66,7 @@ QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(sour
                 Player.Functions.SetInventory(Player.PlayerData.items, true)
                 Player.Functions.AddItem(AttachmentComponent.item, 1)
                 TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[AttachmentComponent.item], "add")
-                TriggerClientEvent("QBCore:Notify", src, LangWeapons:t('info.removed_attachment', { value = AttachmentComponent.label }), "error")
+                TriggerClientEvent("QBCore:Notify", src, Lang:t('info.removed_attachment', { value = AttachmentComponent.label }), "error")
                 cb(Inventory[ItemData.slot].info.attachments)
             else
                 cb(false)
@@ -107,9 +107,9 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                         Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready = true
                         TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
                         TriggerEvent('qb-phone:server:sendNewMailToOffline', Player.PlayerData.citizenid, {
-                            sender = LangWeapons:t('mail.sender'),
-                            subject = LangWeapons:t('mail.subject'),
-                            message = LangWeapons:t('mail.message', { value = WeaponData.label })
+                            sender = Lang:t('mail.sender'),
+                            subject = Lang:t('mail.subject'),
+                            message = Lang:t('mail.message', { value = WeaponData.label })
                         })
                         SetTimeout(7 * 60000, function()
                             if Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready then
@@ -124,15 +124,15 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                     cb(false)
                 end
             else
-                TriggerClientEvent("QBCore:Notify", src, LangWeapons:t('error.no_damage_on_weapon'), "error")
+                TriggerClientEvent("QBCore:Notify", src, Lang:t('error.no_damage_on_weapon'), "error")
                 cb(false)
             end
         else
-            TriggerClientEvent("QBCore:Notify", src, LangWeapons:t('error.no_damage_on_weapon'), "error")
+            TriggerClientEvent("QBCore:Notify", src, Lang:t('error.no_damage_on_weapon'), "error")
             cb(false)
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, LangWeapons:t('error.no_weapon_in_hand'), "error")
+        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_weapon_in_hand'), "error")
         TriggerClientEvent('weapons:client:SetCurrentWeapon', src, {}, false)
         cb(false)
     end
@@ -199,7 +199,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                     else
                         WeaponSlot.info.quality = 0
                         TriggerClientEvent('inventory:client:UseWeapon', src, data)
-                        TriggerClientEvent('QBCore:Notify', src, LangWeapons:t('error.weapon_broken_need_repair'), "error")
+                        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.weapon_broken_need_repair'), "error")
                         break
                     end
                 end
@@ -211,7 +211,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                     else
                         WeaponSlot.info.quality = 0
                         TriggerClientEvent('inventory:client:UseWeapon', src, data)
-                        TriggerClientEvent('QBCore:Notify', src, LangWeapons:t('error.weapon_broken_need_repair'), "error")
+                        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.weapon_broken_need_repair'), "error")
                         break
                     end
                 end
@@ -253,7 +253,7 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
                     TriggerClientEvent('inventory:client:ItemBox', src, ItemData, "remove")
                 end)
             else
-                TriggerClientEvent("QBCore:Notify", src, LangWeapons:t('error.attachment_already_on_weapon' , { value = AttachmentData.label:lower() }), "error", 3500)
+                TriggerClientEvent("QBCore:Notify", src, Lang:t('error.attachment_already_on_weapon' , { value = AttachmentData.label:lower() }), "error", 3500)
             end
         else
             Inventory[CurrentWeaponData.slot].info.attachments = {}
@@ -279,34 +279,34 @@ end)
 
 -- Commands
 
-QBCore.Commands.Add("repairweapon", "Repair Weapon (God Only)", {{name="hp", help=LangWeapons:t('info.hp_of_weapon')}}, true, function(source, args)
+QBCore.Commands.Add("repairweapon", "Repair Weapon (God Only)", {{name="hp", help=Lang:t('info.hp_of_weapon')}}, true, function(source, args)
     TriggerClientEvent('weapons:client:SetWeaponQuality', source, tonumber(args[1]))
 end, "god")
 
 -- Items
 
 -- AMMO
-QBCore.Functions.CreateUseableItem('pistol_ammo', function(source, item)
+QBCore.Functions.CreateUseableItem('ammo_pistol', function(source, item)
     TriggerClientEvent('weapon:client:AddAmmo', source, 'AMMO_PISTOL', 12, item)
 end)
 
-QBCore.Functions.CreateUseableItem('rifle_ammo', function(source, item)
+QBCore.Functions.CreateUseableItem('ammo_rifle', function(source, item)
     TriggerClientEvent('weapon:client:AddAmmo', source, 'AMMO_RIFLE', 30, item)
 end)
 
-QBCore.Functions.CreateUseableItem('smg_ammo', function(source, item)
+QBCore.Functions.CreateUseableItem('ammo_smg', function(source, item)
     TriggerClientEvent('weapon:client:AddAmmo', source, 'AMMO_SMG', 20, item)
 end)
 
-QBCore.Functions.CreateUseableItem('shotgun_ammo', function(source, item)
+QBCore.Functions.CreateUseableItem('ammo_shotgun', function(source, item)
     TriggerClientEvent('weapon:client:AddAmmo', source, 'AMMO_SHOTGUN', 10, item)
 end)
 
-QBCore.Functions.CreateUseableItem('mg_ammo', function(source, item)
+QBCore.Functions.CreateUseableItem('ammo_mg', function(source, item)
     TriggerClientEvent('weapon:client:AddAmmo', source, 'AMMO_MG', 30, item)
 end)
 
-QBCore.Functions.CreateUseableItem('snp_ammo', function(source, item)
+QBCore.Functions.CreateUseableItem('ammo_sniper', function(source, item)
     TriggerClientEvent('weapon:client:AddAmmo', source, 'AMMO_SNIPER', 10, item)
 end)
 
@@ -400,7 +400,15 @@ QBCore.Functions.CreateUseableItem('pistol50_luxuryfinish', function(source, ite
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
 end)
 
+QBCore.Functions.CreateUseableItem('heavypistol_luxuryfinish', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
+end)
+
 QBCore.Functions.CreateUseableItem('revolver_defaultclip', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
+end)
+
+QBCore.Functions.CreateUseableItem('doubleaction_defaultclip', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
 
@@ -408,8 +416,8 @@ QBCore.Functions.CreateUseableItem('revolver_vipvariant', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'vipvariant')
 end)
 
-QBCore.Functions.CreateUseableItem('revolver_bodyguardvariant', function(source, item)
-    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'bodyguardvariant')
+QBCore.Functions.CreateUseableItem('revolver_bossvariant', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'bossvariant')
 end)
 
 QBCore.Functions.CreateUseableItem('snspistol_defaultclip', function(source, item)
@@ -456,10 +464,6 @@ QBCore.Functions.CreateUseableItem('microsmg_scope', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'scope')
 end)
 
-QBCore.Functions.CreateUseableItem('appistol_defaultclip', function(source, item)
-    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
-end)
-
 QBCore.Functions.CreateUseableItem('microsmg_luxuryfinish', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
 end)
@@ -490,6 +494,14 @@ end)
 
 QBCore.Functions.CreateUseableItem('assaultsmg_extendedclip', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'extendedclip')
+end)
+
+QBCore.Functions.CreateUseableItem('pumpshotgun_defaultclip', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
+end)
+
+QBCore.Functions.CreateUseableItem('sawnoffshotgun_defaultclip', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
 
 QBCore.Functions.CreateUseableItem('assaultsmg_luxuryfinish', function(source, item)
@@ -528,6 +540,10 @@ QBCore.Functions.CreateUseableItem('combatpistol_defaultclip', function(source, 
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
 
+QBCore.Functions.CreateUseableItem('emplauncher_defaultclip', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
+end)
+
 QBCore.Functions.CreateUseableItem('combatpdw_drum', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'drum')
 end)
@@ -549,6 +565,10 @@ QBCore.Functions.CreateUseableItem('pumpshotgun_luxuryfinish', function(source, 
 end)
 
 QBCore.Functions.CreateUseableItem('sawnoffshotgun_luxuryfinish', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
+end)
+
+QBCore.Functions.CreateUseableItem('sniper_luxuryfinish', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
 end)
 
@@ -596,6 +616,10 @@ QBCore.Functions.CreateUseableItem('rifle_suppressor', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'suppressor')
 end)
 
+QBCore.Functions.CreateUseableItem('sniperrifle_suppressor', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'suppressor')
+end)
+
 QBCore.Functions.CreateUseableItem('assaultrifle_luxuryfinish', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
 end)
@@ -636,10 +660,6 @@ QBCore.Functions.CreateUseableItem('advancedrifle_luxuryfinish', function(source
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
 end)
 
-QBCore.Functions.CreateUseableItem('assaultshotgun_extendedclip', function(source, item)
-    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'extendedclip')
-end)
-
 QBCore.Functions.CreateUseableItem('specialcarbine_defaultclip', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
@@ -648,12 +668,12 @@ QBCore.Functions.CreateUseableItem('specialcarbine_extendedclip', function(sourc
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'extendedclip')
 end)
 
-QBCore.Functions.CreateUseableItem('specialcarbine_drum', function(source, item)
-    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'drum')
+QBCore.Functions.CreateUseableItem('bullpupshotgun_defaultclip', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
 
-QBCore.Functions.CreateUseableItem('specialcarbine_luxuryfinish', function(source, item)
-    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
+QBCore.Functions.CreateUseableItem('specialcarbine_drum', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'drum')
 end)
 
 QBCore.Functions.CreateUseableItem('specialcarbine_luxuryfinish', function(source, item)
@@ -676,10 +696,6 @@ QBCore.Functions.CreateUseableItem('compactrifle_defaultclip', function(source, 
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
 
-QBCore.Functions.CreateUseableItem('assaultrifle_luxuryfinish', function(source, item)
-    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
-end)
-
 QBCore.Functions.CreateUseableItem('compactrifle_extendedclip', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'extendedclip')
 end)
@@ -688,15 +704,19 @@ QBCore.Functions.CreateUseableItem('compactrifle_drum', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'drum')
 end)
 
-QBCore.Functions.CreateUseableItem('carbinerifle_drum', function(source, item)
-    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'drum')
-end)
-
 QBCore.Functions.CreateUseableItem('gusenberg_defaultclip', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
 
 QBCore.Functions.CreateUseableItem('gusenberg_extendedclip', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'extendedclip')
+end)
+
+QBCore.Functions.CreateUseableItem('microsmg_defaultclip', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
+end)
+
+QBCore.Functions.CreateUseableItem('microsmg_extendedclip', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'extendedclip')
 end)
 
@@ -720,6 +740,10 @@ QBCore.Functions.CreateUseableItem('heavysniper_defaultclip', function(source, i
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
 
+QBCore.Functions.CreateUseableItem('heavysniper_extendedclip', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'extendedclip')
+end)
+
 QBCore.Functions.CreateUseableItem('marksmanrifle_defaultclip', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'defaultclip')
 end)
@@ -733,5 +757,9 @@ QBCore.Functions.CreateUseableItem('marksmanrifle_scope', function(source, item)
 end)
 
 QBCore.Functions.CreateUseableItem('marksmanrifle_luxuryfinish', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
+end)
+
+QBCore.Functions.CreateUseableItem('snspistol_luxuryfinish', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'luxuryfinish')
 end)

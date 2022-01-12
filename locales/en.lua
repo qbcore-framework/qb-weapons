@@ -27,22 +27,9 @@ local Translations = {
         subject = 'Repair',
         message = 'Your %{value} is repaired u can pick it up at the location. <br><br> Peace out madafaka'
     },
-    weapon_attachments = {
-        defaultclip = 'Default Clip',
-        extendedclip = 'Extended Clip',
-        flashlight = 'Flashlight',
-        suppressor = 'Suppressor',
-        luxuryfinish = 'Luxury Finish',
-        vipvariant = 'VIP Variant',
-        bodyguardvariant = 'Bodyguard Variant',
-        woodgrip = 'Wood Grip',
-        scope = 'Scope',
-        drum = 'Drum Magazine',
-        grip = 'Grip'
-    }
 }
 
-LangWeapons = Locale:new({
+Lang = Locale:new({
     phrases = Translations,
     warnOnMissing = true
 })

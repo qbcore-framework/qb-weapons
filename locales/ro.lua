@@ -27,22 +27,9 @@ local Translations = {
         subject = 'Repara',
         message = 'Arma: %{value} este reparata si o poti lua de la mine. <br><br> Du-te dracu bozo'
     },
-    weapon_attachments = {
-        defaultclip = 'Incarcator',
-        extendedclip = 'Incarcator extins',
-        flashlight = 'Lanterna',
-        suppressor = 'Amortizor',
-        luxuryfinish = 'Luxury Finish',
-        vipvariant = 'VIP Variant',
-        bodyguardvariant = 'Bodyguard Variant',
-        woodgrip = 'Prindere de lemn',
-        scope = 'Luneta',
-        drum = 'Magazin tip Toba',
-        grip = 'Prindere'
-    }
 }
 
-LangWeapons = Locale:new({
+Lang = Locale:new({
     phrases = Translations,
     warnOnMissing = true
 })
