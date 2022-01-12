@@ -66,7 +66,7 @@ QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(sour
                 Player.Functions.SetInventory(Player.PlayerData.items, true)
                 Player.Functions.AddItem(AttachmentComponent.item, 1)
                 TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[AttachmentComponent.item], "add")
-                TriggerClientEvent("QBCore:Notify", src, LangWeapons:t('info.removed_attachment', { value = AttachmentComponent.label }), "error")
+                TriggerClientEvent("QBCore:Notify", src, Lang:t('info.removed_attachment', { value = AttachmentComponent.label }), "error")
                 cb(Inventory[ItemData.slot].info.attachments)
             else
                 cb(false)
@@ -107,9 +107,9 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                         Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready = true
                         TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
                         TriggerEvent('qb-phone:server:sendNewMailToOffline', Player.PlayerData.citizenid, {
-                            sender = LangWeapons:t('mail.sender'),
-                            subject = LangWeapons:t('mail.subject'),
-                            message = LangWeapons:t('mail.message', { value = WeaponData.label })
+                            sender = Lang:t('mail.sender'),
+                            subject = Lang:t('mail.subject'),
+                            message = Lang:t('mail.message', { value = WeaponData.label })
                         })
                         SetTimeout(7 * 60000, function()
                             if Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready then
@@ -124,15 +124,15 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                     cb(false)
                 end
             else
-                TriggerClientEvent("QBCore:Notify", src, LangWeapons:t('error.no_damage_on_weapon'), "error")
+                TriggerClientEvent("QBCore:Notify", src, Lang:t('error.no_damage_on_weapon'), "error")
                 cb(false)
             end
         else
-            TriggerClientEvent("QBCore:Notify", src, LangWeapons:t('error.no_damage_on_weapon'), "error")
+            TriggerClientEvent("QBCore:Notify", src, Lang:t('error.no_damage_on_weapon'), "error")
             cb(false)
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, LangWeapons:t('error.no_weapon_in_hand'), "error")
+        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_weapon_in_hand'), "error")
         TriggerClientEvent('weapons:client:SetCurrentWeapon', src, {}, false)
         cb(false)
     end
@@ -199,7 +199,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                     else
                         WeaponSlot.info.quality = 0
                         TriggerClientEvent('inventory:client:UseWeapon', src, data)
-                        TriggerClientEvent('QBCore:Notify', src, LangWeapons:t('error.weapon_broken_need_repair'), "error")
+                        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.weapon_broken_need_repair'), "error")
                         break
                     end
                 end
@@ -211,7 +211,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                     else
                         WeaponSlot.info.quality = 0
                         TriggerClientEvent('inventory:client:UseWeapon', src, data)
-                        TriggerClientEvent('QBCore:Notify', src, LangWeapons:t('error.weapon_broken_need_repair'), "error")
+                        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.weapon_broken_need_repair'), "error")
                         break
                     end
                 end
@@ -253,7 +253,7 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
                     TriggerClientEvent('inventory:client:ItemBox', src, ItemData, "remove")
                 end)
             else
-                TriggerClientEvent("QBCore:Notify", src, LangWeapons:t('error.attachment_already_on_weapon' , { value = AttachmentData.label:lower() }), "error", 3500)
+                TriggerClientEvent("QBCore:Notify", src, Lang:t('error.attachment_already_on_weapon' , { value = AttachmentData.label:lower() }), "error", 3500)
             end
         else
             Inventory[CurrentWeaponData.slot].info.attachments = {}
@@ -279,7 +279,7 @@ end)
 
 -- Commands
 
-QBCore.Commands.Add("repairweapon", "Repair Weapon (God Only)", {{name="hp", help=LangWeapons:t('info.hp_of_weapon')}}, true, function(source, args)
+QBCore.Commands.Add("repairweapon", "Repair Weapon (God Only)", {{name="hp", help=Lang:t('info.hp_of_weapon')}}, true, function(source, args)
     TriggerClientEvent('weapons:client:SetWeaponQuality', source, tonumber(args[1]))
 end, "god")
 

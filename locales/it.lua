@@ -27,22 +27,9 @@ local Translations = {
         subject = 'Riparazione',
         message = 'La tua %{value} è stata riparata e pui prenderla alla posizione. <br><br> Peace out madafaka'
     },
-    weapon_attachments = {
-        defaultclip = 'Caricatore',
-        extendedclip = 'Caricatore esteso',
-        flashlight = 'Torcia',
-        suppressor = 'Silenziatore',
-        luxuryfinish = 'Finitura di pregio',
-        vipvariant = 'Variante VIP',
-        bodyguardvariant = 'Variante Bodyguard',
-        woodgrip = 'Impugnatura di legno',
-        scope = 'Mirino',
-        drum = 'Caricatore a tamburo',
-        grip = 'Impugnatura'
-    }
 }
 
-LangWeapons = Locale:new({
+Lang = Locale:new({
     phrases = Translations,
     warnOnMissing = true
 })
