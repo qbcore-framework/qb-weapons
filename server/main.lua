@@ -66,7 +66,7 @@ QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(sour
                 Player.Functions.SetInventory(Player.PlayerData.items, true)
                 Player.Functions.AddItem(AttachmentComponent.item, 1)
                 TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[AttachmentComponent.item], "add")
-                TriggerClientEvent("QBCore:Notify", src, Lang:t('info.removed_attachment', { value = AttachmentComponent.label }), "error")
+                TriggerClientEvent("QBCore:Notify", src, Lang:t('info.removed_attachment', { value = QBCore.Shared.Items[AttachmentComponent.item].label }), "error")
                 cb(Inventory[ItemData.slot].info.attachments)
             else
                 cb(false)
@@ -242,7 +242,7 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
                 end
                 Inventory[CurrentWeaponData.slot].info.attachments[#Inventory[CurrentWeaponData.slot].info.attachments+1] = {
                     component = AttachmentData.component,
-                    label = AttachmentData.label,
+                    label = QBCore.Shared.Items[AttachmentData.item].label,
                     item = AttachmentData.item,
                     type = AttachmentData.type,
                 }
@@ -253,13 +253,13 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
                     TriggerClientEvent('inventory:client:ItemBox', src, ItemData, "remove")
                 end)
             else
-                TriggerClientEvent("QBCore:Notify", src, Lang:t('error.attachment_already_on_weapon' , { value = AttachmentData.label:lower() }), "error", 3500)
+                TriggerClientEvent("QBCore:Notify", src, Lang:t('error.attachment_already_on_weapon' , { value = QBCore.Shared.Items[AttachmentData.item].label }), "error", 3500)
             end
         else
             Inventory[CurrentWeaponData.slot].info.attachments = {}
             Inventory[CurrentWeaponData.slot].info.attachments[#Inventory[CurrentWeaponData.slot].info.attachments+1] = {
                 component = AttachmentData.component,
-                label = AttachmentData.label,
+                label = QBCore.Shared.Items[AttachmentData.item].label,
                 item = AttachmentData.item,
                 type = AttachmentData.type,
             }
