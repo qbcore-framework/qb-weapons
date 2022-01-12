@@ -39,6 +39,7 @@ Config.DurabilityMultiplier = {
 	['weapon_combatpistol'] 		 = 0.15,
 	['weapon_appistol'] 			 = 0.15,
 	-- ['weapon_stungun'] 				 = 0.15,
+    -- ['weapon_stungun_mp'] 				 = 0.15,
 	['weapon_pistol50'] 			 = 0.15,
 	['weapon_snspistol'] 			 = 0.15,
 	['weapon_heavypistol'] 			 = 0.15,
@@ -88,6 +89,7 @@ Config.DurabilityMultiplier = {
 	['weapon_specialcarbine_mk2'] 	= 0.15,
 	['weapon_bullpuprifle_mk2'] 	= 0.15,
 	['weapon_militaryrifle'] 		= 0.15,
+    ['weapon_heavyrifle']           = 0.15,
 
 	-- Light Machine Guns
 	['weapon_mg'] 				    = 0.15, 
@@ -107,6 +109,7 @@ Config.DurabilityMultiplier = {
 	['weapon_rpg'] 				    = 0.15,
 	['weapon_grenadelauncher'] 		= 0.15,
 	['weapon_grenadelauncher_smoke']= 0.15,
+    ['weapon_emplauncher']          = 0.15,
 	['weapon_minigun'] 				= 0.15,
 	['weapon_firework'] 			= 0.15,
 	['weapon_railgun'] 				= 0.15,
@@ -130,6 +133,7 @@ Config.DurabilityMultiplier = {
 	['weapon_petrolcan'] 			= 0.15,
 	['weapon_fireextinguisher'] 	= 0.15,
 	['weapon_hazardcan'] 			= 0.15,
+    ['weapon_fertilizercan'] 		= 0.15,
 }
 
 Config.WeaponRepairPoints = {
@@ -337,7 +341,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_MACRO',
-            item = 'microsmg_scope',
+            item = 'scope_small',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP_02',
@@ -370,7 +374,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_MACRO_02',
-            item = 'smg_scope',
+            item = 'scope_small',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_PI_SUPP',
@@ -398,7 +402,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_MACRO',
-            item = 'microsmg_scope',
+            item = 'scope_small',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP_02',
@@ -468,7 +472,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_SMALL',
-            item = 'combatpdw_scope',
+            item = 'scope_small',
         },
     },
     -- SHOTGUNS
@@ -592,7 +596,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_MACRO',
-            item = 'microsmg_scope',
+            item = 'scope_small',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP_02',
@@ -629,7 +633,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_MEDIUM',
-            item = 'carbinerifle_scope',
+            item = 'scope_medium',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP',
@@ -661,7 +665,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_SMALL',
-            item = 'combatpdw_scope',
+            item = 'scope_small',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP',
@@ -698,7 +702,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_MEDIUM',
-            item = 'carbinerifle_scope',
+            item = 'scope_medium',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP_02',
@@ -730,7 +734,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_SMALL',
-            item = 'combatpdw_scope',
+            item = 'scope_small',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP',
@@ -762,6 +766,38 @@ WeaponAttachments = {
             type = 'clip',
         },
     },
+    ['WEAPON_HEAVYRIFLE'] = {
+        ['defaultclip'] = {
+            component = 'COMPONENT_HEAVYRIFLE_CLIP_01',
+            item = 'bullpuprifle_defaultclip',
+            type = 'clip',
+        },
+        ['extendedclip'] = {
+            component = 'COMPONENT_HEAVYRIFLE_CLIP_02',
+            item = 'bullpuprifle_extendedclip',
+            type = 'clip',
+        },
+        ['flashlight'] = {
+            component = 'COMPONENT_AT_AR_FLSH',
+            item = 'rifle_flashlight',
+        },
+        ['scope'] = {
+            component = 'COMPONENT_AT_SCOPE_MEDIUM',
+            item = 'scope_medium',
+        },
+        ['suppressor'] = {
+            component = 'COMPONENT_AT_AR_SUPP',
+            item = 'rifle_suppressor',
+        },
+        ['grip'] = {
+            component = 'COMPONENT_AT_AR_AFGRIP',
+            item = 'rifle_grip',
+        },
+        ['luxuryfinish'] = {
+            component = 'COMPONENT_BULLPUPRIFLE_VARMOD_LOW',
+            item = 'bullpuprifle_luxuryfinish',
+        },
+    },
     -- MACHINE GUNS
     ['WEAPON_GUSENBERG'] = {
         ['defaultclip'] = {
@@ -772,6 +808,14 @@ WeaponAttachments = {
         ['extendedclip'] = {
             component = 'COMPONENT_GUSENBERG_CLIP_02',
             item = 'gusenberg_extendedclip',
+            type = 'clip',
+        },
+    },
+    -- LAUNCHERS
+    ['WEAPON_EMPLAUNCHER'] = {
+        ['defaultclip'] = {
+            component = 'COMPONENT_EMPLAUNCHER_CLIP_01',
+            item = 'emplauncher_defaultclip',
             type = 'clip',
         },
     },
@@ -787,12 +831,12 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_LARGE',
-            item = 'sniper_scope',
+            item = 'scope_large',
             type = 'scope',
         },
         ['advancedscope'] = {
             component = 'COMPONENT_AT_SCOPE_MAX',
-            item = 'snipermax_scope',
+            item = 'scope_advanced',
             type = 'scope',
         },
         ['grip'] = {
@@ -807,12 +851,12 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_LARGE',
-            item = 'sniper_scope',
+            item = 'scope_large',
             type = 'scope',
         },
         ['advancedscope'] = {
             component = 'COMPONENT_AT_SCOPE_MAX',
-            item = 'snipermax_scope',
+            item = 'scope_advanced',
             type = 'scope',
         },
     },
@@ -833,7 +877,7 @@ WeaponAttachments = {
         },
         ['scope'] = {
             component = 'COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM',
-            item = 'marksmanrifle_scope',
+            item = 'scope_advanced',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP',
