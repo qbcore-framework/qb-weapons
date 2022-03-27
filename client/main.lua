@@ -81,7 +81,7 @@ RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
             local total = GetAmmoInPedWeapon(ped, weapon)
             local found, maxAmmo = GetMaxAmmo(ped, weapon)
             if total < maxAmmo then
-                QBCore.Functions.Progressbar("taking_bullets", Lang:t('info.loading_bullets'), math.random(4000, 6000), false, true, {
+                QBCore.Functions.Progressbar("taking_bullets", Lang:t('info.loading_bullets'), Config.ReloadTime, false, true, {
                     disableMovement = false,
                     disableCarMovement = false,
                     disableMouse = false,
@@ -89,7 +89,7 @@ RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
                 }, {}, {}, {}, function() -- Done
                     if QBCore.Shared.Weapons[weapon] then
                         AddAmmoToPed(ped,weapon,amount)
-                        TaskReloadWeapon(ped)
+                        MakePedReload(ped)
                         TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total + amount)
                         TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
                         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], "remove")
