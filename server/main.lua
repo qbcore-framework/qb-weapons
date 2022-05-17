@@ -164,7 +164,7 @@ RegisterNetEvent("weapons:server:UpdateWeaponAmmo", function(CurrentWeaponData, 
     end
 end)
 
-RegisterNetEvent("weapons:server:TakeBackWeapon", function(k, _)
+RegisterNetEvent("weapons:server:TakeBackWeapon", function(k)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local itemdata = Config.WeaponRepairPoints[k].RepairingData.WeaponData
