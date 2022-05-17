@@ -15,7 +15,7 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
-    for k, _ in pairs(Config.WeaponRepairPoints) do
+    for k in pairs(Config.WeaponRepairPoints) do
         Config.WeaponRepairPoints[k].IsRepairing = false
         Config.WeaponRepairPoints[k].RepairingData = {}
     end
