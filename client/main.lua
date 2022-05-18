@@ -15,7 +15,7 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
-    for k, v in pairs(Config.WeaponRepairPoints) do
+    for k in pairs(Config.WeaponRepairPoints) do
         Config.WeaponRepairPoints[k].IsRepairing = false
         Config.WeaponRepairPoints[k].RepairingData = {}
     end
@@ -79,7 +79,7 @@ RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
     if CurrentWeaponData then
         if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
             local total = GetAmmoInPedWeapon(ped, weapon)
-            local found, maxAmmo = GetMaxAmmo(ped, weapon)
+            local _, maxAmmo = GetMaxAmmo(ped, weapon)
             if total < maxAmmo then
                 QBCore.Functions.Progressbar("taking_bullets", Lang:t('info.loading_bullets'), Config.ReloadTime, false, true, {
                     disableMovement = false,

@@ -94,7 +94,7 @@ Config.DurabilityMultiplier = {
     ['weapon_heavyrifle']           = 0.15,
 
 	-- Light Machine Guns
-	['weapon_mg'] 				    = 0.15, 
+	['weapon_mg'] 				    = 0.15,
 	['weapon_combatmg'] 			= 0.15,
 	['weapon_gusenberg'] 			= 0.15,
 	['weapon_combatmg_mk2'] 		= 0.15,

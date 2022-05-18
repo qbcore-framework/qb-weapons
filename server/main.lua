@@ -8,7 +8,7 @@ local function IsWeaponBlocked(WeaponName)
         if name == WeaponName then
             retval = true
             break
-        end 
+        end
     end
     return retval
 end
@@ -27,7 +27,7 @@ end
 
 local function GetAttachmentType(attachments)
     local attype = nil
-    for k,v in pairs(attachments) do
+    for _, v in pairs(attachments) do
         attype = v.type
     end
     return attype
@@ -35,7 +35,7 @@ end
 
 -- Callback
 
-QBCore.Functions.CreateCallback("weapons:server:GetConfig", function(source, cb)
+QBCore.Functions.CreateCallback("weapons:server:GetConfig", function(_, cb)
     cb(Config.WeaponRepairPoints)
 end)
 
@@ -143,7 +143,7 @@ end)
 RegisterNetEvent("weapons:server:AddWeaponAmmo", function(CurrentWeaponData, amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local amount = tonumber(amount)
+    amount = tonumber(amount)
     if CurrentWeaponData then
         if Player.PlayerData.items[CurrentWeaponData.slot] then
             Player.PlayerData.items[CurrentWeaponData.slot].info.ammo = amount
@@ -155,7 +155,7 @@ end)
 RegisterNetEvent("weapons:server:UpdateWeaponAmmo", function(CurrentWeaponData, amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local amount = tonumber(amount)
+    amount = tonumber(amount)
     if CurrentWeaponData then
         if Player.PlayerData.items[CurrentWeaponData.slot] then
             Player.PlayerData.items[CurrentWeaponData.slot].info.ammo = amount
@@ -164,7 +164,7 @@ RegisterNetEvent("weapons:server:UpdateWeaponAmmo", function(CurrentWeaponData, 
     end
 end)
 
-RegisterNetEvent("weapons:server:TakeBackWeapon", function(k, data)
+RegisterNetEvent("weapons:server:TakeBackWeapon", function(k)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local itemdata = Config.WeaponRepairPoints[k].RepairingData.WeaponData
@@ -193,7 +193,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
     if WeaponSlot then
         if not IsWeaponBlocked(WeaponData.name) then
             if WeaponSlot.info.quality then
-                for i = 1, RepeatAmount, 1 do
+                for _ = 1, RepeatAmount, 1 do
                     if WeaponSlot.info.quality - DecreaseAmount > 0 then
                         WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
                     else
@@ -205,7 +205,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                 end
             else
                 WeaponSlot.info.quality = 100
-                for i = 1, RepeatAmount, 1 do
+                for _ = 1, RepeatAmount, 1 do
                     if WeaponSlot.info.quality - DecreaseAmount > 0 then
                         WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
                     else
@@ -232,7 +232,7 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
             local HasAttach, key = HasAttachment(AttachmentData.component, Inventory[CurrentWeaponData.slot].info.attachments)
             if not HasAttach then
                 if AttachmentData.type ~=nil and currenttype == AttachmentData.type then
-                    for k, v in pairs(Inventory[CurrentWeaponData.slot].info.attachments) do
+                    for _, v in pairs(Inventory[CurrentWeaponData.slot].info.attachments) do
                         if v.type and v.type == currenttype then
                             GiveBackItem = tostring(v.item):lower()
                             table.remove(Inventory[CurrentWeaponData.slot].info.attachments, key)
@@ -273,7 +273,6 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
     end
     if GiveBackItem then
         Player.Functions.AddItem(GiveBackItem, 1, false)
-        GiveBackItem = nil
     end
 end)
 
