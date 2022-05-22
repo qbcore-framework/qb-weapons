@@ -255,7 +255,7 @@ WeaponAttachments = {
     ['WEAPON_REVOLVER'] = {
         ['defaultclip'] = {
             component = 'COMPONENT_REVOLVER_CLIP_01',
-            item = 'revovler_defaultclip',
+            item = 'revolver_defaultclip',
         },
         ['vipvariant'] = {
             component = 'COMPONENT_REVOLVER_VARMOD_GOON',
