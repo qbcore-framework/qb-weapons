@@ -50,7 +50,7 @@ QBCore.Functions.CreateCallback("weapon:server:GetWeaponAmmo", function(source, 
             end
         end
     end
-    cb(retval)
+    cb(retval, WeaponData.name)
 end)
 
 QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(source, cb, AttachmentData, ItemData)
