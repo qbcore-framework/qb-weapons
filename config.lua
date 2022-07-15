@@ -152,6 +152,7 @@ Config.WeaponRepairCosts = {
     ["mg"] = 4000,
     ["rifle"] = 5000,
     ["sniper"] = 7000,
+    ["shotgun"] = 6000
 }
 
 WeaponAttachments = {
