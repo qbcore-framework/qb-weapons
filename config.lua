@@ -181,7 +181,7 @@ Config.RepairPoints = {
             ["rifle"] = {cost = 5000, time = math.random(1,5)},
             ["sniper"] = {cost = 7000, time = math.random(1,5)},
         },
-        tableTimeout = 10,
+        tableTimeout = false, -- Set to false if you don't want to use the table timeout.
         IsRepairing = false,
         RepairingData = {},
         debug = false
