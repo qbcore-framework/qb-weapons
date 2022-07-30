@@ -10,6 +10,34 @@ Config.DurabilityBlockedWeapons = {
 }
 
 Config.DurabilityMultiplier = {
+    -- CUSTOM WEAPONS
+	['weapon_sniperrifle_miku'] 			= 0.15,
+	['weapon_sniperrifle_awp'] 			= 0.15,
+	['weapon_liquid_carbine'] 			= 0.15,
+	['weapon_stg'] 			= 0.15,
+	['weapon_lost_draco'] 			= 0.15,
+	['weapon_mp40'] 			= 0.15,
+	['weapon_iron_wolf'] 			= 0.15,
+	['weapon_glitch'] 			= 0.15,
+	['weapon_m700'] 			= 0.15,
+	['weapon_fbiarb'] 			= 0.15,
+	['weapon_mk18b'] 			= 0.15,
+	['weapon_mp9a'] 			= 0.15,
+	['weapon_mp5'] 			= 0.15,
+	['weapon_reaver'] 			= 0.15,
+	['weapon_hk416b'] 			= 0.15,
+	['weapon_g17'] 			= 0.15,
+	['weapon_g19'] 			= 0.15,
+	['weapon_fn57'] 			= 0.15,
+	['weapon_bl'] 			= 0.15,
+	['weapon_rrmc'] 			= 0.15,
+
+
+    --
+    --
+    --
+    -- BASE GAME
+    --
 	-- Melee
 	-- ['weapon_unarmed'] 				 = 0.15,
 	['weapon_dagger'] 				 = 0.15,
@@ -138,21 +166,64 @@ Config.DurabilityMultiplier = {
     ['weapon_fertilizercan'] 		= 0.15,
 }
 
-Config.WeaponRepairPoints = {
-    [1] = {
-        coords = vector3(964.02, -1267.41, 34.97),
+Config.RepairPoints = {
+    [1] = { 
+        coords = vector4(11.17, -1098.84, 29.8, 156.87), 
+        type = "public", --public, job, gang, private
+        --jobs = { ["police"] = 0 },
+        --gangs = { ["ammu"] = 0, ["rrmc"] = 0 }, 
+        --citizenids = {["JFD98238"] = true, ["HJS29340"] = true},
+        repairCosts = {
+            ["pistol"] = {cost = 2000, time = math.random(1,5)},
+            ["smg"] = {cost = 4000, time = math.random(1,5)},
+            ["mg"] = {cost = 6000, time = math.random(1,5)},
+            ["shotgun"] = {cost = 6000, time = math.random(1,5)},
+            ["rifle"] = {cost = 5000, time = math.random(1,5)},
+            ["sniper"] = {cost = 7000, time = math.random(1,5)},
+        },
+        tableTimeout = 10,
         IsRepairing = false,
         RepairingData = {},
-    }
-}
-
-Config.WeaponRepairCosts = {
-    ["pistol"] = 1000,
-    ["smg"] = 3000,
-    ["mg"] = 4000,
-    ["rifle"] = 5000,
-    ["sniper"] = 7000,
-    ["shotgun"] = 6000
+        debug = false
+    },
+    [2] = { 
+        coords = vector4(14.13, -1099.94, 29.8, 160.38), 
+        type = "public", --public, job, gang, private
+        --jobs = { ["police"] = 0 },
+        --gangs = { ["ammu"] = 0, ["rrmc"] = 0 }, 
+        --citizenids = {["JFD98238"] = true, ["HJS29340"] = true},
+        repairCosts = {
+            ["pistol"] = {cost = 2000, time = math.random(1,5)},
+            ["smg"] = {cost = 4000, time = math.random(1,5)},
+            ["mg"] = {cost = 6000, time = math.random(1,5)},
+            ["shotgun"] = {cost = 6000, time = math.random(1,5)},
+            ["rifle"] = {cost = 5000, time = math.random(1,5)},
+            ["sniper"] = {cost = 7000, time = math.random(1,5)},
+        },
+        tableTimeout = 10,
+        IsRepairing = false,
+        RepairingData = {},
+        debug = false
+    },
+    [3] = { 
+        coords = vector4(17.15, -1101.04, 29.8, 159.48), 
+        type = "public", --public, job, gang, private
+        --jobs = { ["police"] = 0 },
+        --gangs = { ["ammu"] = 0, ["rrmc"] = 0 }, 
+        --citizenids = {["JFD98238"] = true, ["HJS29340"] = true},
+        repairCosts = {
+            ["pistol"] = {cost = 2000, time = math.random(1,3)},
+            ["smg"] = {cost = 4000, time = math.random(1,3)},
+            ["mg"] = {cost = 6000, time = math.random(1,3)},
+            ["shotgun"] = {cost = 6000, time = math.random(1,3)},
+            ["rifle"] = {cost = 5000, time = math.random(1,3)},
+            ["sniper"] = {cost = 7000, time = math.random(1,3)},
+        },
+        tableTimeout = 10,
+        IsRepairing = false,
+        RepairingData = {},
+        debug = false
+    },
 }
 
 WeaponAttachments = {
