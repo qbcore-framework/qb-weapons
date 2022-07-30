@@ -388,10 +388,10 @@ RegisterNetEvent("weapon:startRepair", function(data)
         TriggerEvent('QBCore:Notify', Lang:t('info.repair_weapon_price', { value = Config.RepairPoints[data.id].repairCosts[WeaponClass].cost}), "primary", 1500)
         QBCore.Functions.TriggerCallback('weapons:server:RepairWeapon', function(HasMoney)
             if HasMoney then
-                TriggerEvent('QBCore:Notify', "Started Repair!", "success", 1500)
+                TriggerEvent('QBCore:Notify', Lang:t('info.weapon_repair_started'), "success", 1500)
                 CurrentWeaponData = {}
             else
-                TriggerEvent('QBCore:Notify', "Not enough cash!", "error", 1500)
+                TriggerEvent('QBCore:Notify', Lang:t('info.not_enough_cash'), "error", 1500)
             end
         end, data.id, CurrentWeaponData)
     else
