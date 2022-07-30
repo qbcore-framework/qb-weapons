@@ -181,7 +181,7 @@ Config.RepairPoints = {
             ["rifle"] = {cost = 5000, time = math.random(1,5)},
             ["sniper"] = {cost = 7000, time = math.random(1,5)},
         },
-        tableTimeout = false, -- Set to false if you don't want to use the table timeout.
+        tableTimeout = false, -- Set to false if you don't want to use the table timeout. Time is in minutes
         IsRepairing = false,
         RepairingData = {},
         debug = false
@@ -200,7 +200,7 @@ Config.RepairPoints = {
             ["rifle"] = {cost = 5000, time = math.random(1,5)},
             ["sniper"] = {cost = 7000, time = math.random(1,5)},
         },
-        tableTimeout = 10,
+        tableTimeout = 10, -- Set to false if you don't want to use the table timeout. Time is in minutes
         IsRepairing = false,
         RepairingData = {},
         debug = false
@@ -219,7 +219,7 @@ Config.RepairPoints = {
             ["rifle"] = {cost = 5000, time = math.random(1,3)},
             ["sniper"] = {cost = 7000, time = math.random(1,3)},
         },
-        tableTimeout = 10,
+        tableTimeout = 10, -- Set to false if you don't want to use the table timeout. Time is in minutes
         IsRepairing = false,
         RepairingData = {},
         debug = false
