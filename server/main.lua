@@ -1,5 +1,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
+local globalTime = 0
+
 -- Functions
 
 local function IsWeaponBlocked(WeaponName)
@@ -36,7 +38,7 @@ end
 -- Callback
 
 QBCore.Functions.CreateCallback("weapons:server:GetConfig", function(_, cb)
-    cb(Config.WeaponRepairPoints)
+    cb(Config.RepairPoints)
 end)
 
 QBCore.Functions.CreateCallback("weapon:server:GetWeaponAmmo", function(source, cb, WeaponData)
@@ -83,16 +85,16 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local minute = 60 * 1000
-    local Timeout = math.random(5 * minute, 10 * minute)
     local WeaponData = QBCore.Shared.Weapons[GetHashKey(data.name)]
     local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
+    globalTime = Config.RepairPoints[RepairPoint].repairCosts[WeaponClass].time * minute
 
     if Player.PlayerData.items[data.slot] then
         if Player.PlayerData.items[data.slot].info.quality then
             if Player.PlayerData.items[data.slot].info.quality ~= 100 then
-                if Player.Functions.RemoveMoney('cash', Config.WeaponRepairCosts[WeaponClass]) then
-                    Config.WeaponRepairPoints[RepairPoint].IsRepairing = true
-                    Config.WeaponRepairPoints[RepairPoint].RepairingData = {
+                if Player.Functions.RemoveMoney('cash', Config.RepairPoints[RepairPoint].repairCosts[WeaponClass].cost) then
+                    Config.RepairPoints[RepairPoint].IsRepairing = true
+                    Config.RepairPoints[RepairPoint].RepairingData = {
                         CitizenId = Player.PlayerData.citizenid,
                         WeaponData = Player.PlayerData.items[data.slot],
                         Ready = false,
@@ -100,22 +102,21 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                     Player.Functions.RemoveItem(data.name, 1, data.slot)
                     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[data.name], "remove")
                     TriggerClientEvent("inventory:client:CheckWeapon", src, data.name)
-                    TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
+                    TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.RepairPoints[RepairPoint], RepairPoint)
 
-                    SetTimeout(Timeout, function()
-                        Config.WeaponRepairPoints[RepairPoint].IsRepairing = false
-                        Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready = true
-                        TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
+                    SetTimeout(globalTime, function()
+                        Config.RepairPoints[RepairPoint].IsRepairing = false
+                        Config.RepairPoints[RepairPoint].RepairingData.Ready = true
+                        TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.RepairPoints[RepairPoint], RepairPoint)
                         TriggerEvent('qb-phone:server:sendNewMailToOffline', Player.PlayerData.citizenid, {
                             sender = Lang:t('mail.sender'),
                             subject = Lang:t('mail.subject'),
                             message = Lang:t('mail.message', { value = WeaponData.label })
                         })
-                        SetTimeout(7 * 60000, function()
-                            if Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready then
-                                Config.WeaponRepairPoints[RepairPoint].IsRepairing = false
-                                Config.WeaponRepairPoints[RepairPoint].RepairingData = {}
-                                TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
+                        SetTimeout(Config.RepairPoints[RepairPoint].tableTimeout * minute, function()
+                            if Config.RepairPoints[RepairPoint].RepairingData.Ready then
+                                Config.RepairPoints[RepairPoint].RepairingData.CitizenId = nil
+                                TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.RepairPoints[RepairPoint], RepairPoint)
                             end
                         end)
                     end)
@@ -139,6 +140,11 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
 end)
 
 -- Events
+
+RegisterServerEvent("weapon:repairTime", function(data)
+    local src = source
+    TriggerClientEvent('QBCore:Notify', src, "This will take " .. globalTime/(60 * 1000) .. " minutes", 'primary')
+end)
 
 RegisterNetEvent("weapons:server:AddWeaponAmmo", function(CurrentWeaponData, amount)
     local src = source
@@ -167,13 +173,13 @@ end)
 RegisterNetEvent("weapons:server:TakeBackWeapon", function(k)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local itemdata = Config.WeaponRepairPoints[k].RepairingData.WeaponData
+    local itemdata = Config.RepairPoints[k].RepairingData.WeaponData
     itemdata.info.quality = 100
     Player.Functions.AddItem(itemdata.name, 1, false, itemdata.info)
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[itemdata.name], "add")
-    Config.WeaponRepairPoints[k].IsRepairing = false
-    Config.WeaponRepairPoints[k].RepairingData = {}
-    TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[k], k)
+    Config.RepairPoints[k].IsRepairing = false
+    Config.RepairPoints[k].RepairingData = {}
+    TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.RepairPoints[k], k)
 end)
 
 RegisterNetEvent("weapons:server:SetWeaponQuality", function(data, hp)
