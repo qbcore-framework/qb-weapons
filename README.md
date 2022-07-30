@@ -1,7 +1,7 @@
 # qb-weapons
 Weapon Logic Script For QB-Core
 
-#BrianTU Update:
+# BrianTU Update:
     - QB-Target interaction setup by vector4.
     - Individual table pricing, time and "ownership" timeout. Finders Keepers am I right?
     - Table types i.e. public, private, job, gang.
