@@ -1,6 +1,12 @@
 # qb-weapons
 Weapon Logic Script For QB-Core
 
+#BrianTU Update:
+    - QB-Target interaction setup by vector4.
+    - Individual table pricing, time and "ownership" timeout. Finders Keepers am I right?
+    - Table types i.e. public, private, job, gang.
+    - Table timeout is still restricted to the table type. If you don't want to use it, I added an option to put "false" into the field 
+
 # License
 
     QBCore Framework
