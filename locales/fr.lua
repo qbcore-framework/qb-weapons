@@ -20,7 +20,9 @@ local Translations = {
         take_weapon_back = '[E] - Récuperer votre arme',
         repair_weapon_price = '[E] Réparer l\'arme, ~g~$%{value}~w~',
         removed_attachment = 'Vous avez retiré %{value} de votre arme!',
-        hp_of_weapon = 'Durabilité de votre arme'
+        hp_of_weapon = 'Durabilité de votre arme',
+        weapon_repair_started = 'Started Repair!',
+        not_enough_cash = 'Not enough cash!',
     },
     mail = {
         sender = 'Tyrone',
