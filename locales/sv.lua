@@ -20,7 +20,9 @@ local Translations = {
         take_weapon_back = '[E] - Ta tillbaka vapen',
         repair_weapon_price = '[E] Reparera vapen, ~g~$%{value}~w~',
         removed_attachment = 'Du tp bort %{value} från vapnet!',
-        hp_of_weapon = 'Ditt vapens HP'
+        hp_of_weapon = 'Ditt vapens HP',
+        weapon_repair_started = 'Started Repair!',
+        not_enough_cash = 'Not enough cash!',
     },
     mail = {
         sender = 'Viktor',
