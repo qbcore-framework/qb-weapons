@@ -10,34 +10,6 @@ Config.DurabilityBlockedWeapons = {
 }
 
 Config.DurabilityMultiplier = {
-    -- CUSTOM WEAPONS
-	['weapon_sniperrifle_miku'] 			= 0.15,
-	['weapon_sniperrifle_awp'] 			= 0.15,
-	['weapon_liquid_carbine'] 			= 0.15,
-	['weapon_stg'] 			= 0.15,
-	['weapon_lost_draco'] 			= 0.15,
-	['weapon_mp40'] 			= 0.15,
-	['weapon_iron_wolf'] 			= 0.15,
-	['weapon_glitch'] 			= 0.15,
-	['weapon_m700'] 			= 0.15,
-	['weapon_fbiarb'] 			= 0.15,
-	['weapon_mk18b'] 			= 0.15,
-	['weapon_mp9a'] 			= 0.15,
-	['weapon_mp5'] 			= 0.15,
-	['weapon_reaver'] 			= 0.15,
-	['weapon_hk416b'] 			= 0.15,
-	['weapon_g17'] 			= 0.15,
-	['weapon_g19'] 			= 0.15,
-	['weapon_fn57'] 			= 0.15,
-	['weapon_bl'] 			= 0.15,
-	['weapon_rrmc'] 			= 0.15,
-
-
-    --
-    --
-    --
-    -- BASE GAME
-    --
 	-- Melee
 	-- ['weapon_unarmed'] 				 = 0.15,
 	['weapon_dagger'] 				 = 0.15,
