@@ -20,7 +20,9 @@ local Translations = {
         take_weapon_back = '~g~E~w~ - ﻚﺣﻼﺳ ﺪﺧ',
         repair_weapon_price = '~g~E~w~ - ~g~$%{value}~w~ ﺢﻴﻠﺼﺗ',
         removed_attachment = 'من سلاحك %{value} نزعت',
-        hp_of_weapon = 'متانة سلاحك'
+        hp_of_weapon = 'متانة سلاحك',
+        weapon_repair_started = 'Started Repair!',
+        not_enough_cash = 'Not enough cash!',
     },
     mail = {
         sender = 'عامل',
