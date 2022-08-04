@@ -190,8 +190,8 @@ CreateThread(function()
         if v.type == "public" then
             opt = {
                 { 
-                    type = "client", 
-                    event = "weapon:startRepair", 
+                    type = "client",
+                    event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
                     id = k,
                     canInteract = function() 
@@ -203,10 +203,10 @@ CreateThread(function()
                     end,
                   },
                   { 
-                    type = "server", 
-                    event = "weapon:repairTime", 
+                    type = "server",
+                    event = "weapon:repairTime",
                     label = 'Check Repair Time',
-                    id = k,  
+                    id = k,
                     canInteract = function() 
                         if Config.RepairPoints[k].IsRepairing then
                             return true
@@ -216,10 +216,10 @@ CreateThread(function()
                     end,
                   },
                   { 
-                    type = "client", 
-                    event = "weapon:completeRepair", 
+                    type = "client",
+                    event = "weapon:completeRepair",
                     label = 'Collect Weapon',
-                    id = k,  
+                    id = k,
                     canInteract = function() 
                         if Config.RepairPoints[k].RepairingData.Ready then
                             return true
@@ -233,8 +233,8 @@ CreateThread(function()
             local temp = v.citizenids
             opt = {
                 { 
-                    type = "client", 
-                    event = "weapon:startRepair", 
+                    type = "client",
+                    event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
                     id = k,
                     citizenid = temp,
@@ -247,10 +247,10 @@ CreateThread(function()
                     end,
                   },
                   { 
-                    type = "server", 
-                    event = "weapon:repairTime", 
+                    type = "server",
+                    event = "weapon:repairTime",
                     label = 'Check Repair Time',
-                    id = k,  
+                    id = k,
                     citizenid = temp,
                     canInteract = function() 
                         if Config.RepairPoints[k].IsRepairing then
@@ -261,10 +261,10 @@ CreateThread(function()
                     end,
                   },
                   { 
-                    type = "client", 
-                    event = "weapon:completeRepair", 
+                    type = "client",
+                    event = "weapon:completeRepair",
                     label = 'Collect Weapon',
-                    id = k,  
+                    id = k,
                     citizenid = temp,
                     canInteract = function() 
                         if Config.RepairPoints[k].RepairingData.Ready then
@@ -279,8 +279,8 @@ CreateThread(function()
             local temp = v.jobs
             opt = {
                 { 
-                    type = "client", 
-                    event = "weapon:startRepair", 
+                    type = "client",
+                    event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
                     id = k,
                     job = temp,
@@ -293,10 +293,10 @@ CreateThread(function()
                     end,
                   },
                   { 
-                    type = "server", 
-                    event = "weapon:repairTime", 
+                    type = "server",
+                    event = "weapon:repairTime",
                     label = 'Check Repair Time',
-                    id = k,  
+                    id = k,
                     job = temp,
                     canInteract = function() 
                         if Config.RepairPoints[k].IsRepairing then
@@ -307,10 +307,10 @@ CreateThread(function()
                     end,
                   },
                   { 
-                    type = "client", 
-                    event = "weapon:completeRepair", 
+                    type = "client",
+                    event = "weapon:completeRepair",
                     label = 'Collect Weapon',
-                    id = k,  
+                    id = k,
                     job = temp,
                     canInteract = function() 
                         if Config.RepairPoints[k].RepairingData.Ready then
@@ -325,8 +325,8 @@ CreateThread(function()
             local temp = v.gangs
             opt = {
                 { 
-                    type = "client", 
-                    event = "weapon:startRepair", 
+                    type = "client",
+                    event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
                     id = k,
                     gang = temp,
@@ -339,10 +339,10 @@ CreateThread(function()
                     end,
                   },
                   { 
-                    type = "server", 
-                    event = "weapon:repairTime", 
+                    type = "server",
+                    event = "weapon:repairTime",
                     label = 'Check Repair Time',
-                    id = k,  
+                    id = k,
                     gang = temp,
                     canInteract = function() 
                         if Config.RepairPoints[k].IsRepairing then
@@ -353,10 +353,10 @@ CreateThread(function()
                     end,
                   },
                   { 
-                    type = "client", 
-                    event = "weapon:completeRepair", 
+                    type = "client",
+                    event = "weapon:completeRepair",
                     label = 'Collect Weapon',
-                    id = k,  
+                    id = k,
                     gang = temp,
                     canInteract = function() 
                         if Config.RepairPoints[k].RepairingData.Ready then
@@ -369,14 +369,14 @@ CreateThread(function()
             }
         end
         exports['qb-target']:AddBoxZone("weaponrepair"..k, vector3(v.coords.x, v.coords.y, v.coords.z), 1.25, 1.5, { 
-            name = "weaponrepair"..k, 
-            heading = v.coords.w, 
-            debugPoly = v.debug, 
-            minZ = v.coords.z-0.5, 
-            maxZ = v.coords.z+0.5, 
-          }, {
+            name = "weaponrepair"..k,
+            heading = v.coords.w,
+            debugPoly = v.debug,
+            minZ = v.coords.z-0.5,
+            maxZ = v.coords.z+0.5,
+          },{
             options = opt,
-            distance = 2.5, 
+            distance = 2.5,
         })
     end
 end)
