@@ -189,7 +189,7 @@ CreateThread(function()
         local opt = {}
         if v.type == "public" then
             opt = {
-                { 
+                {
                     type = "client",
                     event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
@@ -202,7 +202,7 @@ CreateThread(function()
                         end
                     end,
                   },
-                  { 
+                  {
                     type = "server",
                     event = "weapon:repairTime",
                     label = 'Check Repair Time',
@@ -215,7 +215,7 @@ CreateThread(function()
                         end
                     end,
                   },
-                  { 
+                  {
                     type = "client",
                     event = "weapon:completeRepair",
                     label = 'Collect Weapon',
@@ -232,7 +232,7 @@ CreateThread(function()
         elseif v.type == "private" then
             local temp = v.citizenids
             opt = {
-                { 
+                {
                     type = "client",
                     event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
@@ -246,7 +246,7 @@ CreateThread(function()
                         end
                     end,
                   },
-                  { 
+                  {
                     type = "server",
                     event = "weapon:repairTime",
                     label = 'Check Repair Time',
@@ -260,7 +260,7 @@ CreateThread(function()
                         end
                     end,
                   },
-                  { 
+                  {
                     type = "client",
                     event = "weapon:completeRepair",
                     label = 'Collect Weapon',
@@ -278,7 +278,7 @@ CreateThread(function()
         elseif v.type == "job" then
             local temp = v.jobs
             opt = {
-                { 
+                {
                     type = "client",
                     event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
@@ -292,7 +292,7 @@ CreateThread(function()
                         end
                     end,
                   },
-                  { 
+                  {
                     type = "server",
                     event = "weapon:repairTime",
                     label = 'Check Repair Time',
@@ -306,7 +306,7 @@ CreateThread(function()
                         end
                     end,
                   },
-                  { 
+                  {
                     type = "client",
                     event = "weapon:completeRepair",
                     label = 'Collect Weapon',
@@ -324,7 +324,7 @@ CreateThread(function()
         elseif v.type == "gang" then
             local temp = v.gangs
             opt = {
-                { 
+                {
                     type = "client",
                     event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
@@ -338,7 +338,7 @@ CreateThread(function()
                         end
                     end,
                   },
-                  { 
+                  {
                     type = "server",
                     event = "weapon:repairTime",
                     label = 'Check Repair Time',
@@ -352,7 +352,7 @@ CreateThread(function()
                         end
                     end,
                   },
-                  { 
+                  {
                     type = "client",
                     event = "weapon:completeRepair",
                     label = 'Collect Weapon',
@@ -368,7 +368,7 @@ CreateThread(function()
                   }
             }
         end
-        exports['qb-target']:AddBoxZone("weaponrepair"..k, vector3(v.coords.x, v.coords.y, v.coords.z), 1.25, 1.5, { 
+        exports['qb-target']:AddBoxZone("weaponrepair"..k, vector3(v.coords.x, v.coords.y, v.coords.z), 1.25, 1.5, {
             name = "weaponrepair"..k,
             heading = v.coords.w,
             debugPoly = v.debug,
