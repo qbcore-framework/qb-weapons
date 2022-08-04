@@ -139,8 +139,8 @@ Config.DurabilityMultiplier = {
 }
 
 Config.RepairPoints = {
-    [1] = { 
-        coords = vector4(11.17, -1098.84, 29.8, 156.87), 
+    [1] = {
+        coords = vector4(11.17, -1098.84, 29.8, 156.87),
         type = "public", --public, job, gang, private
         --jobs = { ["police"] = 0 },
         --gangs = { ["ammu"] = 0, ["rrmc"] = 0 }, 
@@ -158,8 +158,8 @@ Config.RepairPoints = {
         RepairingData = {},
         debug = false
     },
-    [2] = { 
-        coords = vector4(14.13, -1099.94, 29.8, 160.38), 
+    [2] = {
+        coords = vector4(14.13, -1099.94, 29.8, 160.38),
         type = "public", --public, job, gang, private
         --jobs = { ["police"] = 0 },
         --gangs = { ["ammu"] = 0, ["rrmc"] = 0 }, 
@@ -177,8 +177,8 @@ Config.RepairPoints = {
         RepairingData = {},
         debug = false
     },
-    [3] = { 
-        coords = vector4(17.15, -1101.04, 29.8, 159.48), 
+    [3] = {
+        coords = vector4(17.15, -1101.04, 29.8, 159.48),
         type = "public", --public, job, gang, private
         --jobs = { ["police"] = 0 },
         --gangs = { ["ammu"] = 0, ["rrmc"] = 0 }, 
