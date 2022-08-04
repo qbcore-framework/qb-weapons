@@ -194,7 +194,7 @@ CreateThread(function()
                     event = "weapon:startRepair",
                     label = 'Start Weapon Repair',
                     id = k,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].IsRepairing or Config.RepairPoints[k].RepairingData.Ready then
                             return false
                         else
@@ -207,7 +207,7 @@ CreateThread(function()
                     event = "weapon:repairTime",
                     label = 'Check Repair Time',
                     id = k,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].IsRepairing then
                             return true
                         else
@@ -220,7 +220,7 @@ CreateThread(function()
                     event = "weapon:completeRepair",
                     label = 'Collect Weapon',
                     id = k,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].RepairingData.Ready then
                             return true
                         else
@@ -238,7 +238,7 @@ CreateThread(function()
                     label = 'Start Weapon Repair',
                     id = k,
                     citizenid = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].IsRepairing or Config.RepairPoints[k].RepairingData.Ready then
                             return false
                         else
@@ -252,7 +252,7 @@ CreateThread(function()
                     label = 'Check Repair Time',
                     id = k,
                     citizenid = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].IsRepairing then
                             return true
                         else
@@ -266,7 +266,7 @@ CreateThread(function()
                     label = 'Collect Weapon',
                     id = k,
                     citizenid = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].RepairingData.Ready then
                             return true
                         else
@@ -284,7 +284,7 @@ CreateThread(function()
                     label = 'Start Weapon Repair',
                     id = k,
                     job = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].IsRepairing or Config.RepairPoints[k].RepairingData.Ready then
                             return false
                         else
@@ -298,7 +298,7 @@ CreateThread(function()
                     label = 'Check Repair Time',
                     id = k,
                     job = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].IsRepairing then
                             return true
                         else
@@ -312,7 +312,7 @@ CreateThread(function()
                     label = 'Collect Weapon',
                     id = k,
                     job = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].RepairingData.Ready then
                             return true
                         else
@@ -330,7 +330,7 @@ CreateThread(function()
                     label = 'Start Weapon Repair',
                     id = k,
                     gang = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].IsRepairing or Config.RepairPoints[k].RepairingData.Ready then
                             return false
                         else
@@ -344,7 +344,7 @@ CreateThread(function()
                     label = 'Check Repair Time',
                     id = k,
                     gang = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].IsRepairing then
                             return true
                         else
@@ -358,7 +358,7 @@ CreateThread(function()
                     label = 'Collect Weapon',
                     id = k,
                     gang = temp,
-                    canInteract = function() 
+                    canInteract = function()
                         if Config.RepairPoints[k].RepairingData.Ready then
                             return true
                         else
