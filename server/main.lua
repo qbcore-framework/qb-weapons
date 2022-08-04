@@ -113,7 +113,7 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                             subject = Lang:t('mail.subject'),
                             message = Lang:t('mail.message', { value = WeaponData.label })
                         })
-                        if not Config.RepairPoints[RepairPoint].tableTimeout == false then
+                        if Config.RepairPoints[RepairPoint].tableTimeout ~= false then
                             SetTimeout(Config.RepairPoints[RepairPoint].tableTimeout * minute, function()
                                 if Config.RepairPoints[RepairPoint].RepairingData.Ready then
                                     Config.RepairPoints[RepairPoint].RepairingData.CitizenId = nil
@@ -143,7 +143,7 @@ end)
 
 -- Events
 
-RegisterServerEvent("weapon:repairTime", function(data)
+RegisterServerEvent("weapon:repairTime", function()
     local src = source
     TriggerClientEvent('QBCore:Notify', src, "This will take " .. globalTime/(60 * 1000) .. " minutes", 'primary')
 end)
