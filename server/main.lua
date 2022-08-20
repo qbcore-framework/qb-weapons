@@ -217,7 +217,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                         WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
                     else
                         WeaponSlot.info.quality = 0
-                        TriggerClientEvent('inventory:client:UseWeapon', src, data)
+                        TriggerClientEvent('inventory:client:UseWeapon', src, data, false)
                         TriggerClientEvent('QBCore:Notify', src, Lang:t('error.weapon_broken_need_repair'), "error")
                         break
                     end
@@ -229,7 +229,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                         WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
                     else
                         WeaponSlot.info.quality = 0
-                        TriggerClientEvent('inventory:client:UseWeapon', src, data)
+                        TriggerClientEvent('inventory:client:UseWeapon', src, data, false)
                         TriggerClientEvent('QBCore:Notify', src, Lang:t('error.weapon_broken_need_repair'), "error")
                         break
                     end
