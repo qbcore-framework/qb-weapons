@@ -166,7 +166,7 @@ CreateThread(function()
                             Wait(200)
                         end
                     else
-                        if weapon ~= `WEAPON_UNARMED` then
+                        if weapon == `WEAPON_UNARMED` then
                             TriggerEvent('inventory:client:CheckWeapon', QBCore.Shared.Weapons[weapon]["name"])
                             QBCore.Functions.Notify(Lang:t('error.weapon_broken'), "error")
                             MultiplierAmount = 0
