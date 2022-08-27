@@ -53,10 +53,13 @@ RegisterNetEvent("addAttachment", function(component)
     GiveWeaponComponentToPed(ped, GetHashKey(WeaponData.name), GetHashKey(component))
 end)
 
-RegisterNetEvent('weapons:client:EquipTint', function(tint)
+RegisterNetEvent('weapons:client:EquipTint', function(tint, itemData)
     local player = PlayerPedId()
     local weapon = GetSelectedPedWeapon(player)
     SetPedWeaponTintIndex(player, weapon, tint)
+    if CurrentWeaponData then
+        TriggerServerEvent("weapons:server:AddWeaponTint", CurrentWeaponData, tint)
+    end
 end)
 
 RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)
