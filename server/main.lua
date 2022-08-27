@@ -197,6 +197,18 @@ RegisterNetEvent("weapons:server:UpdateWeaponAmmo", function(CurrentWeaponData, 
     end
 end)
 
+RegisterNetEvent("weapons:server:AddWeaponTint", function(CurrentWeaponData, tint)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local tint = tint
+    if CurrentWeaponData then
+        if Player.PlayerData.items[CurrentWeaponData.slot] then
+            Player.PlayerData.items[CurrentWeaponData.slot].info.tint = tint
+        end
+        Player.Functions.SetInventory(Player.PlayerData.items, true)
+    end
+end)
+
 RegisterNetEvent("weapons:server:TakeBackWeapon", function(k)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
