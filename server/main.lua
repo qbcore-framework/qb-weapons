@@ -53,6 +53,20 @@ QBCore.Functions.CreateCallback("weapon:server:GetWeaponAmmo", function(source, 
     cb(retval, WeaponData.name)
 end)
 
+QBCore.Functions.CreateCallback("weapon:server:GetWeaponTint", function(source, cb, WeaponData)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local retval = 0
+    if WeaponData then
+        if Player then
+            local ItemData = Player.Functions.GetItemBySlot(WeaponData.slot)
+            if ItemData then
+                retval = ItemData.info.tint and ItemData.info.tint or 0
+            end
+        end
+    end
+    cb(retval)
+end)
+
 QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(source, cb, AttachmentData, ItemData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
