@@ -1,9 +1,14 @@
 Config = Config or {}
 
 Config.EnaleWeaponAmmoLevels = true -- Set to false to limit the amount ammo that can be loaded into firearms.
-Config.MaxAmmo = 30 -- Sets the maximum amount of ammo that can be loaded into firearms.
+Config.smgMaxAmmo = 60 --sets max ammo for smgs (Each Reload will add 20 ammo)
+Config.pistolMaxAmmo = 36 -- sets max ammo for pistols (Each Reload will add 12 ammo)
+Config.rifleMaxAmmo = 90 -- sets max ammo for rifles (Each Reload will add 30 ammo)
+Config.shotgunMaxAmmo = 30 -- sets max ammo for shotguns (Each Reload will add 10 ammo)
+Config.mgMaxAmmo = 90 -- sets max ammo for mgs (Each Reload will add 30 ammo)
+Config.sniperMaxAmmo = 30 -- sets max ammo for snipers (Each Reload will add 10 ammo)
 
-Config.ReloadTime = math.random(4000, 6000)
+Config.ReloadTime = math.random(2000, 3000)
 
 Config.DurabilityBlockedWeapons = {
     "weapon_stungun",
