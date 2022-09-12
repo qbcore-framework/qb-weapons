@@ -77,10 +77,7 @@ end)
 RegisterNetEvent('weapons:client:AddAmmo', function(type, amount, itemData)
     local ped = PlayerPedId()
     local weapon = GetSelectedPedWeapon(ped)
-    local fullmag = nil
-    local total = nil
-    local maxAmmo = nil
-    local _ = nil
+    local fullmag, total, maxAmmo, _
     type = type:upper()
     if CurrentWeaponData then
         if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type then
