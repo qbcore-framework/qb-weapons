@@ -101,10 +101,12 @@ RegisterNetEvent('weapons:client:AddAmmo', function(type, amount, itemData)
                 elseif type == 'AMMO_MG' then
                     fullmag = 30
                     MaxAmmo = Config.mgMaxAmmo
-                elseif type == 'AMMO_SNIPER' then
+                elseif type == 'SNIPER_AMMO' then
                     fullmag = 10
                     MaxAmmo = Config.sniperMaxAmmo
-                else fullmag = MaxAmmo end
+                else
+                   TriggerEvent('QBCore:Notify', Lang:t('failure.reloaded') .. ' ' .. type, "failure")
+                end
                 total = GetAmmoInPedWeapon(ped, weapon) + fullmag
             end
             if total <= MaxAmmo then

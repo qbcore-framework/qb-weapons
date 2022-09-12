@@ -13,6 +13,9 @@ local Translations = {
     success = {
         reloaded = 'Reincarcat'
     },
+    failure = {
+        maxammo = 'Config file not set for this ammo type',
+    },
     info = {
         loading_bullets = 'Reincarci..',
         repairshop_not_usable = 'Magazinul de reparat ~r~NU~w~ poate fi folosit in acest moment.',

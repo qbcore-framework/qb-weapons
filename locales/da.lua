@@ -13,6 +13,9 @@ local Translations = {
     success = {
         reloaded = 'Ladet'
     },
+    failure = {
+        maxammo = 'Config file not set for this ammo type',
+    },
     info = {
         loading_bullets = 'Lader patroner',
         repairshop_not_usable = 'Denne shop for reparationer er ~r~IKKE~w~ en mulighed.',

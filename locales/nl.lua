@@ -13,6 +13,9 @@ local Translations = {
     success = {
         reloaded = 'Herladen'
     },
+    failure = {
+        maxammo = 'Config file not set for this ammo type',
+    },
     info = {
         loading_bullets = 'Kogels laden',
         repairshop_not_usable = 'De reparatiewerkplaats is op dit moment NIET bruikbaar.',

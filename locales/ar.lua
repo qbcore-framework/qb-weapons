@@ -13,6 +13,9 @@ local Translations = {
     success = {
         reloaded = 'إعادة التحميل'
     },
+    failure = {
+        maxammo = 'Config file not set for this ammo type',
+    },
     info = {
         loading_bullets = 'تحميل الرصاص',
         repairshop_not_usable = 'ﻖﻠﻐﻣ ﺔﻈﺤﻠﻟﺍ ﻩﺬﻫ ﻲﻓ ﺢﻴﻠﺼﺘﻟﺍ ﺮﺠﺘﻣ', -- you need font arabic

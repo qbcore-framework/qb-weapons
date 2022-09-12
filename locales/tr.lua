@@ -13,6 +13,9 @@ local Translations = {
     success = {
         reloaded = 'Şarjör değiştirildi'
     },
+    failure = {
+        maxammo = 'Config file not set for this ammo type',
+    },
     info = {
         loading_bullets = 'Şarjör değiştiriliyor',
         repairshop_not_usable = 'Şu anda tamirhane kullanılabilir DEĞİL.',

@@ -13,6 +13,9 @@ local Translations = {
     success = {
         reloaded = 'Uuesti laaditud'
     },
+    failure = {
+        maxammo = 'Config file not set for this ammo type',
+    },
     info = {
         loading_bullets = 'Kuulide laadimine',
         repairshop_not_usable = 'Praegune remonditöökoda ~pole~ kasutatav.',

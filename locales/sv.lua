@@ -13,6 +13,9 @@ local Translations = {
     success = {
         reloaded = 'Omladdat'
     },
+    failure = {
+        maxammo = 'Config file not set for this ammo type',
+    },
     info = {
         loading_bullets = 'Laddar kulor',
         repairshop_not_usable = 'Reparation är ~r~INTE~w~ möjligt för tillfället.',
