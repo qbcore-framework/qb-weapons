@@ -1,6 +1,6 @@
 Config = Config or {}
 
-Config.EnaleWeaponAmmoLevels = true -- Set to false to disable the default weapon values
+Config.EnaleWeaponAmmoLevels = true -- Set to false to limit the amount ammo that can be loaded into firearms.
 Config.MaxAmmo = 30 -- Sets the maximum amount of ammo that can be loaded into firearms.
 
 Config.ReloadTime = math.random(4000, 6000)

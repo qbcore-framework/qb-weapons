@@ -77,11 +77,29 @@ end)
 RegisterNetEvent('weapons:client:AddAmmo', function(type, amount, itemData)
     local ped = PlayerPedId()
     local weapon = GetSelectedPedWeapon(ped)
+    local fullmag = nil
+    local total = nil
+    local maxAmmo = nil
+    local _ = nil
+    type = type:upper()
     if CurrentWeaponData then
-        if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
-            local total = GetAmmoInPedWeapon(ped, weapon)
-            if Config.EnaleWeaponAmmoLevels then local _, maxAmmo = GetMaxAmmo(ped, weapon) else local _, maxAmmo = Config.MaxAmmo end
-            if total < maxAmmo then
+        if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type then
+            if Config.EnaleWeaponAmmoLevels then
+                total = GetAmmoInPedWeapon(ped, weapon)
+                _, maxAmmo = GetMaxAmmo(ped, weapon)
+                maxAmmo = maxAmmo - 1
+            else
+                maxAmmo = Config.MaxAmmo
+                if type == 'AMMO_PISTOL' then fullmag = 12
+                elseif type == 'AMMO_SMG' then fullmag = 20
+                elseif type == 'AMMO_RIFLE' then fullmag = 30
+                elseif type == 'AMMO_SHOTGUN' then fullmag = 10
+                elseif type == 'AMMO_MG' then fullmag = 30
+                elseif type == 'SNIPER_AMMO' then fullmag = 10
+                else fullmag = maxAmmo end
+                total = GetAmmoInPedWeapon(ped, weapon) + fullmag
+            end
+            if total <= maxAmmo then
                 QBCore.Functions.Progressbar("taking_bullets", Lang:t('info.loading_bullets'), Config.ReloadTime, false, true, {
                     disableMovement = false,
                     disableCarMovement = false,
