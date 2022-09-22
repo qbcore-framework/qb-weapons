@@ -5,9 +5,10 @@ description 'QB-Weapons'
 version '1.0.0'
 
 shared_scripts {
-	'@qb-core/shared/locale.lua',
-	'locales/en.lua',
-	'config.lua',
+    '@qb-core/shared/locale.lua',
+    'locales/en.lua',
+    'locales/*.lua',
+    'config.lua',
 }
 
 server_script 'server/main.lua'
