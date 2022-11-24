@@ -174,7 +174,7 @@ end)
 
 -- Events
 
-RegisterServerEvent("weapon:repairTime", function(data)
+RegisterServerEvent("weapons:server:RepairTime", function(data)
     local src = source
     TriggerClientEvent('QBCore:Notify', src, Lang:t('info.repair_time', {value = Config.WeaponRepairPoints[data.id].RepairingData.Time/60000}), 'primary')
 end)

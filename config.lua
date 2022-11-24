@@ -1,13 +1,17 @@
 Config = Config or {}
 
+Config.UseTarget = GetConvar('UseTarget', 'false') == 'true'
+
 Config.ReloadTime = math.random(4000, 6000)
 
 Config.WeaponRepairPoints = {
     [1] = {
-        setup = {
+        coords = vector4(11.17, -1098.84, 29.8, 156.87), -- used for all interactions ([e], ped (target), boxzone (target))
+        target = {
+            -- For Ped Target
             usePed = false,
             pedModel = `a_m_m_indian_01`,
-            coords = vector4(11.17, -1098.84, 29.8, 156.87),
+            -- For Boxzone Target
             width = 1.25,
             depth = 1.5,
             minZ = 29.3,
@@ -22,16 +26,16 @@ Config.WeaponRepairPoints = {
             ["rifle"] = {cost = 500, time = {1,5}},
             ["sniper"] = {cost = 500, time = {1,5}},
         },
-        type = "public", --type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
-        tableTimeout = false, -- if set to a number, it will time out and allow anyone to pick up the weapon.
+        type = "public", -->>>CAN ONLY BE USED WITH TARGET<<< type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
+        tableTimeout = false, -- if set to a number, it will time out and allow anyone to pick up the weapon. (or if set to false, it will be in the table till the owner picks up, or, script restart)
         IsRepairing = false,
         RepairingData = {},
     },
     [2] = {
-        setup = {
+        coords = vector4(17.15, -1101.04, 29.8, 159.48),
+        target = {
             usePed = true,
             pedModel = `a_m_m_indian_01`,
-            coords = vector4(17.15, -1101.04, 29.8, 159.48),
             width = 1.25,
             depth = 1.5,
             minZ = 29.3,
@@ -46,16 +50,16 @@ Config.WeaponRepairPoints = {
             ["rifle"] = {cost = 500, time = {1,5}},
             ["sniper"] = {cost = 500, time = {1,5}},
         },
-        type = "public", --type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
+        type = "public",
         tableTimeout = false,
         IsRepairing = false,
         RepairingData = {},
     },
     [3] = {
-        setup = {
+        coords = vector4(487.32, -997.07, 30.69, 269.64),
+        target = {
             usePed = false,
             pedModel = `a_m_m_indian_01`,
-            coords = vector4(487.32, -997.07, 30.69, 269.64),
             width = 1.25,
             depth = 1.5,
             minZ = 30.19,
@@ -70,16 +74,16 @@ Config.WeaponRepairPoints = {
             ["rifle"] = {cost = 500, time = {1,5}},
             ["sniper"] = {cost = 500, time = {1,5}},
         },
-        type = {job = {["police"] = 0}}, --type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
+        type = {job = {["police"] = 0}},
         tableTimeout = false,
         IsRepairing = false,
         RepairingData = {},
     },
     [4] = {
-        setup = {
+        coords = vector4(165.21, -1323.24, 25.81, 153.48),
+        target = {
             usePed = false,
             pedModel = `a_m_m_indian_01`,
-            coords = vector4(165.21, -1323.24, 25.81, 153.48),
             width = 1.25,
             depth = 1.5,
             minZ = 25.31,
@@ -94,7 +98,7 @@ Config.WeaponRepairPoints = {
             ["rifle"] = {cost = 500, time = {1,5}},
             ["sniper"] = {cost = 500, time = {1,5}},
         },
-        type = {gang = {["lostmc"] = 0}}, --type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
+        type = {gang = {["lostmc"] = 0}},
         tableTimeout = false,
         IsRepairing = false,
         RepairingData = {},
