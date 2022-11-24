@@ -20,7 +20,11 @@ local Translations = {
         take_weapon_back = '[E] - Võtke relv tagasi',
         repair_weapon_price = '[E] Relv parandamine, ~g~$%{value}~w~',
         removed_attachment = 'Eemaldasite oma relvast %{value}!',
-        hp_of_weapon = 'Teie relva vastupidavus'
+        hp_of_weapon = 'Teie relva vastupidavus',
+        take_weapon_nil = 'Finders keepers...', -- English
+        weapon_repair_started = 'Started Repair!', -- English
+        not_enough_cash = 'Not enough cash!', -- English
+        repair_time = 'This will take %{value} minutes', -- English
     },
     mail = {
         sender = 'Tyrone',

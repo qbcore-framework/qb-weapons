@@ -15,12 +15,16 @@ local Translations = {
     },
     info = {
         loading_bullets = 'تحميل الرصاص',
-        repairshop_not_usable = 'ﻖﻠﻐﻣ ﺔﻈﺤﻠﻟﺍ ﻩﺬﻫ ﻲﻓ ﺢﻴﻠﺼﺘﻟﺍ ﺮﺠﺘﻣ', -- you need font arabic
+        repairshop_not_usable = 'ﻖﻠﻐﻣ ﺔﻈﺤﻠﻟﺍ ﻩﺬﻫ ﻲﻓ ﺢﻴﻠﺼﺘﻟﺍ ﺮﺠﺘﻣ',
         weapon_will_repair = 'ﻚﺣﻼﺳ ﺡﻼﺻﺇ ﻢﺘﻴﺳ',
         take_weapon_back = '~g~E~w~ - ﻚﺣﻼﺳ ﺪﺧ',
         repair_weapon_price = '~g~E~w~ - ~g~$%{value}~w~ ﺢﻴﻠﺼﺗ',
         removed_attachment = 'من سلاحك %{value} نزعت',
-        hp_of_weapon = 'متانة سلاحك'
+        hp_of_weapon = 'متانة سلاحك',
+        take_weapon_nil = 'Finders keepers...', -- English
+        weapon_repair_started = 'Started Repair!', -- English
+        not_enough_cash = 'Not enough cash!', -- English
+        repair_time = 'This will take %{value} minutes', -- English
     },
     mail = {
         sender = 'عامل',

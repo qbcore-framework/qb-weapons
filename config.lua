@@ -2,6 +2,105 @@ Config = Config or {}
 
 Config.ReloadTime = math.random(4000, 6000)
 
+Config.WeaponRepairPoints = {
+    [1] = {
+        setup = {
+            usePed = false,
+            pedModel = `a_m_m_indian_01`,
+            coords = vector4(11.17, -1098.84, 29.8, 156.87),
+            width = 1.25,
+            depth = 1.5,
+            minZ = 29.3,
+            maxZ = 30.3,
+            debug = false
+        },
+        repairCosts = {
+            ["pistol"] = {cost = 500, time = {1,5}}, -- time = minimum, maximum (done random during each use)
+            ["smg"] = {cost = 500, time = {1,5}},
+            ["mg"] = {cost = 500, time = {1,5}},
+            ["shotgun"] = {cost = 500, time = {1,5}},
+            ["rifle"] = {cost = 500, time = {1,5}},
+            ["sniper"] = {cost = 500, time = {1,5}},
+        },
+        type = "public", --type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
+        tableTimeout = false, -- if set to a number, it will time out and allow anyone to pick up the weapon.
+        IsRepairing = false,
+        RepairingData = {},
+    },
+    [2] = {
+        setup = {
+            usePed = true,
+            pedModel = `a_m_m_indian_01`,
+            coords = vector4(17.15, -1101.04, 29.8, 159.48),
+            width = 1.25,
+            depth = 1.5,
+            minZ = 29.3,
+            maxZ = 30.3,
+            debug = false
+        },
+        repairCosts = {
+            ["pistol"] = {cost = 500, time = {1,5}},
+            ["smg"] = {cost = 500, time = {1,5}},
+            ["mg"] = {cost = 500, time = {1,5}},
+            ["shotgun"] = {cost = 500, time = {1,5}},
+            ["rifle"] = {cost = 500, time = {1,5}},
+            ["sniper"] = {cost = 500, time = {1,5}},
+        },
+        type = "public", --type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
+        tableTimeout = false,
+        IsRepairing = false,
+        RepairingData = {},
+    },
+    [3] = {
+        setup = {
+            usePed = false,
+            pedModel = `a_m_m_indian_01`,
+            coords = vector4(487.32, -997.07, 30.69, 269.64),
+            width = 1.25,
+            depth = 1.5,
+            minZ = 30.19,
+            maxZ = 31.19,
+            debug = false
+        },
+        repairCosts = {
+            ["pistol"] = {cost = 500, time = {1,5}},
+            ["smg"] = {cost = 500, time = {1,5}},
+            ["mg"] = {cost = 500, time = {1,5}},
+            ["shotgun"] = {cost = 500, time = {1,5}},
+            ["rifle"] = {cost = 500, time = {1,5}},
+            ["sniper"] = {cost = 500, time = {1,5}},
+        },
+        type = {job = {["police"] = 0}}, --type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
+        tableTimeout = false,
+        IsRepairing = false,
+        RepairingData = {},
+    },
+    [4] = {
+        setup = {
+            usePed = false,
+            pedModel = `a_m_m_indian_01`,
+            coords = vector4(165.21, -1323.24, 25.81, 153.48),
+            width = 1.25,
+            depth = 1.5,
+            minZ = 25.31,
+            maxZ = 26.31,
+            debug = false
+        },
+        repairCosts = {
+            ["pistol"] = {cost = 500, time = {1,5}},
+            ["smg"] = {cost = 500, time = {1,5}},
+            ["mg"] = {cost = 500, time = {1,5}},
+            ["shotgun"] = {cost = 500, time = {1,5}},
+            ["rifle"] = {cost = 500, time = {1,5}},
+            ["sniper"] = {cost = 500, time = {1,5}},
+        },
+        type = {gang = {["lostmc"] = 0}}, --type = "public" {job = {["police"] = 0}} {gang = {["lotus"] = 0}} {citizenid = {["JFD98238"] = true,}}
+        tableTimeout = false,
+        IsRepairing = false,
+        RepairingData = {},
+    },
+}
+
 Config.DurabilityBlockedWeapons = {
     "weapon_stungun",
     "weapon_nightstick",
@@ -136,14 +235,6 @@ Config.DurabilityMultiplier = {
 	['weapon_fireextinguisher'] 	= 0.15,
 	['weapon_hazardcan'] 			= 0.15,
     ['weapon_fertilizercan'] 		= 0.15,
-}
-
-Config.WeaponRepairPoints = {
-    [1] = {
-        coords = vector3(964.02, -1267.41, 34.97),
-        IsRepairing = false,
-        RepairingData = {},
-    }
 }
 
 Config.WeaponRepairCosts = {

@@ -2,6 +2,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = QBCore.Functions.GetPlayerData()
 local CurrentWeaponData, CanShoot, MultiplierAmount = {}, true, 0
+local pedsSpawned = false
 
 -- Handlers
 
@@ -21,23 +22,6 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
         Config.WeaponRepairPoints[k].RepairingData = {}
     end
 end)
-
--- Functions
-
-local function DrawText3Ds(x, y, z, text)
-	SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(x,y,z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
-end
 
 -- Events
 
@@ -128,6 +112,43 @@ RegisterNetEvent("weapons:client:EquipAttachment", function(ItemData, attachment
     end
 end)
 
+RegisterNetEvent("weapons:client:RepairWeapon", function(data)
+    if CurrentWeaponData and next(CurrentWeaponData) then
+        local WeaponData = QBCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
+        local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
+        TriggerEvent('QBCore:Notify', Lang:t('info.repair_weapon_price', { value = Config.WeaponRepairPoints[data.id].repairCosts[WeaponClass].cost}), "primary", 1500)
+        QBCore.Functions.TriggerCallback('weapons:server:RepairWeapon', function(HasMoney)
+            if HasMoney then
+                CurrentWeaponData = {}
+            end
+        end, data.id, CurrentWeaponData)
+    else
+        if Config.WeaponRepairPoints[data.id].RepairingData.CitizenId == nil then
+            TriggerEvent('QBCore:Notify', Lang:t('error.no_weapon_in_hand'), "error", 1500)
+        end
+    end
+end)
+
+RegisterNetEvent("weapons:client:CollectWeapon", function(data)
+    if CurrentWeaponData and next(CurrentWeaponData) then
+        if Config.WeaponRepairPoints[data.id].RepairingData.CitizenId ~= PlayerData.citizenid then
+            TriggerEvent('QBCore:Notify', Lang:t('info.repairshop_not_usable'), "error", 1500)
+        else
+            TriggerEvent('QBCore:Notify', Lang:t('info.take_weapon_back'), "success", 1500)
+            TriggerServerEvent('weapons:server:TakeBackWeapon', data.id, data)
+        end
+    else
+        if Config.WeaponRepairPoints[data.id].RepairingData.CitizenId == PlayerData.citizenid then
+            TriggerEvent('QBCore:Notify', Lang:t('info.take_weapon_back'), "success", 1500)
+            TriggerServerEvent('weapons:server:TakeBackWeapon', data.id, data)
+        end
+        if Config.WeaponRepairPoints[data.id].RepairingData.CitizenId == nil then
+            TriggerEvent('QBCore:Notify', Lang:t('info.take_weapon_nil'), "success", 1500)
+            TriggerServerEvent('weapons:server:TakeBackWeapon', data.id, data)
+        end
+    end
+end)
+
 -- Threads
 
 CreateThread(function()
@@ -137,16 +158,20 @@ end)
 CreateThread(function()
     while true do
         local ped = PlayerPedId()
-        if IsPedArmed(ped, 7) == 1 and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) then
+        local idle = 1
+        if (IsPedArmed(ped, 7) == 1 and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24))) or IsPedShooting(PlayerPedId()) then
             local weapon = GetSelectedPedWeapon(ped)
             local ammo = GetAmmoInPedWeapon(ped, weapon)
+            if weapon == GetHashKey("WEAPON_PETROLCAN")  then
+                idle = 1000
+            end
             TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
             if MultiplierAmount > 0 then
                 TriggerServerEvent("weapons:server:UpdateWeaponQuality", CurrentWeaponData, MultiplierAmount)
                 MultiplierAmount = 0
             end
         end
-        Wait(0)
+        Wait(idle)
     end
 end)
 
@@ -180,67 +205,95 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    while true do
-        if LocalPlayer.state.isLoggedIn then
-            local inRange = false
-            local ped = PlayerPedId()
-            local pos = GetEntityCoords(ped)
-            for k, data in pairs(Config.WeaponRepairPoints) do
-                local distance = #(pos - data.coords)
-                if distance < 10 then
-                    inRange = true
-                    if distance < 1 then
-                        if data.IsRepairing then
-                            if data.RepairingData.CitizenId ~= PlayerData.citizenid then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repairshop_not_usable'))
-                            else
-                                if not data.RepairingData.Ready then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.weapon_will_repair'))
-                                else
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
-                                end
-                            end
-                        else
-                            if CurrentWeaponData and next(CurrentWeaponData) then
-                                if not data.RepairingData.Ready then
-                                    local WeaponData = QBCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
-                                    local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repair_weapon_price', { value = Config.WeaponRepairCosts[WeaponClass] }))
-                                    if IsControlJustPressed(0, 38) then
-                                        QBCore.Functions.TriggerCallback('weapons:server:RepairWeapon', function(HasMoney)
-                                            if HasMoney then
-                                                CurrentWeaponData = {}
-                                            end
-                                        end, k, CurrentWeaponData)
-                                    end
-                                else
-                                    if data.RepairingData.CitizenId ~= PlayerData.citizenid then
-                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repairshop_not_usable'))
-                                    else
-                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
-                                        if IsControlJustPressed(0, 38) then
-                                            TriggerServerEvent('weapons:server:TakeBackWeapon', k, data)
-                                        end
-                                    end
-                                end
-                            else
-                                if data.RepairingData.CitizenId == nil then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('error.no_weapon_in_hand'))
-                                elseif data.RepairingData.CitizenId == PlayerData.citizenid then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
-                                    if IsControlJustPressed(0, 38) then
-                                        TriggerServerEvent('weapons:server:TakeBackWeapon', k, data)
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-            if not inRange then
-                Wait(1000)
-            end
+    for i, v in pairs(Config.WeaponRepairPoints) do
+        local jobType = nil
+        local gangType = nil
+        local citizenType = nil
+        if v.type.job ~= nil then
+            jobType = v.type.job
+        elseif v.type.gang ~= nil then
+            gangType = v.type.gang
+        elseif v.type.citizenid ~= nil then
+            citizenType = v.type.citizenid
         end
-        Wait(0)
+
+        local opts = {
+            {
+                type = "client",
+                event = "weapons:client:RepairWeapon",
+                label = 'Start Weapon Repair',
+                id = i,
+                job = jobType,
+                gang = gangType,
+                citizenid = citizenType,
+                canInteract = function()
+                    if Config.WeaponRepairPoints[i].IsRepairing or Config.WeaponRepairPoints[i].RepairingData.Ready then
+                        return false
+                    else
+                        return true
+                    end
+                end,
+              },
+              {
+                type = "server",
+                event = "weapon:repairTime",
+                label = 'Check Repair Time',
+                id = i,
+                job = jobType,
+                gang = gangType,
+                citizenid = citizenType,
+                canInteract = function()
+                    if Config.WeaponRepairPoints[i].IsRepairing then
+                        return true
+                    else
+                        return false
+                    end
+                end,
+              },
+              {
+                type = "client",
+                event = "weapons:client:CollectWeapon",
+                label = 'Collect Weapon',
+                id = i,
+                job = jobType,
+                gang = gangType,
+                citizenid = citizenType,
+                canInteract = function()
+                    if Config.WeaponRepairPoints[i].RepairingData.Ready then
+                        return true
+                    else
+                        return false
+                    end
+                end,
+              }
+        }
+        if Config.WeaponRepairPoints[i].setup.usePed and not pedsSpawned then
+            local model = Config.WeaponRepairPoints[i].setup.pedModel
+            RequestModel(model)
+            while not HasModelLoaded(model) do
+              Wait(0)
+            end
+            local pos = Config.WeaponRepairPoints[i].setup.coords
+            local entity = CreatePed(0, model, pos.x, pos.y, pos.z-1, pos.w, false, false)
+            SetBlockingOfNonTemporaryEvents(entity, true)
+            FreezeEntityPosition(entity, true)
+            SetEntityInvincible(entity, true)
+            exports['qb-target']:AddTargetEntity(entity, {
+              options = opts,
+              distance = 2.5,
+            })
+        else
+            exports['qb-target']:AddBoxZone("weaponrepair"..i, vector3(v.setup.coords.x, v.setup.coords.y, v.setup.coords.z), v.setup.width, v.setup.depth, {
+                name = "weaponrepair"..i,
+                heading = v.setup.coords.w,
+                debugPoly = v.setup.debug,
+                minZ = v.setup.minZ,
+                maxZ = v.setup.maxZ,
+              },{
+                options = opts,
+                distance = 2.5,
+            })
+        end
     end
+    pedsSpawned = true
 end)

@@ -10,7 +10,10 @@ shared_scripts {
 	'config.lua',
 }
 
-server_script 'server/main.lua'
+server_scripts {
+	'server/main.lua',
+	'server/extra.lua'
+}
 client_script 'client/main.lua'
 
 files {'weaponsnspistol.meta'}

@@ -20,7 +20,11 @@ local Translations = {
         take_weapon_back = '[E] - Atgauti ginklą',
         repair_weapon_price = '[E] Sutaisyti ginklą, ~g~$%{value}~w~',
         removed_attachment = 'Jūs panaikinote %{value} iš savo ginklo!',
-        hp_of_weapon = 'Jūsų ginklo patvarumas'
+        hp_of_weapon = 'Jūsų ginklo patvarumas',
+        take_weapon_nil = 'Finders keepers...', -- English
+        weapon_repair_started = 'Started Repair!', -- English
+        not_enough_cash = 'Not enough cash!', -- English
+        repair_time = 'This will take %{value} minutes', -- English
     },
     mail = {
         sender = 'Tironas',
