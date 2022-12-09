@@ -334,8 +334,7 @@ else
                                     if not data.RepairingData.Ready then
                                         DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.weapon_will_repair'))
                                         if IsControlJustPressed(0, 38) then
-                                            local data = {id = k}
-                                            TriggerServerEvent('weapons:server:RepairTime', data)
+                                            TriggerServerEvent('weapons:server:RepairTime', {id = k})
                                         end
                                     end
                                 end
