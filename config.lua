@@ -9,7 +9,7 @@ Config.DurabilityBlockedWeapons = {
     "weapon_unarmed",
 }
 
-Config.Throwables = {    
+Config.Throwables = {
     "weapon_snowball",
     "weapon_pipebomb",
     "weapon_molotov",
