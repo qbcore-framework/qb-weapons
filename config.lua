@@ -10,16 +10,16 @@ Config.DurabilityBlockedWeapons = {
 }
 
 Config.Throwables = {
-    "weapon_snowball",
-    "weapon_pipebomb",
-    "weapon_molotov",
-    "weapon_stickybomb",
-    "weapon_grenade",
-    "weapon_bzgas",
-    "weapon_proxmine",
-    "weapon_ball",
-    "weapon_smokegrenade",
-    "weapon_flare"
+    "ball",
+    "bzgas",
+    "flare",
+    "grenade",
+    "molotov",
+    "pipebomb",
+    "proxmine",
+    "smokegrenade",
+    "snowball",
+    "stickybomb",
 }
 
 Config.DurabilityMultiplier = {
