@@ -9,6 +9,19 @@ Config.DurabilityBlockedWeapons = {
     "weapon_unarmed",
 }
 
+Config.Throwables = {    
+    "weapon_snowball",
+    "weapon_pipebomb",
+    "weapon_molotov",
+    "weapon_stickybomb",
+    "weapon_grenade",
+    "weapon_bzgas",
+    "weapon_proxmine",
+    "weapon_ball",
+    "weapon_smokegrenade",
+    "weapon_flare"
+}
+
 Config.DurabilityMultiplier = {
 	-- Melee
 	-- ['weapon_unarmed'] 				 = 0.15,
