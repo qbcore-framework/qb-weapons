@@ -144,7 +144,7 @@ QBCore.Functions.CreateCallback('prison:server:checkThrowable', function(source,
     if not Player then return cb(false) end
     local throwable = false
     for _,v in pairs(Config.Throwables) do
-        if QBCore.Shared.Weapons[weapon]["name"] == v then
+        if QBCore.Shared.Weapons[weapon].name == v then
             Player.Functions.RemoveItem(v, 1)
             throwable = true
             break
