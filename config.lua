@@ -29,6 +29,7 @@ Config.DurabilityMultiplier = {
 	['weapon_bat'] 				 	 = 0.15,
 	['weapon_bottle'] 				 = 0.15,
 	['weapon_crowbar'] 				 = 0.15,
+    ['weapon_candycane']             = 0.15,
 	-- ['weapon_flashlight'] 			 = 0.15,
 	['weapon_golfclub'] 			 = 0.15,
 	['weapon_hammer'] 				 = 0.15,
@@ -69,6 +70,7 @@ Config.DurabilityMultiplier = {
 	['weapon_ceramicpistol'] 		 = 0.15,
 	['weapon_navyrevolver'] 		 = 0.15,
 	['weapon_gadgetpistol'] 		 = 0.15,
+    ['weapon_pistolxm3']             = 0.15,
 
 	-- Submachine Guns
 	['weapon_microsmg'] 			 = 0.15,
@@ -131,6 +133,7 @@ Config.DurabilityMultiplier = {
 	['weapon_hominglauncher'] 		= 0.15,
 	['weapon_compactlauncher'] 		= 0.15,
 	['weapon_rayminigun'] 			= 0.15,
+    ['weapon_railgunxm3']           = 0.15,
 
 	-- Throwables
 	['weapon_grenade'] 				= 0.15,
