@@ -224,6 +224,14 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
     Player.Functions.SetInventory(Player.PlayerData.items, true)
 end)
 
+RegisterNetEvent('weapons:server:ApplyTint', function(data, tint)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local WeaponSlot = Player.PlayerData.items[data.slot]
+    WeaponSlot.info.tint = tint
+    Player.Functions.SetInventory(Player.PlayerData.items, true)
+end)
+
 RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWeaponData, AttachmentData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)

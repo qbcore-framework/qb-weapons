@@ -57,6 +57,7 @@ RegisterNetEvent('weapons:client:EquipTint', function(tint)
     local player = PlayerPedId()
     local weapon = GetSelectedPedWeapon(player)
     SetPedWeaponTintIndex(player, weapon, tint)
+    TriggerServerEvent("weapons:server:ApplyTint", CurrentWeaponData, tint)
 end)
 
 RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)
