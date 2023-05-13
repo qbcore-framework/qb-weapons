@@ -163,7 +163,12 @@ CreateThread(function()
                                 if result or GetAmmoInPedWeapon(ped, weapon) <= 0 then return end
                                 MultiplierAmount += 1
                             end, weapon)
-                            Wait(200)
+
+                            if QBCore.Shared.Weapons[weapon].weapontype == 'Throwable' then
+                                Wait(1000)
+                            else
+                                Wait(200)
+                            end
                         end
                     else
                         if weapon ~= `WEAPON_UNARMED` then
