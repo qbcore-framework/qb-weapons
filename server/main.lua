@@ -171,20 +171,26 @@ RegisterNetEvent("weapons:server:TakeBackWeapon", function(k)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local itemdata = Config.WeaponRepairPoints[k].RepairingData.WeaponData
-    itemdata.info.quality = 100
-    Player.Functions.AddItem(itemdata.name, 1, false, itemdata.info)
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[itemdata.name], "add")
-    Config.WeaponRepairPoints[k].IsRepairing = false
-    Config.WeaponRepairPoints[k].RepairingData = {}
-    TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[k], k)
+
+    if Player then
+        itemdata.info.quality = 100
+        Player.Functions.AddItem(itemdata.name, 1, false, itemdata.info)
+        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[itemdata.name], "add")
+        Config.WeaponRepairPoints[k].IsRepairing = false
+        Config.WeaponRepairPoints[k].RepairingData = {}
+        TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[k], k)
+    end
 end)
 
 RegisterNetEvent("weapons:server:SetWeaponQuality", function(data, hp)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local WeaponSlot = Player.PlayerData.items[data.slot]
-    WeaponSlot.info.quality = hp
-    Player.Functions.SetInventory(Player.PlayerData.items, true)
+
+    if Player then
+        WeaponSlot.info.quality = hp
+        Player.Functions.SetInventory(Player.PlayerData.items, true)
+    end
 end)
 
 RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmount)
