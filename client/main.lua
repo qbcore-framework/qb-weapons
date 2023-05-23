@@ -90,7 +90,7 @@ RegisterNetEvent('weapons:client:AddAmmo', function(type, amount, itemData)
                 }, {}, {}, {}, function() -- Done
                     if QBCore.Shared.Weapons[weapon] then
                         AddAmmoToPed(ped,weapon,amount)
-                        MakePedReload(ped)
+                        TaskReloadWeapon(ped)
                         TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, total + amount)
                         TriggerServerEvent('weapons:server:removeWeaponAmmoItem', itemData)
                         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], "remove")
