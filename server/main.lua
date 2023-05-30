@@ -120,7 +120,7 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                         Config.WeaponRepairPoints[RepairPoint].IsRepairing = false
                         Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready = true
                         TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
-                        TriggerEvent('qb-phone:server:sendNewMailToOffline', Player.PlayerData.citizenid, {
+                        exports['qb-phone']:sendNewMailToOffline(Player.PlayerData.citizenid, {
                             sender = Lang:t('mail.sender'),
                             subject = Lang:t('mail.subject'),
                             message = Lang:t('mail.message', { value = WeaponData.label })
@@ -156,31 +156,15 @@ QBCore.Functions.CreateCallback('prison:server:checkThrowable', function(source,
     local Player = QBCore.Functions.GetPlayer(source)
 
     if not Player then return cb(false) end
-
-    if QBCore.Shared.Weapons[weapon]["name"] == "weapon_snowball" then
-        Player.Functions.RemoveItem("weapon_snowball", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_pipebomb" then
-        Player.Functions.RemoveItem("weapon_pipebomb", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_molotov" then
-        Player.Functions.RemoveItem("weapon_molotov", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_stickybomb" then
-        Player.Functions.RemoveItem("weapon_stickybomb", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_grenade" then
-        Player.Functions.RemoveItem("weapon_grenade", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_bzgas" then
-        Player.Functions.RemoveItem("weapon_bzgas", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_proxmine" then
-        Player.Functions.RemoveItem("weapon_proxmine", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_ball" then
-        Player.Functions.RemoveItem("weapon_ball", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_smokegrenade" then
-        Player.Functions.RemoveItem("weapon_smokegrenade", 1)
-    elseif QBCore.Shared.Weapons[weapon]["name"] == "weapon_flare" then
-        Player.Functions.RemoveItem("weapon_flare", 1)
-    else
-        return cb(false)
+    local throwable = false
+    for _,v in pairs(Config.Throwables) do
+        if QBCore.Shared.Weapons[weapon].name == 'weapon_'..v then
+            Player.Functions.RemoveItem('weapon_'..v, 1)
+            throwable = true
+            break
+        end
     end
-    cb(true)
+    cb(throwable)
 end)
 
 -- Events
@@ -212,6 +196,7 @@ end)
 RegisterNetEvent("weapons:server:TakeBackWeapon", function(k)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
     local itemdata = Config.WeaponRepairPoints[k].RepairingData.WeaponData
     itemdata.info.quality = 100
     Player.Functions.AddItem(itemdata.name, 1, false, itemdata.info)
@@ -224,6 +209,7 @@ end)
 RegisterNetEvent("weapons:server:SetWeaponQuality", function(data, hp)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
     local WeaponSlot = Player.PlayerData.items[data.slot]
     WeaponSlot.info.quality = hp
     Player.Functions.SetInventory(Player.PlayerData.items, true)
@@ -530,6 +516,10 @@ end)
 
 QBCore.Functions.CreateUseableItem('smg_extendedclip', function(source, item)
     TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'extendedclip')
+end)
+
+QBCore.Functions.CreateUseableItem('smg_suppressor', function(source, item)
+    TriggerClientEvent('weapons:client:EquipAttachment', source, item, 'suppressor')
 end)
 
 QBCore.Functions.CreateUseableItem('smg_drum', function(source, item)
