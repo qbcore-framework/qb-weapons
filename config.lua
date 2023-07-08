@@ -653,9 +653,9 @@ WeaponAttachments = {
             component = 'COMPONENT_AT_PI_COMP_02',
             item = 'wep_compensator',
         },
-        ['scope'] = {
+        ['scopesmall'] = {
             component = 'COMPONENT_AT_PI_RAIL_02',
-            item = 'snspistol_mk2_scope',
+            item = 'snspistol_mk2_scopesmall',
         },
 		['luxuryfinish1'] = {
             component = 'COMPONENT_SNSPISTOL_MK2_CAMO',
@@ -755,9 +755,9 @@ WeaponAttachments = {
             component = 'COMPONENT_AT_PI_COMP_03',
             item = 'wep_compensator',
         },
-        ['scope'] = {
+        ['scopesmall'] = {
             component = 'COMPONENT_AT_SCOPE_MACRO_MK2',
-            item = 'revolver_mk2_scope',
+            item = 'revolver_mk2_scopesmall',
         },
 		['holosight'] = {
             component = 'COMPONENT_AT_SIGHTS',
@@ -860,9 +860,9 @@ WeaponAttachments = {
             component = 'COMPONENT_AT_PI_FLSH',
             item = 'wep_flashlight',
         },
-        ['scope'] = {
+        ['scopesmall'] = {
             component = 'COMPONENT_AT_SCOPE_MACRO',
-            item = 'microsmg_scope',
+            item = 'microsmg_scopesmall',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP_02',
@@ -905,9 +905,9 @@ WeaponAttachments = {
             component = 'COMPONENT_AT_AR_FLSH',
             item = 'wep_flashlight',
         },
-        ['scope'] = {
+        ['scopesmall'] = {
             component = 'COMPONENT_AT_SCOPE_MACRO_02',
-            item = 'smg_scope',
+            item = 'smg_scopesmall',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_PI_SUPP',
@@ -933,9 +933,9 @@ WeaponAttachments = {
             component = 'COMPONENT_AT_AR_FLSH',
             item = 'wep_flashlight',
         },
-        ['scope'] = {
+        ['scopesmall'] = {
             component = 'COMPONENT_AT_SCOPE_MACRO',
-            item = 'assaultsmg_scope',
+            item = 'assaultsmg_scopesmall',
         },
         ['suppressor'] = {
             component = 'COMPONENT_AT_AR_SUPP_02',
@@ -1015,9 +1015,9 @@ WeaponAttachments = {
             component = 'COMPONENT_AT_AR_AFGRIP',
             item = 'combatpdw_grip',
         },
-        ['scope'] = {
+        ['scopesmall'] = {
             component = 'COMPONENT_AT_SCOPE_SMALL',
-            item = 'combatpdw_scope',
+            item = 'combatpdw_scopesmall',
         },
     },
 	['WEAPON_SMG_MK2'] = {
