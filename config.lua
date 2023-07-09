@@ -88,7 +88,6 @@ Config.DurabilityMultiplier = {
     ['weapon_combatpdw']             = 0.15,
     ['weapon_machinepistol']         = 0.15,
     ['weapon_minismg']               = 0.15,
-    ['weapon_raycarbine']            = 0.15,
 	['weapon_gusenberg']             = 0.15,
 	['weapon_tecpistol']             = 0.15,
 	
@@ -824,7 +823,7 @@ WeaponAttachments = {
             component = 'COMPONENT_CERAMICPISTOL_CLIP_02',
             item = 'ceramicppistol_extendedclip',
             type = 'clip',
-        },        
+        },
         ['suppressor'] = {
             component = 'COMPONENT_CERAMICPISTOL_SUPP',
             item = 'pistol_suppressor',
@@ -885,7 +884,7 @@ WeaponAttachments = {
             item = 'microsmg_luxuryfinish4',
         },
     },
-    ['WEAPON_SMG'] = { 
+    ['WEAPON_SMG'] = {
         ['defaultclip'] = {
             component = 'COMPONENT_SMG_CLIP_01',
             item = 'smg_defaultclip',
