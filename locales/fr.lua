@@ -5,9 +5,9 @@ local Translations = {
         no_weapon = 'Vous n\'avez pas d\'arme.',
         no_support_attachment = 'Cette arme ne supporte pas cet accessoire.',
         no_weapon_in_hand = 'Vous n\'avez pas d\'arme dans vos mains.',
-        weapon_broken = 'Cette arme est cassée est ne peux donc pas être utilisée.',
+        weapon_broken = 'Cette arme est cassée et ne peut donc pas être utilisée.',
         no_damage_on_weapon = 'Cette arme n\'est pas endommagée..',
-        weapon_broken_need_repair = 'Votre arme est cassée, Vous devez la réparée pour vous en reservir.',
+        weapon_broken_need_repair = 'Votre arme est cassée, vous devez la réparée pour vous en reservir.',
         attachment_already_on_weapon = 'Vous aviez déjà un %{value} sur votre arme.'
     },
     success = {
@@ -25,7 +25,7 @@ local Translations = {
     mail = {
         sender = 'Tyrone',
         subject = 'Réparation',
-        message = 'Votre %{value} Est réparé et vous pouvez venir le récuperer. <br><br> Peace out madafaka'
+        message = 'Votre %{value} est réparée et vous pouvez venir le récuperer. <br><br> Peace out madafaka'
     },
 }
 
