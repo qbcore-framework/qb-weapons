@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'Arma este stricata si nu o poti folosi.',
         no_damage_on_weapon = 'Arma nu este stricata..',
         weapon_broken_need_repair = 'Arma ta este stricata, va trebuie sa o repari ca sa o folosesti.',
-        attachment_already_on_weapon = 'Deja ai atasat: %{value} pe arma.'
+        attachment_already_on_weapon = 'Deja ai atasat: %{value} pe arma.',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'Reincarcat'

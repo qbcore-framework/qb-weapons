@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'Bu silah kırık ve kullanılamaz.',
         no_damage_on_weapon = 'Bu silah hasar görmedi..',
         weapon_broken_need_repair = 'Silahınız bozuldu, tekrar kullanabilmeniz için tamir etmeniz gerekiyor..',
-        attachment_already_on_weapon = 'Silahınızda zaten bir %{value} var.'
+        attachment_already_on_weapon = 'Silahınızda zaten bir %{value} var.',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'Şarjör değiştirildi'

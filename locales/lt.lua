@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'Šis ginklas yra sulūžęs ir negali būti naudojamas.',
         no_damage_on_weapon = 'Šis ginklas nėra sugadintas...',
         weapon_broken_need_repair = 'Jūsų ginklas yra sulūžęs, jums reikia jį sutaisyti, kad naudoti vėl.',
-        attachment_already_on_weapon = 'Jūs jau turite %{value} ant savo ginklo.'
+        attachment_already_on_weapon = 'Jūs jau turite %{value} ant savo ginklo.',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'Užtaisytas'

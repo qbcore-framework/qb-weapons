@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'Dit wapen is kapot en kan niet worden gebruikt.',
         no_damage_on_weapon = 'Dit wapen is niet beschadigd..',
         weapon_broken_need_repair = 'Je wapen is kapot, je moet het repareren voordat je het weer kunt gebruiken.',
-        attachment_already_on_weapon = 'Je hebt al een %{value} op je wapen.'
+        attachment_already_on_weapon = 'Je hebt al een %{value} op je wapen.',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'Herladen'

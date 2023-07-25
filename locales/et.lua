@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'See relv on katki ja seda ei saa kasutada.',
         no_damage_on_weapon = 'See relv ei ole kahjustatud..',
         weapon_broken_need_repair = 'Teie relv on katki, peate selle parandama, enne kui saate seda uuesti kasutada.',
-        attachment_already_on_weapon = 'Teie relv on katki, peate selle parandama, enne kui saate seda uuesti kasutada.'
+        attachment_already_on_weapon = 'Teie relv on katki, peate selle parandama, enne kui saate seda uuesti kasutada.',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'Uuesti laaditud'

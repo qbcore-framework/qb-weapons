@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'Diese Waffe ist Kapputt! Du kannst sie nicht Benutzen!.',
         no_damage_on_weapon = 'Die Waffe hat keine Schäden..',
         weapon_broken_need_repair = 'Deine Waffe ist Kapput Repariere sie bevor du sie nutzen Kannst.',
-        attachment_already_on_weapon = 'Du hast %{value} Bereits auf deiner Waffe.'
+        attachment_already_on_weapon = 'Du hast %{value} Bereits auf deiner Waffe.',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'Nachgeladen'

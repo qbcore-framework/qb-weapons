@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'Este arma esta estropeada y no puedes usarla.',
         no_damage_on_weapon = 'Este arma no esta dañada..',
         weapon_broken_need_repair = 'Tu arma esta estropeada, necesitas repararla antes de poder usarla.',
-        attachment_already_on_weapon = 'Ya tienes un %{value} en tu arma.'
+        attachment_already_on_weapon = 'Ya tienes un %{value} en tu arma.',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'Recargada'

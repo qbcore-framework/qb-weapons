@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'Vapnet är trasigt och kan inte användas.',
         no_damage_on_weapon = 'Vapnet är inte trasigt..',
         weapon_broken_need_repair = 'Vapnet är trasigt och måste repareras för att kunna användas igen.',
-        attachment_already_on_weapon = 'Du har redan en %{value} på det här vapnet.'
+        attachment_already_on_weapon = 'Du har redan en %{value} på det här vapnet.',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'Omladdat'

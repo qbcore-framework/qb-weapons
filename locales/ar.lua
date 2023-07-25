@@ -8,7 +8,8 @@ local Translations = {
         weapon_broken = 'هذا السلاح مكسور و لا يمكن استخدامه',
         no_damage_on_weapon = 'هذا السلاح غير مكسور',
         weapon_broken_need_repair = 'تم كسر سلاحك و تحتاج إلى إصلاحه قبل أن لا تتمكن من استخدامه مرة أخرى',
-        attachment_already_on_weapon = 'في سلاحك %{value} لديك من قبل'
+        attachment_already_on_weapon = 'في سلاحك %{value} لديك من قبل',
+        system_error_with_weapon = 'Weapon %{value} is not found within QBCore.Shared.Weapons.'
     },
     success = {
         reloaded = 'إعادة التحميل'
