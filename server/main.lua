@@ -97,7 +97,9 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                         WeaponData = Player.PlayerData.items[data.slot],
                         Ready = false,
                     }
-                    Player.Functions.RemoveItem(data.name, 1, data.slot)
+                    if not Player.Functions.RemoveItem(data.name, 1, data.slot) then
+                        return Player.Functions.AddMoney('cash', Config.WeaponRepairCosts[WeaponClass])
+                    end
                     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[data.name], "remove")
                     TriggerClientEvent("inventory:client:CheckWeapon", src, data.name)
                     TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
@@ -145,7 +147,7 @@ QBCore.Functions.CreateCallback('prison:server:checkThrowable', function(source,
     local throwable = false
     for _,v in pairs(Config.Throwables) do
         if QBCore.Shared.Weapons[weapon].name == 'weapon_'..v then
-            Player.Functions.RemoveItem('weapon_'..v, 1)
+            if not Player.Functions.RemoveItem('weapon_'..v, 1) then return cb(false) end
             throwable = true
             break
         end
