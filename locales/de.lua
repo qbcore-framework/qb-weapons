@@ -5,20 +5,20 @@ local Translations = {
         no_weapon = 'Du hast keine Waffen.',
         no_support_attachment = 'Diese waffe untersützt diesen komponenten nicht.',
         no_weapon_in_hand = 'Du hast keine Waffe in der Hand.',
-        weapon_broken = 'Diese Waffe ist Kapputt! Du kannst sie nicht Benutzen!.',
+        weapon_broken = 'Diese Waffe ist kaputt! Du kannst sie nicht Benutzen!.',
         no_damage_on_weapon = 'Die Waffe hat keine Schäden..',
-        weapon_broken_need_repair = 'Deine Waffe ist Kapput Repariere sie bevor du sie nutzen Kannst.',
-        attachment_already_on_weapon = 'Du hast %{value} Bereits auf deiner Waffe.'
+        weapon_broken_need_repair = 'Deine Waffe ist kaputt. Repariere sie bevor du sie nutzen Kannst.',
+        attachment_already_on_weapon = 'Du hast %{value} bereits auf deiner Waffe.'
     },
     success = {
         reloaded = 'Nachgeladen'
     },
     info = {
         loading_bullets = 'Lade Kugeln',
-        repairshop_not_usable = 'Der ReparierShop ist im moment ~r~NICHT~w~ Nutzbar.',
+        repairshop_not_usable = 'Der ReparaturShop ist im moment ~r~NICHT~w~ nutzbar.',
         weapon_will_repair = 'Deine Waffe wird Repariert.',
-        take_weapon_back = '[E] - Nehme deine Waffe',
-        repair_weapon_price = '[E] Repariere die waffe Für:, ~g~$%{value}~w~',
+        take_weapon_back = '[E] - Nimm deine Waffe',
+        repair_weapon_price = '[E] Repariere die Waffe für:, ~g~$%{value}~w~',
         removed_attachment = 'Du hast %{value} von deiner Waffe Entfernt!',
         hp_of_weapon = 'Status der Waffe'
     },
