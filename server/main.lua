@@ -286,9 +286,9 @@ end)
 RegisterNetEvent('weapons:server:removeWeaponAmmoItem', function(item)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    if not Player or type(item) ~= 'table' or not item.name or not item.slot then return end
+    if not Player or type(item) ~= 'table' or not item.name then return end
 
-    Player.Functions.RemoveItem(item.name, 1, item.slot)
+    Player.Functions.RemoveItem(item.name, 1)
 end)
 
 -- Commands
