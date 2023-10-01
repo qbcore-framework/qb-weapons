@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'Kuulide laadimine',
+        apply_tint = 'Tooni pealekandmine',
         repairshop_not_usable = 'Praegune remonditöökoda ~pole~ kasutatav.',
         weapon_will_repair = 'Teie relv parandatakse.',
         take_weapon_back = '[E] - Võtke relv tagasi',

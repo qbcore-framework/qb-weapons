@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'Užtaisomi šoviniai',
+        apply_tint = 'Atspalvio taikymas',
         repairshop_not_usable = 'Taisyklos šiuo metu ~r~NEGALIMA~w~ naudoti.',
         weapon_will_repair = 'Jūsų ginklas bus sutaisytas.',
         take_weapon_back = '[E] - Atgauti ginklą',

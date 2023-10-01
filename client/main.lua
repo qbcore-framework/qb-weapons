@@ -56,7 +56,20 @@ end)
 RegisterNetEvent('weapons:client:EquipTint', function(tint)
     local player = PlayerPedId()
     local weapon = GetSelectedPedWeapon(player)
+    QBCore.Functions.Progressbar("apply_tint", Lang:t('info.apply_tint'), Config.ApplyTint, false, true, {
+        disableMovement = false,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = "mp_arresting",
+        anim = "a_uncuff",
+        flags = 16,
+    }, {}, {}, function() -- Done
     SetPedWeaponTintIndex(player, weapon, tint)
+    TriggerServerEvent("weapons:server:ApplyTint", CurrentWeaponData, tint)
+    ClearPedTasks(player)
+    end)
 end)
 
 RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)

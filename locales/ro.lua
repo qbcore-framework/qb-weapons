@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'Reincarci..',
+        apply_tint = 'Aplicarea nuanței',
         repairshop_not_usable = 'Magazinul de reparat ~r~NU~w~ poate fi folosit in acest moment.',
         weapon_will_repair = 'Arma ta va fi reparata.',
         take_weapon_back = '[E] - Ia-ti arma inapoi',

@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'Carregando Balas',
+        apply_tint = 'Aplicando tonalidade',
         repairshop_not_usable = 'A oficina de reparos não está disponível neste momento.',
         weapon_will_repair = 'Sua arma será consertada.',
         take_weapon_back = '[E] - Pegar Arma de Volta',

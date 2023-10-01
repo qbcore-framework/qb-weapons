@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'Şarjör değiştiriliyor',
+        apply_tint = 'Renk tonu uygulama',
         repairshop_not_usable = 'Şu anda tamirhane kullanılabilir DEĞİL.',
         weapon_will_repair = 'Silahın tamir edilecek.',
         take_weapon_back = '[E] - Silahı Geri Al',

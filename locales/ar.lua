@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'تحميل الرصاص',
+        apply_tint = 'تطبيق الصبغة',
         repairshop_not_usable = 'ﻖﻠﻐﻣ ﺔﻈﺤﻠﻟﺍ ﻩﺬﻫ ﻲﻓ ﺢﻴﻠﺼﺘﻟﺍ ﺮﺠﺘﻣ', -- you need font arabic
         weapon_will_repair = 'ﻚﺣﻼﺳ ﺡﻼﺻﺇ ﻢﺘﻴﺳ',
         take_weapon_back = '~g~E~w~ - ﻚﺣﻼﺳ ﺪﺧ',

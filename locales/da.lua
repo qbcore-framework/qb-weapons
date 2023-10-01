@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'Lader patroner',
+        apply_tint = 'Påføring af farvetone',
         repairshop_not_usable = 'Denne shop for reparationer er ~r~IKKE~w~ en mulighed.',
         weapon_will_repair = 'Dit våben vil blive repareret.',
         take_weapon_back = '[E] - Tag våben tilbage',

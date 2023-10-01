@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'Laddar kulor',
+        apply_tint = 'Applicera nyans',
         repairshop_not_usable = 'Reparation är ~r~INTE~w~ möjligt för tillfället.',
         weapon_will_repair = 'Ditt vapen kommer att repareras.',
         take_weapon_back = '[E] - Ta tillbaka vapen',

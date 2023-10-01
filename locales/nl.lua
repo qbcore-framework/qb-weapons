@@ -15,6 +15,7 @@ local Translations = {
     },
     info = {
         loading_bullets = 'Kogels laden',
+        apply_tint = 'Tint aanbrengen',
         repairshop_not_usable = 'De reparatiewerkplaats is op dit moment NIET bruikbaar.',
         weapon_will_repair = 'Je wapen wordt gerepareerd.',
         take_weapon_back = '[E] - Wapen terugnemen',
