@@ -155,7 +155,8 @@ Config.DurabilityMultiplier = {
 }
 
 Config.WeaponRepairPoints = {
-    { coords = vector3(964.02, -1267.41, 34.97), IsRepairing = false, RepairingData = {} }
+    { coords = vector3(964.02, -1267.41, 34.97), IsRepairing = false, RepairingData = {} },
+    --{ coords = vector3(487.32, -996.99, 30.69), IsRepairing = false, RepairingData = {}, Job = 'police', MinJobGrade = 4 }
 }
 
 Config.WeaponRepairCosts = {
