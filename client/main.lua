@@ -165,7 +165,7 @@ CreateThread(function()
             local pos = GetEntityCoords(ped)
             for k, data in pairs(Config.WeaponRepairPoints) do
                 local distance = #(pos - data.coords)
-                if distance < 10  and data.Job and PlayerData.job.grade.level >= data.MinJobGrade then
+                if distance < 10 and (not data.Job or (data.Job and PlayerData.job.grade.level >= data.MinJobGrade)) then
                     inRange = true
                     if distance < 1 then
                         if data.IsRepairing then
