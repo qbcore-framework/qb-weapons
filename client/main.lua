@@ -22,6 +22,10 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
     end
 end)
 
+RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)
+    PlayerData.job = JobInfo
+end)
+
 -- Functions
 
 local function DrawText3Ds(x, y, z, text)
@@ -161,7 +165,7 @@ CreateThread(function()
             local pos = GetEntityCoords(ped)
             for k, data in pairs(Config.WeaponRepairPoints) do
                 local distance = #(pos - data.coords)
-                if distance < 10 then
+                if distance < 10  and data.Job and PlayerData.job.grade.level >= data.MinJobGrade then
                     inRange = true
                     if distance < 1 then
                         if data.IsRepairing then
