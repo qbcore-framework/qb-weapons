@@ -254,7 +254,7 @@ WeaponAttachments = {
         weapon_grenadelauncher = `COMPONENT_AT_AR_FLSH`,
     },
     suppressor_attachment = {
-        weapon_pistol = `COMPONENT_AT_PI_SUPP`,
+        weapon_pistol = `COMPONENT_AT_PI_SUPP_02`,
         weapon_pistol_mk2 = `COMPONENT_AT_PI_SUPP_02`,
         weapon_combatpistol = `COMPONENT_AT_PI_SUPP`,
         weapon_appistol = `COMPONENT_AT_PI_SUPP`,
