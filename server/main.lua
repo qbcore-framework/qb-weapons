@@ -200,33 +200,14 @@ end, 'god')
 -- Items
 
 -- AMMO
-QBCore.Functions.CreateUseableItem('pistol_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_PISTOL', 12, item)
-end)
 
-QBCore.Functions.CreateUseableItem('rifle_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_RIFLE', 30, item)
-end)
-
-QBCore.Functions.CreateUseableItem('smg_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_SMG', 20, item)
-end)
-
-QBCore.Functions.CreateUseableItem('shotgun_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_SHOTGUN', 10, item)
-end)
-
-QBCore.Functions.CreateUseableItem('mg_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_MG', 30, item)
-end)
-
-QBCore.Functions.CreateUseableItem('snp_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_SNIPER', 10, item)
-end)
-
-QBCore.Functions.CreateUseableItem('emp_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_EMPLAUNCHER', 10, item)
-end)
+for i = 0, 32 do
+    for _, ammoData in ipairs(Config.AmmoTypes) do
+        QBCore.Functions.CreateUseableItem(ammoData.item .. "_" .. i, function(source, item)
+            TriggerClientEvent('weapons:client:AddAmmo', source, ammoData.weapon, ammoData.amount, item)
+        end)
+    end
+end
 
 -- TINTS
 
