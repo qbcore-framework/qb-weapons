@@ -167,6 +167,16 @@ Config.WeaponRepairCosts = {
     shotgun = 6000
 }
 
+Config.AmmoTypes = {
+    {item = 'pistol_ammo', weapon = 'AMMO_PISTOL', amount = 12},
+    {item = 'rifle_ammo', weapon = 'AMMO_RIFLE', amount = 30},
+    {item = 'smg_ammo', weapon = 'AMMO_SMG', amount = 20},
+    {item = 'shotgun_ammo', weapon = 'AMMO_SHOTGUN', amount = 10},
+    {item = 'mg_ammo', weapon = 'AMMO_MG', amount = 30},
+    {item = 'snp_ammo', weapon = 'AMMO_SNIPER', amount = 10},
+    {item = 'emp_ammo', weapon = 'AMMO_EMPLAUNCHER', amount = 10}
+}
+
 WeaponAttachments = {
     clip_attachment = {
         weapon_pistol = `COMPONENT_PISTOL_CLIP_02`,
