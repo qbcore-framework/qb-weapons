@@ -1,13 +1,13 @@
 -- Variables
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = QBCore.Functions.GetPlayerData()
-local CurrentWeaponData, CanShoot, MultiplierAmount = {}, true, 0
+local CurrentWeaponData, CanShoot, MultiplierAmount, currentWeapon = {}, true, 0, nil
 
 -- Handlers
 
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
-    QBCore.Functions.TriggerCallback('weapons:server:GetConfig', function(RepairPoints)
+    QBCore.Functions.TriggerCallback('qb-weapons:server:GetConfig', function(RepairPoints)
         for k, data in pairs(RepairPoints) do
             Config.WeaponRepairPoints[k].IsRepairing = data.IsRepairing
             Config.WeaponRepairPoints[k].RepairingData = data.RepairingData
@@ -41,17 +41,17 @@ end
 
 -- Events
 
-RegisterNetEvent('weapons:client:SyncRepairShops', function(NewData, key)
+RegisterNetEvent('qb-weapons:client:SyncRepairShops', function(NewData, key)
     Config.WeaponRepairPoints[key].IsRepairing = NewData.IsRepairing
     Config.WeaponRepairPoints[key].RepairingData = NewData.RepairingData
 end)
 
-RegisterNetEvent('weapons:client:EquipTint', function(weapon, tint)
+RegisterNetEvent('qb-weapons:client:EquipTint', function(weapon, tint)
     local player = PlayerPedId()
     SetPedWeaponTintIndex(player, weapon, tint)
 end)
 
-RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)
+RegisterNetEvent('qb-weapons:client:SetCurrentWeapon', function(data, bool)
     if data ~= false then
         CurrentWeaponData = data
     else
@@ -60,46 +60,112 @@ RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)
     CanShoot = bool
 end)
 
-RegisterNetEvent('weapons:client:SetWeaponQuality', function(amount)
+RegisterNetEvent('qb-weapons:client:SetWeaponQuality', function(amount)
     if CurrentWeaponData and next(CurrentWeaponData) then
-        TriggerServerEvent('weapons:server:SetWeaponQuality', CurrentWeaponData, amount)
+        TriggerServerEvent('qb-weapons:server:SetWeaponQuality', CurrentWeaponData, amount)
     end
 end)
 
-RegisterNetEvent('weapons:client:AddAmmo', function(type, amount, itemData)
+RegisterNetEvent('qb-weapons:client:AddAmmo', function(type, amount, itemData)
     local ped = PlayerPedId()
     local weapon = GetSelectedPedWeapon(ped)
-    if CurrentWeaponData then
-        if QBCore.Shared.Weapons[weapon]['name'] ~= 'weapon_unarmed' and QBCore.Shared.Weapons[weapon]['ammotype'] == type:upper() then
-            local total = GetAmmoInPedWeapon(ped, weapon)
-            local _, maxAmmo = GetMaxAmmo(ped, weapon)
-            if total < maxAmmo then
-                QBCore.Functions.Progressbar('taking_bullets', Lang:t('info.loading_bullets'), Config.ReloadTime, false, true, {
-                    disableMovement = false,
-                    disableCarMovement = false,
-                    disableMouse = false,
-                    disableCombat = true,
-                }, {}, {}, {}, function() -- Done
-                    if QBCore.Shared.Weapons[weapon] then
-                        AddAmmoToPed(ped, weapon, amount)
-                        TaskReloadWeapon(ped)
-                        TriggerServerEvent('weapons:server:UpdateWeaponAmmo', CurrentWeaponData, total + amount)
-                        TriggerServerEvent('weapons:server:removeWeaponAmmoItem', itemData)
-                        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], 'remove')
-                        TriggerEvent('QBCore:Notify', Lang:t('success.reloaded'), 'success')
-                    end
-                end, function()
-                    QBCore.Functions.Notify(Lang:t('error.canceled'), 'error')
-                end)
-            else
-                QBCore.Functions.Notify(Lang:t('error.max_ammo'), 'error')
-            end
-        else
-            QBCore.Functions.Notify(Lang:t('error.no_weapon'), 'error')
-        end
-    else
+
+    if not CurrentWeaponData then
         QBCore.Functions.Notify(Lang:t('error.no_weapon'), 'error')
+        return
     end
+
+    if QBCore.Shared.Weapons[weapon]['name'] == 'weapon_unarmed' or QBCore.Shared.Weapons[weapon]['ammotype'] ~= type:upper() then
+        QBCore.Functions.Notify(Lang:t('error.no_weapon'), 'error')
+        return
+    end
+
+    local total = GetAmmoInPedWeapon(ped, weapon)
+    local _, maxAmmo = GetMaxAmmo(ped, weapon)
+
+    if total >= maxAmmo then
+        QBCore.Functions.Notify(Lang:t('error.max_ammo'), 'error')
+        return
+    end
+
+    QBCore.Functions.Progressbar('taking_bullets', Lang:t('info.loading_bullets'), Config.ReloadTime, false, true, {
+        disableMovement = false,
+        disableCarMovement = false,
+        disableMouse = false,
+        disableCombat = true,
+    }, {}, {}, {}, function() -- Done
+        if QBCore.Shared.Weapons[weapon] then
+            AddAmmoToPed(ped, weapon, amount)
+            TaskReloadWeapon(ped, false)
+            TriggerServerEvent('qb-weapons:server:UpdateWeaponAmmo', CurrentWeaponData, total + amount)
+            TriggerServerEvent('qb-weapons:server:removeWeaponAmmoItem', itemData)
+            TriggerEvent('qb-inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], 'remove')
+            TriggerEvent('QBCore:Notify', Lang:t('success.reloaded'), 'success')
+        end
+    end, function()
+        QBCore.Functions.Notify(Lang:t('error.canceled'), 'error')
+    end)
+end)
+
+RegisterNetEvent('qb-weapons:client:UseWeapon', function(weaponData, shootbool)
+    local ped = PlayerPedId()
+    local weaponName = tostring(weaponData.name)
+    local weaponHash = joaat(weaponData.name)
+    if currentWeapon == weaponName then
+        TriggerEvent('qb-weapons:client:DrawWeapon', nil)
+        SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+        RemoveAllPedWeapons(ped, true)
+        TriggerEvent('qb-weapons:client:SetCurrentWeapon', nil, shootbool)
+        currentWeapon = nil
+    elseif weaponName == 'weapon_stickybomb' or weaponName == 'weapon_pipebomb' or weaponName == 'weapon_smokegrenade' or weaponName == 'weapon_flare' or weaponName == 'weapon_proxmine' or weaponName == 'weapon_ball' or weaponName == 'weapon_molotov' or weaponName == 'weapon_grenade' or weaponName == 'weapon_bzgas' then
+        TriggerEvent('qb-weapons:client:DrawWeapon', weaponName)
+        GiveWeaponToPed(ped, weaponHash, 1, false, false)
+        SetPedAmmo(ped, weaponHash, 1)
+        SetCurrentPedWeapon(ped, weaponHash, true)
+        TriggerEvent('qb-weapons:client:SetCurrentWeapon', weaponData, shootbool)
+        currentWeapon = weaponName
+    elseif weaponName == 'weapon_snowball' then
+        TriggerEvent('qb-weapons:client:DrawWeapon', weaponName)
+        GiveWeaponToPed(ped, weaponHash, 10, false, false)
+        SetPedAmmo(ped, weaponHash, 10)
+        SetCurrentPedWeapon(ped, weaponHash, true)
+        TriggerServerEvent('qb-inventory:server:snowball', 'remove')
+        TriggerEvent('qb-weapons:client:SetCurrentWeapon', weaponData, shootbool)
+        currentWeapon = weaponName
+    else
+        TriggerEvent('qb-weapons:client:DrawWeapon', weaponName)
+        TriggerEvent('qb-weapons:client:SetCurrentWeapon', weaponData, shootbool)
+        local ammo = tonumber(weaponData.info.ammo) or 0
+
+        if weaponName == 'weapon_petrolcan' or weaponName == 'weapon_fireextinguisher' then
+            ammo = 4000
+        end
+
+        GiveWeaponToPed(ped, weaponHash, ammo, false, false)
+        SetPedAmmo(ped, weaponHash, ammo)
+        SetCurrentPedWeapon(ped, weaponHash, true)
+
+        if weaponData.info.attachments then
+            for _, attachment in pairs(weaponData.info.attachments) do
+                GiveWeaponComponentToPed(ped, weaponHash, joaat(attachment.component))
+            end
+        end
+
+        if weaponData.info.tint then
+            SetPedWeaponTintIndex(ped, weaponHash, weaponData.info.tint)
+        end
+
+        currentWeapon = weaponName
+    end
+end)
+
+RegisterNetEvent('qb-weapons:client:CheckWeapon', function(weaponName)
+    if currentWeapon ~= weaponName:lower() then return end
+    local ped = PlayerPedId()
+    TriggerEvent('qb-weapons:ResetHolster')
+    SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+    RemoveAllPedWeapons(ped, true)
+    currentWeapon = nil
 end)
 
 -- Threads
@@ -114,9 +180,9 @@ CreateThread(function()
         if IsPedArmed(ped, 7) == 1 and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) then
             local weapon = GetSelectedPedWeapon(ped)
             local ammo = GetAmmoInPedWeapon(ped, weapon)
-            TriggerServerEvent('weapons:server:UpdateWeaponAmmo', CurrentWeaponData, tonumber(ammo))
+            TriggerServerEvent('qb-weapons:server:UpdateWeaponAmmo', CurrentWeaponData, tonumber(ammo))
             if MultiplierAmount > 0 then
-                TriggerServerEvent('weapons:server:UpdateWeaponQuality', CurrentWeaponData, MultiplierAmount)
+                TriggerServerEvent('qb-weapons:server:UpdateWeaponQuality', CurrentWeaponData, MultiplierAmount)
                 MultiplierAmount = 0
             end
         end
@@ -141,7 +207,7 @@ CreateThread(function()
                         end
                     else
                         if weapon ~= `WEAPON_UNARMED` then
-                            TriggerEvent('inventory:client:CheckWeapon', QBCore.Shared.Weapons[weapon]['name'])
+                            TriggerEvent('qb-weapons:client:CheckWeapon', QBCore.Shared.Weapons[weapon]['name'])
                             QBCore.Functions.Notify(Lang:t('error.weapon_broken'), 'error')
                             MultiplierAmount = 0
                         end
@@ -181,7 +247,7 @@ CreateThread(function()
                                     local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, '_')[2]):lower()
                                     DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repair_weapon_price', { value = Config.WeaponRepairCosts[WeaponClass] }))
                                     if IsControlJustPressed(0, 38) then
-                                        QBCore.Functions.TriggerCallback('weapons:server:RepairWeapon', function(HasMoney)
+                                        QBCore.Functions.TriggerCallback('qb-weapons:server:RepairWeapon', function(HasMoney)
                                             if HasMoney then
                                                 CurrentWeaponData = {}
                                             end
@@ -193,7 +259,7 @@ CreateThread(function()
                                     else
                                         DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
                                         if IsControlJustPressed(0, 38) then
-                                            TriggerServerEvent('weapons:server:TakeBackWeapon', k, data)
+                                            TriggerServerEvent('qb-weapons:server:TakeBackWeapon', k, data)
                                         end
                                     end
                                 end
@@ -203,7 +269,7 @@ CreateThread(function()
                                 elseif data.RepairingData.CitizenId == PlayerData.citizenid then
                                     DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
                                     if IsControlJustPressed(0, 38) then
-                                        TriggerServerEvent('weapons:server:TakeBackWeapon', k, data)
+                                        TriggerServerEvent('qb-weapons:server:TakeBackWeapon', k, data)
                                     end
                                 end
                             end

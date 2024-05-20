@@ -12,7 +12,12 @@ shared_scripts {
     'config.lua',
 }
 
-client_script 'client/main.lua'
+client_scripts {
+    'client/main.lua',
+    'client/recoil.lua',
+    'client/weapdraw.lua',
+}
+
 server_script 'server/main.lua'
 
 files {

@@ -15,7 +15,7 @@ end
 
 -- Callback
 
-QBCore.Functions.CreateCallback('weapons:server:GetConfig', function(_, cb)
+QBCore.Functions.CreateCallback('qb-weapons:server:GetConfig', function(_, cb)
     cb(Config.WeaponRepairPoints)
 end)
 
@@ -33,7 +33,7 @@ QBCore.Functions.CreateCallback('weapon:server:GetWeaponAmmo', function(source, 
     cb(retval, WeaponData.name)
 end)
 
-QBCore.Functions.CreateCallback('weapons:server:RepairWeapon', function(source, cb, RepairPoint, data)
+QBCore.Functions.CreateCallback('qb-weapons:server:RepairWeapon', function(source, cb, RepairPoint, data)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local minute = 60 * 1000
@@ -41,67 +41,74 @@ QBCore.Functions.CreateCallback('weapons:server:RepairWeapon', function(source, 
     local WeaponData = QBCore.Shared.Weapons[GetHashKey(data.name)]
     local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, '_')[2]):lower()
 
-    if Player.PlayerData.items[data.slot] then
-        if Player.PlayerData.items[data.slot].info.quality then
-            if Player.PlayerData.items[data.slot].info.quality ~= 100 then
-                if Player.Functions.RemoveMoney('cash', Config.WeaponRepairCosts[WeaponClass]) then
-                    Config.WeaponRepairPoints[RepairPoint].IsRepairing = true
-                    Config.WeaponRepairPoints[RepairPoint].RepairingData = {
-                        CitizenId = Player.PlayerData.citizenid,
-                        WeaponData = Player.PlayerData.items[data.slot],
-                        Ready = false,
-                    }
-                    if not Player.Functions.RemoveItem(data.name, 1, data.slot) then
-                        return Player.Functions.AddMoney('cash', Config.WeaponRepairCosts[WeaponClass])
-                    end
-                    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[data.name], 'remove')
-                    TriggerClientEvent('inventory:client:CheckWeapon', src, data.name)
-                    TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
-
-                    SetTimeout(Timeout, function()
-                        Config.WeaponRepairPoints[RepairPoint].IsRepairing = false
-                        Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready = true
-                        TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
-                        exports['qb-phone']:sendNewMailToOffline(Player.PlayerData.citizenid, {
-                            sender = Lang:t('mail.sender'),
-                            subject = Lang:t('mail.subject'),
-                            message = Lang:t('mail.message', { value = WeaponData.label })
-                        })
-                        SetTimeout(7 * 60000, function()
-                            if Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready then
-                                Config.WeaponRepairPoints[RepairPoint].IsRepairing = false
-                                Config.WeaponRepairPoints[RepairPoint].RepairingData = {}
-                                TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
-                            end
-                        end)
-                    end)
-                    cb(true)
-                else
-                    cb(false)
-                end
-            else
-                TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_damage_on_weapon'), 'error')
-                cb(false)
-            end
-        else
-            TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_damage_on_weapon'), 'error')
-            cb(false)
-        end
-    else
-        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_weapon_in_hand'), 'error')
-        TriggerClientEvent('weapons:client:SetCurrentWeapon', src, {}, false)
+    if not Player then
         cb(false)
+        return
     end
+
+    if not Player.PlayerData.items[data.slot] then
+        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_weapon_in_hand'), 'error')
+        TriggerClientEvent('qb-weapons:client:SetCurrentWeapon', src, {}, false)
+        cb(false)
+        return
+    end
+
+    if not Player.PlayerData.items[data.slot].info.quality or Player.PlayerData.items[data.slot].info.quality == 100 then
+        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_damage_on_weapon'), 'error')
+        cb(false)
+        return
+    end
+
+    if not Player.Functions.RemoveMoney('cash', Config.WeaponRepairCosts[WeaponClass]) then
+        cb(false)
+        return
+    end
+
+    Config.WeaponRepairPoints[RepairPoint].IsRepairing = true
+    Config.WeaponRepairPoints[RepairPoint].RepairingData = {
+        CitizenId = Player.PlayerData.citizenid,
+        WeaponData = Player.PlayerData.items[data.slot],
+        Ready = false,
+    }
+
+    if not exports['qb-inventory']:RemoveItem(src, data.name, 1, data.slot, 'qb-weapons:server:RepairWeapon') then
+        Player.Functions.AddMoney('cash', Config.WeaponRepairCosts[WeaponClass], 'qb-weapons:server:RepairWeapon')
+        return
+    end
+
+    TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[data.name], 'remove')
+    TriggerClientEvent('qb-inventory:client:CheckWeapon', src, data.name)
+    TriggerClientEvent('qb-weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
+
+    SetTimeout(Timeout, function()
+        Config.WeaponRepairPoints[RepairPoint].IsRepairing = false
+        Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready = true
+        TriggerClientEvent('qb-weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
+        exports['qb-phone']:sendNewMailToOffline(Player.PlayerData.citizenid, {
+            sender = Lang:t('mail.sender'),
+            subject = Lang:t('mail.subject'),
+            message = Lang:t('mail.message', { value = WeaponData.label })
+        })
+
+        SetTimeout(7 * 60000, function()
+            if Config.WeaponRepairPoints[RepairPoint].RepairingData.Ready then
+                Config.WeaponRepairPoints[RepairPoint].IsRepairing = false
+                Config.WeaponRepairPoints[RepairPoint].RepairingData = {}
+                TriggerClientEvent('qb-weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
+            end
+        end)
+    end)
+
+    cb(true)
 end)
 
 QBCore.Functions.CreateCallback('prison:server:checkThrowable', function(source, cb, weapon)
     local Player = QBCore.Functions.GetPlayer(source)
-
     if not Player then return cb(false) end
     local throwable = false
     for _, v in pairs(Config.Throwables) do
         if QBCore.Shared.Weapons[weapon].name == 'weapon_' .. v then
-            if not Player.Functions.RemoveItem('weapon_' .. v, 1) then return cb(false) end
+            if not exports['qb-inventory']:RemoveItem(source, 'weapon_' .. v, 1, false, 'prison:server:checkThrowable') then return cb(false) end
             throwable = true
             break
         end
@@ -111,7 +118,7 @@ end)
 
 -- Events
 
-RegisterNetEvent('weapons:server:UpdateWeaponAmmo', function(CurrentWeaponData, amount)
+RegisterNetEvent('qb-weapons:server:UpdateWeaponAmmo', function(CurrentWeaponData, amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
@@ -124,20 +131,20 @@ RegisterNetEvent('weapons:server:UpdateWeaponAmmo', function(CurrentWeaponData, 
     end
 end)
 
-RegisterNetEvent('weapons:server:TakeBackWeapon', function(k)
+RegisterNetEvent('qb-weapons:server:TakeBackWeapon', function(k)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
     local itemdata = Config.WeaponRepairPoints[k].RepairingData.WeaponData
     itemdata.info.quality = 100
-    Player.Functions.AddItem(itemdata.name, 1, false, itemdata.info)
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[itemdata.name], 'add')
+    exports['qb-inventory']:AddItem(src, itemdata.name, 1, false, itemdata.info, 'qb-weapons:server:TakeBackWeapon')
+    TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[itemdata.name], 'add')
     Config.WeaponRepairPoints[k].IsRepairing = false
     Config.WeaponRepairPoints[k].RepairingData = {}
-    TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[k], k)
+    TriggerClientEvent('qb-weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[k], k)
 end)
 
-RegisterNetEvent('weapons:server:SetWeaponQuality', function(data, hp)
+RegisterNetEvent('qb-weapons:server:SetWeaponQuality', function(data, hp)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
@@ -146,7 +153,7 @@ RegisterNetEvent('weapons:server:SetWeaponQuality', function(data, hp)
     Player.Functions.SetInventory(Player.PlayerData.items, true)
 end)
 
-RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmount)
+RegisterNetEvent('qb-weapons:server:UpdateWeaponQuality', function(data, RepeatAmount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local WeaponData = QBCore.Shared.Weapons[GetHashKey(data.name)]
@@ -160,7 +167,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                         WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
                     else
                         WeaponSlot.info.quality = 0
-                        TriggerClientEvent('inventory:client:UseWeapon', src, data, false)
+                        TriggerClientEvent('qb-weapons:client:UseWeapon', src, data, false)
                         TriggerClientEvent('QBCore:Notify', src, Lang:t('error.weapon_broken_need_repair'), 'error')
                         break
                     end
@@ -172,7 +179,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                         WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
                     else
                         WeaponSlot.info.quality = 0
-                        TriggerClientEvent('inventory:client:UseWeapon', src, data, false)
+                        TriggerClientEvent('qb-weapons:client:UseWeapon', src, data, false)
                         TriggerClientEvent('QBCore:Notify', src, Lang:t('error.weapon_broken_need_repair'), 'error')
                         break
                     end
@@ -183,49 +190,47 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
     Player.Functions.SetInventory(Player.PlayerData.items, true)
 end)
 
-RegisterNetEvent('weapons:server:removeWeaponAmmoItem', function(item)
+RegisterNetEvent('qb-weapons:server:removeWeaponAmmoItem', function(item)
     local Player = QBCore.Functions.GetPlayer(source)
-
     if not Player or type(item) ~= 'table' or not item.name or not item.slot then return end
-
-    Player.Functions.RemoveItem(item.name, 1, item.slot)
+    exports['qb-inventory']:RemoveItem(source, item.name, 1, item.slot, 'qb-weapons:server:removeWeaponAmmoItem')
 end)
 
 -- Commands
 
 QBCore.Commands.Add('repairweapon', 'Repair Weapon (God Only)', { { name = 'hp', help = Lang:t('info.hp_of_weapon') } }, true, function(source, args)
-    TriggerClientEvent('weapons:client:SetWeaponQuality', source, tonumber(args[1]))
+    TriggerClientEvent('qb-weapons:client:SetWeaponQuality', source, tonumber(args[1]))
 end, 'god')
 
 -- Items
 
 -- AMMO
 QBCore.Functions.CreateUseableItem('pistol_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_PISTOL', 12, item)
+    TriggerClientEvent('qb-weapons:client:AddAmmo', source, 'AMMO_PISTOL', 12, item)
 end)
 
 QBCore.Functions.CreateUseableItem('rifle_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_RIFLE', 30, item)
+    TriggerClientEvent('qb-weapons:client:AddAmmo', source, 'AMMO_RIFLE', 30, item)
 end)
 
 QBCore.Functions.CreateUseableItem('smg_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_SMG', 20, item)
+    TriggerClientEvent('qb-weapons:client:AddAmmo', source, 'AMMO_SMG', 20, item)
 end)
 
 QBCore.Functions.CreateUseableItem('shotgun_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_SHOTGUN', 10, item)
+    TriggerClientEvent('qb-weapons:client:AddAmmo', source, 'AMMO_SHOTGUN', 10, item)
 end)
 
 QBCore.Functions.CreateUseableItem('mg_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_MG', 30, item)
+    TriggerClientEvent('qb-weapons:client:AddAmmo', source, 'AMMO_MG', 30, item)
 end)
 
 QBCore.Functions.CreateUseableItem('snp_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_SNIPER', 10, item)
+    TriggerClientEvent('qb-weapons:client:AddAmmo', source, 'AMMO_SNIPER', 10, item)
 end)
 
 QBCore.Functions.CreateUseableItem('emp_ammo', function(source, item)
-    TriggerClientEvent('weapons:client:AddAmmo', source, 'AMMO_EMPLAUNCHER', 10, item)
+    TriggerClientEvent('qb-weapons:client:AddAmmo', source, 'AMMO_EMPLAUNCHER', 10, item)
 end)
 
 -- TINTS
@@ -275,9 +280,9 @@ local function EquipWeaponTint(source, tintIndex, item, isMK2)
     weaponSlot.info.tint = tintIndex
     Player.PlayerData.items[weaponSlotIndex] = weaponSlot
     Player.Functions.SetInventory(Player.PlayerData.items, true)
-    Player.Functions.RemoveItem(item, 1)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], 'remove')
-    TriggerClientEvent('weapons:client:EquipTint', source, selectedWeaponHash, tintIndex)
+    exports['qb-inventory']:RemoveItem(source, item, 1, false, 'qb-weapon:EquipWeaponTint')
+    TriggerClientEvent('qb-inventory:client:ItemBox', source, QBCore.Shared.Items[item], 'remove')
+    TriggerClientEvent('qb-weapons:client:EquipTint', source, selectedWeaponHash, tintIndex)
 end
 
 for i = 0, 7 do
@@ -341,8 +346,8 @@ local function EquipWeaponAttachment(src, item)
     Player.PlayerData.items[weaponSlotIndex] = weaponSlot
     Player.Functions.SetInventory(Player.PlayerData.items, true)
     if shouldRemove then
-        Player.Functions.RemoveItem(item, 1)
-        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'remove')
+        exports['qb-inventory']:RemoveItem(src, item, 1, false, 'qb-weapons:EquipWeaponAttachment')
+        TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'remove')
     end
 end
 
@@ -352,21 +357,20 @@ for attachmentItem in pairs(WeaponAttachments) do
     end)
 end
 
-QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(source, cb, AttachmentData, WeaponData)
+QBCore.Functions.CreateCallback('qb-weapons:server:RemoveAttachment', function(source, cb, AttachmentData, WeaponData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local Inventory = Player.PlayerData.items
     local allAttachments = WeaponAttachments
     local AttachmentComponent = allAttachments[AttachmentData.attachment][WeaponData.name]
-
     if Inventory[WeaponData.slot] then
         if Inventory[WeaponData.slot].info.attachments and next(Inventory[WeaponData.slot].info.attachments) then
             local HasAttach, key = HasAttachment(AttachmentComponent, Inventory[WeaponData.slot].info.attachments)
             if HasAttach then
                 table.remove(Inventory[WeaponData.slot].info.attachments, key)
                 Player.Functions.SetInventory(Player.PlayerData.items, true)
-                Player.Functions.AddItem(AttachmentData.attachment, 1)
-                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[AttachmentData.attachment], 'add')
+                exports['qb-inventory']:AddItem(src, AttachmentData.attachment, 1, false, false, 'qb-weapons:server:RemoveAttachment')
+                TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[AttachmentData.attachment], 'add')
                 TriggerClientEvent('QBCore:Notify', src, Lang:t('info.removed_attachment', { value = QBCore.Shared.Items[AttachmentData.attachment].label }), 'error')
                 cb(Inventory[WeaponData.slot].info.attachments)
             else
