@@ -75,8 +75,13 @@ RegisterNetEvent('qb-weapons:client:AddAmmo', function(type, amount, itemData)
         return
     end
 
-    if QBCore.Shared.Weapons[weapon]['name'] == 'weapon_unarmed' or QBCore.Shared.Weapons[weapon]['ammotype'] ~= type:upper() then
-        QBCore.Functions.Notify(Lang:t('error.no_weapon'), 'error')
+    if QBCore.Shared.Weapons[weapon]['name'] == 'weapon_unarmed' then
+        QBCore.Functions.Notify(Lang:t('error.no_weapon_in_hand'), 'error')
+        return
+    end
+
+    if QBCore.Shared.Weapons[weapon]['ammotype'] ~= type:upper() then
+        QBCore.Functions.Notify(Lang:t('error.wrong_ammo'), 'error')
         return
     end
 
