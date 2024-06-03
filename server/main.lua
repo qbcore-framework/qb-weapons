@@ -208,13 +208,11 @@ end, 'god')
 local AmmoTypes = {
     pistol_ammo = { ammoType = 'AMMO_PISTOL', amount = 30 },
     rifle_ammo = { ammoType = 'AMMO_RIFLE', amount = 30 },
-    hunting_ammo = { ammoType = 'AMMO_HUNTING', amount = 30 },
     smg_ammo = { ammoType = 'AMMO_SMG', amount = 30 },
     shotgun_ammo = { ammoType = 'AMMO_SHOTGUN', amount = 10 },
     mg_ammo = { ammoType = 'AMMO_MG', amount = 30 },
     snp_ammo = { ammoType = 'AMMO_SNIPER', amount = 10 },
-    emp_ammo = { ammoType = 'AMMO_EMPLAUNCHER', amount = 10 },
-    smoke_ammo = { ammoType = 'AMMO_GRENADELAUNCHER', amount = 10 }
+    emp_ammo = { ammoType = 'AMMO_EMPLAUNCHER', amount = 10 }
 }
 
 for ammoItem, properties in pairs(AmmoTypes) do
