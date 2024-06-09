@@ -3,6 +3,7 @@ local Translations = {
         canceled = 'Canceled',
         max_ammo = 'Max Ammo Capacity',
         no_weapon = 'You have no weapon.',
+        wrong_ammo = 'Your ammo type is wrong.',
         no_support_attachment = 'This weapon does not support this attachment.',
         no_weapon_in_hand = 'You dont have a weapon in your hand.',
         weapon_broken = 'This weapon is broken and can not be used.',
