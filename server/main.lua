@@ -217,7 +217,7 @@ local AmmoTypes = {
 
 for ammoItem, properties in pairs(AmmoTypes) do
     QBCore.Functions.CreateUseableItem(ammoItem, function(source, item)
-        TriggerClientEvent('weapons:client:AddAmmo', source, properties.ammoType, properties.amount, item)
+        TriggerClientEvent('qb-weapons:client:AddAmmo', source, properties.ammoType, properties.amount, item)
     end)
 end
 
