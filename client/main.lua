@@ -101,8 +101,8 @@ RegisterNetEvent('qb-weapons:client:AddAmmo', function(ammoType, amount, itemDat
     }, {}, {}, {}, function() -- Done
         weapon = GetSelectedPedWeapon(ped) -- Get weapon at time of completion
 
-        if QBCore.Shared.Weapons[weapon]?.ammotype ~= ammoType then 
-            return QBCore.Functions.Notify(Lang:t('error.wrong_ammo'), 'error') 
+        if QBCore.Shared.Weapons[weapon]?.ammotype ~= ammoType then
+            return QBCore.Functions.Notify(Lang:t('error.wrong_ammo'), 'error')
         end
 
         AddAmmoToPed(ped, weapon, amount)
