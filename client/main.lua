@@ -66,7 +66,7 @@ RegisterNetEvent('qb-weapons:client:SetWeaponQuality', function(amount)
     end
 end)
 
-RegisterNetEvent('qb-weapons:client:AddAmmo', function(type, amount, itemData)
+RegisterNetEvent('qb-weapons:client:AddAmmo', function(ammoType, amount, itemData)
     local ped = PlayerPedId()
     local weapon = GetSelectedPedWeapon(ped)
 
@@ -80,7 +80,7 @@ RegisterNetEvent('qb-weapons:client:AddAmmo', function(type, amount, itemData)
         return
     end
 
-    if QBCore.Shared.Weapons[weapon]['ammotype'] ~= type:upper() then
+    if QBCore.Shared.Weapons[weapon]['ammotype'] ~= ammoType:upper() then
         QBCore.Functions.Notify(Lang:t('error.wrong_ammo'), 'error')
         return
     end
@@ -99,14 +99,18 @@ RegisterNetEvent('qb-weapons:client:AddAmmo', function(type, amount, itemData)
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        if QBCore.Shared.Weapons[weapon] then
-            AddAmmoToPed(ped, weapon, amount)
-            TaskReloadWeapon(ped, false)
-            TriggerServerEvent('qb-weapons:server:UpdateWeaponAmmo', CurrentWeaponData, total + amount)
-            TriggerServerEvent('qb-weapons:server:removeWeaponAmmoItem', itemData)
-            TriggerEvent('qb-inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], 'remove')
-            TriggerEvent('QBCore:Notify', Lang:t('success.reloaded'), 'success')
+        weapon = GetSelectedPedWeapon(ped) -- Get weapon at time of completion
+
+        if QBCore.Shared.Weapons[weapon]?.ammotype ~= ammoType then 
+            return QBCore.Functions.Notify(Lang:t('error.wrong_ammo'), 'error') 
         end
+
+        AddAmmoToPed(ped, weapon, amount)
+        TaskReloadWeapon(ped, false)
+        TriggerServerEvent('qb-weapons:server:UpdateWeaponAmmo', CurrentWeaponData, total + amount)
+        TriggerServerEvent('qb-weapons:server:removeWeaponAmmoItem', itemData)
+        TriggerEvent('qb-inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], 'remove')
+        TriggerEvent('QBCore:Notify', Lang:t('success.reloaded'), 'success')
     end, function()
         QBCore.Functions.Notify(Lang:t('error.canceled'), 'error')
     end)
