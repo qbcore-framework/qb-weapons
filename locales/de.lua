@@ -1,31 +1,32 @@
 local Translations = {
     error = {
         canceled = 'Abgebrochen',
-        max_ammo = 'Maximale Muntions Kapazität',
-        no_weapon = 'Du hast keine Waffen.',
-        no_support_attachment = 'Diese waffe untersützt diesen komponenten nicht.',
+        max_ammo = 'Maximale Munitionskapazität',
+        no_weapon = 'Du hast keine Waffe.',
+        wrong_ammo = 'Der Munitionstyp ist falsch.',
+        no_support_attachment = 'Diese Waffe unterstützt diesen Aufsatz nicht.',
         no_weapon_in_hand = 'Du hast keine Waffe in der Hand.',
-        weapon_broken = 'Diese Waffe ist Kapputt! Du kannst sie nicht Benutzen!.',
-        no_damage_on_weapon = 'Die Waffe hat keine Schäden..',
-        weapon_broken_need_repair = 'Deine Waffe ist Kapput Repariere sie bevor du sie nutzen Kannst.',
-        attachment_already_on_weapon = 'Du hast %{value} Bereits auf deiner Waffe.'
+        weapon_broken = 'Diese Waffe ist kaputt und kann nicht verwendet werden.',
+        no_damage_on_weapon = 'Die Waffe hat keine Schäden...',
+        weapon_broken_need_repair = 'Deine Waffe ist kaputt, du musst sie reparieren, bevor du sie wieder benutzen kannst.',
+        attachment_already_on_weapon = 'Du hast bereits ein %{value} auf deiner Waffe.'
     },
     success = {
         reloaded = 'Nachgeladen'
     },
     info = {
         loading_bullets = 'Lade Kugeln',
-        repairshop_not_usable = 'Der ReparierShop ist im moment ~r~NICHT~w~ Nutzbar.',
-        weapon_will_repair = 'Deine Waffe wird Repariert.',
-        take_weapon_back = '[E] - Nehme deine Waffe',
-        repair_weapon_price = '[E] Repariere die waffe Für:, ~g~$%{value}~w~',
-        removed_attachment = 'Du hast %{value} von deiner Waffe Entfernt!',
-        hp_of_weapon = 'Status der Waffe'
+        repairshop_not_usable = 'Die Werkstatt ist momentan ~r~NICHT~w~ benutzbar.',
+        weapon_will_repair = 'Deine Waffe wird repariert.',
+        take_weapon_back = '[E] - Waffe nehmen',
+        repair_weapon_price = '[E] Repariere die Waffe für:, ~g~$%{value}~w~',
+        removed_attachment = 'Du hast %{value} von deiner Waffe entfernt!',
+        hp_of_weapon = 'Haltbarkeit deiner Waffe'
     },
     mail = {
         sender = 'Tyrone',
-        subject = 'Reperatur',
-        message = 'Dein %{value} du kannst es bei der Position abholen. <br><br> Peace out madafaka'
+        subject = 'Reparatur',
+        message = 'Dein %{value} ist repariert. Du kannst es am angegebenen Ort abholen. <br><br> Peace out, Madafaka'
     },
 }
 
