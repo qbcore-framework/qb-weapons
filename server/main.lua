@@ -164,7 +164,7 @@ RegisterNetEvent('qb-weapons:server:UpdateWeaponQuality', function(data, RepeatA
             if WeaponSlot.info.quality then
                 for _ = 1, RepeatAmount, 1 do
                     if WeaponSlot.info.quality - DecreaseAmount > 0 then
-                        WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
+                        WeaponSlot.info.quality = QBCore.Shared.Round(WeaponSlot.info.quality - DecreaseAmount, 2)
                     else
                         WeaponSlot.info.quality = 0
                         TriggerClientEvent('qb-weapons:client:UseWeapon', src, data, false)
@@ -176,7 +176,7 @@ RegisterNetEvent('qb-weapons:server:UpdateWeaponQuality', function(data, RepeatA
                 WeaponSlot.info.quality = 100
                 for _ = 1, RepeatAmount, 1 do
                     if WeaponSlot.info.quality - DecreaseAmount > 0 then
-                        WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
+                        WeaponSlot.info.quality = QBCore.Shared.Round(WeaponSlot.info.quality - DecreaseAmount, 2)
                     else
                         WeaponSlot.info.quality = 0
                         TriggerClientEvent('qb-weapons:client:UseWeapon', src, data, false)
