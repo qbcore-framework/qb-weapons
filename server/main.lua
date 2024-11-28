@@ -77,7 +77,7 @@ QBCore.Functions.CreateCallback('qb-weapons:server:RepairWeapon', function(sourc
     end
 
     TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[data.name], 'remove')
-    TriggerClientEvent('qb-inventory:client:CheckWeapon', src, data.name)
+    TriggerClientEvent('qb-weapons:client:CheckWeapon', src, data.name)
     TriggerClientEvent('qb-weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
 
     SetTimeout(Timeout, function()
