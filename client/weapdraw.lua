@@ -113,6 +113,10 @@ local function loadAnimDict(dict)
     end
 end
 
+local function isPlayingAnim(ped, dict, anim)
+    return IsEntityPlayingAnim(ped, dict, anim, 3)
+end
+
 local function checkWeapon(newWeap)
     for i = 1, #weapons do
         if joaat(weapons[i]) == newWeap then
@@ -143,64 +147,69 @@ end)
 RegisterNetEvent('qb-weapons:client:DrawWeapon', function()
     if GetResourceState('qb-inventory') == 'missing' then return end
 
-    local ped, currWeap = PlayerPedId(), `WEAPON_UNARMED`
+    local ped = PlayerPedId()
+    local currWeap = `WEAPON_UNARMED`
     local holstered = true
+    local canFire = true
+
+    loadAnimDict('rcmjosh4')
+    loadAnimDict('reaction@intimidation@cop@unarmed')
 
     while true do
-        Wait(250)
+        local sleep = 250
         if DoesEntityExist(ped) and not IsEntityDead(ped) then
             local newWeap = GetSelectedPedWeapon(ped)
             if newWeap ~= currWeap then
-                local pos, rot = GetEntityCoords(ped), GetEntityHeading(ped)
-                SetCurrentPedWeapon(ped, currWeap, true)
-
                 local holsterVariant = GetPedDrawableVariation(ped, 7)
                 local wearingHolster = Config.WeapDraw.variants[holsterVariant] ~= nil
 
-                if checkWeapon(newWeap) then
-                    if holstered and wearingHolster then
+                if checkWeapon(newWeap) then -- Drawing a weapon
+                    if holstered and wearingHolster and not IsEntityPlayingAnim(ped, 'rcmjosh4', 'josh_leadout_cop2', 3) then
                         canFire = false
                         CeaseFire()
-                        loadAnimDict('rcmjosh4')
-                        TaskPlayAnimAdvanced(ped, 'rcmjosh4', 'josh_leadout_cop2', pos.x, pos.y, pos.z, 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
+                        TaskPlayAnim(ped, 'rcmjosh4', 'josh_leadout_cop2', 3.0, 3.0, -1, 50, 0, false, false, false)
                         Wait(300)
-                        SetCurrentPedWeapon(ped, newWeap, true)
 
-                        local newDrawable = Config.WeapDraw.variants[holsterVariant]
-                        if newDrawable then
-                            SetPedComponentVariation(ped, 7, newDrawable, GetPedTextureVariation(ped,7), 2)
+                        local emptyDrawable = Config.WeapDraw.variants[holsterVariant]
+                        if emptyDrawable and emptyDrawable ~= holsterVariant then
+                            SetPedComponentVariation(ped, 7, emptyDrawable, GetPedTextureVariation(ped, 7), 2)
                         end
 
-                        currWeap = newWeap
-                        Wait(300)
-                        ClearPedTasks(ped)
-                        holstered = false
-                        canFire = true
-                    else
                         SetCurrentPedWeapon(ped, newWeap, true)
                         currWeap = newWeap
                         holstered = false
                         canFire = true
+                        ClearPedTasks(ped)
+                    elseif newWeap ~= `WEAPON_UNARMED` then
+                        SetCurrentPedWeapon(ped, newWeap, true)
+                        currWeap = newWeap
+                        holstered = false
                     end
-                elseif currWeap ~= `WEAPON_UNARMED` and isWeaponHolsterable(currWeap) and wearingHolster then
-                    local newDrawable = Config.WeapDraw.variants[holsterVariant]
-                    if newDrawable then
-                        SetPedComponentVariation(ped, 7, newDrawable, currHolsterTexture, 2)
+
+                    if newWeap == `WEAPON_UNARMED` and currWeap ~= `WEAPON_UNARMED` and wearingHolster and isWeaponHolsterable(currWeap) and not IsEntityPlayingAnim(ped, 'reaction@intimidation@cop@unarmed', 'intro', 3) then
+                        canFire = false
+                        CeaseFire()
+                        TaskPlayAnim(ped, 'reaction@intimidation@cop@unarmed', 'intro', 3.0, 3.0, -1, 50, 0, false, false, false)
+                        Wait(300)
+
+                        local holsteredDrawable = Config.WeapDraw.variants[holsterVariant]
+                        if holsteredDrawable and holsteredDrawable ~= holsterVariant then
+                            SetPedComponentVariation(ped, 7, holsteredDrawable, GetPedTextureVariation(ped, 7), 2)
+                        end
+
+                        SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+                        currWeap = `WEAPON_UNARMED`
+                        holstered = true
+                        canFire = true
+                        ClearPedTasks(ped)
                     end
-                    SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
-                    currWeap = `WEAPON_UNARMED`
-                    holstered = true
-                    ClearPedTasks(ped)
-                else
-                    SetCurrentPedWeapon(ped, newWeap, true)
-                    currWeap = newWeap
-                    holstered = false
                 end
             end
         end
-    Wait(0)
+        Wait(250)
     end
 end)
+
 
 
 function CeaseFire()
