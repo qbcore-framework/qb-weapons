@@ -33,19 +33,29 @@ Config.Throwables = {
 }
 
 Config.WeapDraw = {
-    variants = { 130, 122, 3, 6, 8 },
+    variants = {
+        [186] = 189,
+        [189] = 186,
+        [193] = 187,
+        [187] = 193,
+        [179] = 185,
+        [185] = 179,
+        [198] = 199,
+        [199] = 198,
+        [205] = 204,
+        [204] = 205,
+        -- add additional pairs here if needed
+    },
     weapons = {
-        --'WEAPON_STUNGUN',
-        'WEAPON_PISTOL',
-        'WEAPON_PISTOL_MK2',
         'WEAPON_COMBATPISTOL',
+        'WEAPON_PISTOL',
         'WEAPON_APPISTOL',
         'WEAPON_PISTOL50',
         'WEAPON_REVOLVER',
         'WEAPON_SNSPISTOL',
         'WEAPON_HEAVYPISTOL',
-        'WEAPON_VINTAGEPISTOL'
-    }
+        'WEAPON_VINTAGEPISTOL',
+    },
 }
 
 Config.DurabilityMultiplier = {
@@ -181,7 +191,8 @@ Config.DurabilityMultiplier = {
 }
 
 Config.WeaponRepairPoints = {
-    { coords = vector3(964.02, -1267.41, 34.97), IsRepairing = false, RepairingData = {} }
+    { coords = vector3(1845.6, 3699.25, 34.24), IsRepairing = false, RepairingData = {} },      -- Sandy SO (Armory)
+    { coords = vector3(463.36, -998.89, 30.69), IsRepairing = false, RepairingData = {} },        -- MRPD (Armory)
 }
 
 Config.WeaponRepairCosts = {
