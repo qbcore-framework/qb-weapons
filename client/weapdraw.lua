@@ -102,13 +102,8 @@ local weapons = {
     'WEAPON_STONE_HATCHET'
 }
 
-local holstered = true
 local canFire = true
-local currWeap = `WEAPON_UNARMED`
-local currHolster = nil
 local currHolsterTexture = nil
-local wearingHolster = nil
-
 
 local function loadAnimDict(dict)
     if HasAnimDictLoaded(dict) then return end
