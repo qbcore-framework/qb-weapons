@@ -102,7 +102,6 @@ local weapons = {
     'WEAPON_STONE_HATCHET'
 }
 
-local canFire = true
 local currHolsterTexture = nil
 
 local function loadAnimDict(dict)
@@ -144,7 +143,7 @@ RegisterNetEvent('qb-weapons:client:DrawWeapon', function()
     if GetResourceState('qb-inventory') == 'missing' then return end
 
     local ped, currWeap = PlayerPedId(), `WEAPON_UNARMED`
-    local holstered, canFire = true, true
+    local holstered = true
 
     while true do
         Wait(250)
