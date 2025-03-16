@@ -103,6 +103,7 @@ local weapons = {
 }
 
 local currHolsterTexture = nil
+local canFire = false
 
 local function loadAnimDict(dict)
     if HasAnimDictLoaded(dict) then return end
