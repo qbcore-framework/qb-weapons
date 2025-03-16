@@ -102,7 +102,6 @@ local weapons = {
     'WEAPON_STONE_HATCHET'
 }
 
-local currHolsterTexture = nil
 local canFire = false
 
 local function loadAnimDict(dict)
@@ -136,7 +135,6 @@ RegisterNetEvent('qb-weapons:ResetHolster', function()
     canFire = true
     currWeap = `WEAPON_UNARMED`
     currHolster = nil
-    currHolsterTexture = nil
     wearingHolster = nil
 end)
 
@@ -146,13 +144,12 @@ RegisterNetEvent('qb-weapons:client:DrawWeapon', function()
     local ped = PlayerPedId()
     local currWeap = `WEAPON_UNARMED`
     local holstered = true
-    local canFire = true
+    canFire = true
 
     loadAnimDict('rcmjosh4')
     loadAnimDict('reaction@intimidation@cop@unarmed')
 
     while true do
-        local sleep = 250
         if DoesEntityExist(ped) and not IsEntityDead(ped) then
             local newWeap = GetSelectedPedWeapon(ped)
             if newWeap ~= currWeap then
