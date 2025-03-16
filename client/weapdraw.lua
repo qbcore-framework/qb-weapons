@@ -113,10 +113,6 @@ local function loadAnimDict(dict)
     end
 end
 
-local function isPlayingAnim(ped, dict, anim)
-    return IsEntityPlayingAnim(ped, dict, anim, 3)
-end
-
 local function checkWeapon(newWeap)
     for i = 1, #weapons do
         if joaat(weapons[i]) == newWeap then
