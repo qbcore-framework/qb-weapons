@@ -5,7 +5,7 @@ local CurrentWeaponData, CanShoot, MultiplierAmount, currentWeapon = {}, true, 0
 
 -- Handlers
 
-AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     QBCore.Functions.TriggerCallback('qb-weapons:server:GetConfig', function(RepairPoints)
         for k, data in pairs(RepairPoints) do
