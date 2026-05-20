@@ -1,5 +1,5 @@
 -- Variables
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject({ 'Functions', 'Shared' })
 local PlayerData = QBCore.Functions.GetPlayerData()
 local CurrentWeaponData, CanShoot, MultiplierAmount, currentWeapon = {}, true, 0, nil
 
@@ -98,7 +98,7 @@ RegisterNetEvent('qb-weapons:client:AddAmmo', function(ammoType, amount, itemDat
         disableCarMovement = false,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function() -- Done
+    }, {}, {}, {}, function()              -- Done
         weapon = GetSelectedPedWeapon(ped) -- Get weapon at time of completion
 
         if QBCore.Shared.Weapons[weapon]?.ammotype ~= ammoType then
