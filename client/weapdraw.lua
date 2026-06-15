@@ -102,12 +102,28 @@ local weapons = {
     'WEAPON_STONE_HATCHET'
 }
 
+local weaponHashes = {}
+for i = 1, #weapons do
+    weaponHashes[joaat(weapons[i])] = true
+end
+
+local holsterableWeaponHashes = {}
+for i = 1, #(Config.WeapDraw.weapons or {}) do
+    holsterableWeaponHashes[joaat(Config.WeapDraw.weapons[i])] = true
+end
+
+local holsterVariants = {}
+for i = 1, #(Config.WeapDraw.variants or {}) do
+    holsterVariants[Config.WeapDraw.variants[i]] = true
+end
+
 local holstered = true
 local canFire = true
 local currWeap = `WEAPON_UNARMED`
 local currHolster = nil
 local currHolsterTexture = nil
 local wearingHolster = nil
+local drawLoopRunning = false
 
 local function loadAnimDict(dict)
     if HasAnimDictLoaded(dict) then return end
@@ -118,21 +134,11 @@ local function loadAnimDict(dict)
 end
 
 local function checkWeapon(newWeap)
-    for i = 1, #weapons do
-        if joaat(weapons[i]) == newWeap then
-            return true
-        end
-    end
-    return false
+    return weaponHashes[newWeap] == true
 end
 
 local function isWeaponHolsterable(weap)
-    for i = 1, #Config.WeapDraw.weapons do
-        if joaat(Config.WeapDraw.weapons[i]) == weap then
-            return true
-        end
-    end
-    return false
+    return holsterableWeaponHashes[weap] == true
 end
 
 RegisterNetEvent('qb-weapons:ResetHolster', function()
@@ -146,18 +152,25 @@ end)
 
 RegisterNetEvent('qb-weapons:client:DrawWeapon', function()
     if GetResourceState('qb-inventory') == 'missing' then return end
+    if drawLoopRunning then return end
+
+    drawLoopRunning = true
+
     local sleep
     local weaponCheck = 0
+    local fastUntil = GetGameTimer() + 1000
+
     while true do
         local ped = PlayerPedId()
-        sleep = 250
+        sleep = GetGameTimer() < fastUntil and 0 or 250
         if DoesEntityExist(ped) and not IsEntityDead(ped) and not IsPedInParachuteFreeFall(ped) and not IsPedFalling(ped) and (GetPedParachuteState(ped) == -1 or GetPedParachuteState(ped) == 0) then
-            sleep = 0
-            if currWeap ~= GetSelectedPedWeapon(ped) then
+            local selectedWeapon = GetSelectedPedWeapon(ped)
+            if currWeap ~= selectedWeapon then
+                sleep = 0
                 local pos = GetEntityCoords(ped, true)
                 local rot = GetEntityHeading(ped)
 
-                local newWeap = GetSelectedPedWeapon(ped)
+                local newWeap = selectedWeapon
                 SetCurrentPedWeapon(ped, currWeap, true)
                 loadAnimDict('reaction@intimidation@1h')
                 loadAnimDict('reaction@intimidation@cop@unarmed')
@@ -165,12 +178,7 @@ RegisterNetEvent('qb-weapons:client:DrawWeapon', function()
                 loadAnimDict('weapons@pistol@')
 
                 local holsterVariant = GetPedDrawableVariation(ped, 8)
-                wearingHolster = false
-                for i = 1, #Config.WeapDraw.variants, 1 do
-                    if holsterVariant == Config.WeapDraw.variants[i] then
-                        wearingHolster = true
-                    end
-                end
+                wearingHolster = holsterVariants[holsterVariant] == true
                 if checkWeapon(newWeap) then
                     if holstered then
                         if wearingHolster then
@@ -322,8 +330,12 @@ RegisterNetEvent('qb-weapons:client:DrawWeapon', function()
             if weaponCheck == 2 then
                 break
             end
+        else
+            weaponCheck = 0
         end
     end
+
+    drawLoopRunning = false
 end)
 
 function CeaseFire()
