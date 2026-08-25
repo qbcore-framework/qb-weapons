@@ -52,12 +52,13 @@ RegisterNetEvent('qb-weapons:client:EquipTint', function(weapon, tint)
 end)
 
 RegisterNetEvent('qb-weapons:client:SetCurrentWeapon', function(data, bool)
-    if data ~= false then
+    if data and data ~= false then
         CurrentWeaponData = data
     else
         CurrentWeaponData = {}
     end
-    CanShoot = bool
+
+    CanShoot = bool ~= false
 end)
 
 RegisterNetEvent('qb-weapons:client:SetWeaponQuality', function(amount)
@@ -179,82 +180,145 @@ end)
 
 -- Threads
 
+local ThrowableWeapons = {}
+for _, throwable in pairs(Config.Throwables or {}) do
+    ThrowableWeapons[joaat(('weapon_%s'):format(throwable))] = true
+end
+
+local function HasCurrentWeapon()
+    return CurrentWeaponData and next(CurrentWeaponData) ~= nil
+end
+
+local function SyncCurrentWeapon(ped, weapon)
+    if not HasCurrentWeapon() then return end
+
+    ped = ped or PlayerPedId()
+    weapon = weapon or GetSelectedPedWeapon(ped)
+
+    if weapon and weapon ~= 0 and weapon ~= `WEAPON_UNARMED` then
+        TriggerServerEvent('qb-weapons:server:UpdateWeaponAmmo', CurrentWeaponData, tonumber(GetAmmoInPedWeapon(ped, weapon)))
+    end
+
+    if MultiplierAmount > 0 then
+        TriggerServerEvent('qb-weapons:server:UpdateWeaponQuality', CurrentWeaponData, MultiplierAmount)
+        MultiplierAmount = 0
+    end
+end
+
+local ammoSyncQueued = false
+local function QueueAmmoSync(delay)
+    if ammoSyncQueued then return end
+
+    ammoSyncQueued = true
+    CreateThread(function()
+        Wait(delay or 750)
+        ammoSyncQueued = false
+        SyncCurrentWeapon()
+    end)
+end
+
+local function HandleBrokenWeapon(ped, weapon)
+    if weapon == `WEAPON_UNARMED` then return end
+
+    local weaponInfo = QBCore.Shared.Weapons[weapon]
+    if not weaponInfo then return end
+
+    TriggerEvent('qb-weapons:client:CheckWeapon', weaponInfo.name)
+    QBCore.Functions.Notify(Lang:t('error.weapon_broken'), 'error')
+    MultiplierAmount = 0
+end
+
 CreateThread(function()
     SetWeaponsNoAutoswap(true)
 end)
 
-CreateThread(function()
-    while true do
-        local ped = PlayerPedId()
-        if IsPedArmed(ped, 7) == 1 and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) then
-            local weapon = GetSelectedPedWeapon(ped)
-            local ammo = GetAmmoInPedWeapon(ped, weapon)
-            TriggerServerEvent('qb-weapons:server:UpdateWeaponAmmo', CurrentWeaponData, tonumber(ammo))
-            if MultiplierAmount > 0 then
-                TriggerServerEvent('qb-weapons:server:UpdateWeaponQuality', CurrentWeaponData, MultiplierAmount)
-                MultiplierAmount = 0
-            end
-        end
-        Wait(0)
+-- Shot tracking is event based. This removes the old permanent Wait(0) durability loop.
+AddEventHandler('CEventGunShot', function(_, eventEntity)
+    local ped = PlayerPedId()
+    if eventEntity ~= ped then return end
+    if not LocalPlayer.state.isLoggedIn or not HasCurrentWeapon() then return end
+
+    local weapon = GetSelectedPedWeapon(ped)
+    if not weapon or weapon == 0 or not QBCore.Shared.Weapons[weapon] then return end
+
+    if not CanShoot then
+        HandleBrokenWeapon(ped, weapon)
+        return
     end
+
+    if not ThrowableWeapons[weapon] and GetAmmoInPedWeapon(ped, weapon) > 0 then
+        MultiplierAmount += 1
+    end
+
+    QueueAmmoSync(800)
 end)
 
+-- Lightweight watcher: idle sleeps hard, only goes frame-by-frame if a broken weapon must be blocked instantly.
 CreateThread(function()
     while true do
-        if LocalPlayer.state.isLoggedIn then
+        local sleep = 750
+
+        if LocalPlayer.state.isLoggedIn and HasCurrentWeapon() then
             local ped = PlayerPedId()
-            if CurrentWeaponData and next(CurrentWeaponData) then
-                if IsPedShooting(ped) or IsControlJustPressed(0, 24) then
-                    local weapon = GetSelectedPedWeapon(ped)
-                    if CanShoot then
-                        if weapon and weapon ~= 0 and QBCore.Shared.Weapons[weapon] then
-                            QBCore.Functions.TriggerCallback('prison:server:checkThrowable', function(result)
-                                if result or GetAmmoInPedWeapon(ped, weapon) <= 0 then return end
-                                MultiplierAmount += 1
-                            end, weapon)
-                            Wait(200)
-                        end
-                    else
-                        if weapon ~= `WEAPON_UNARMED` then
-                            TriggerEvent('qb-weapons:client:CheckWeapon', QBCore.Shared.Weapons[weapon]['name'])
-                            QBCore.Functions.Notify(Lang:t('error.weapon_broken'), 'error')
-                            MultiplierAmount = 0
-                        end
+
+            if IsPedArmed(ped, 7) == 1 then
+                local weapon = GetSelectedPedWeapon(ped)
+
+                if CanShoot then
+                    sleep = 250
+                    if IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24) then
+                        SyncCurrentWeapon(ped, weapon)
+                    end
+                else
+                    sleep = 0
+                    if IsControlJustPressed(0, 24) or IsPedShooting(ped) then
+                        HandleBrokenWeapon(ped, weapon)
                     end
                 end
             end
         end
-        Wait(0)
+
+        Wait(sleep)
     end
 end)
 
 CreateThread(function()
     while true do
+        local sleep = 1000
+
         if LocalPlayer.state.isLoggedIn then
-            local inRange = false
             local ped = PlayerPedId()
             local pos = GetEntityCoords(ped)
+
             for k, data in pairs(Config.WeaponRepairPoints) do
                 local distance = #(pos - data.coords)
+
                 if distance < 10 then
-                    inRange = true
-                    if distance < 1 then
-                        if data.IsRepairing then
-                            if data.RepairingData.CitizenId ~= PlayerData.citizenid then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repairshop_not_usable'))
-                            else
-                                if not data.RepairingData.Ready then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.weapon_will_repair'))
-                                else
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
-                                end
-                            end
+                    sleep = math.min(sleep, 250)
+                end
+
+                if distance < 1.0 then
+                    sleep = 0
+
+                    if data.IsRepairing then
+                        if data.RepairingData.CitizenId ~= PlayerData.citizenid then
+                            DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repairshop_not_usable'))
                         else
-                            if CurrentWeaponData and next(CurrentWeaponData) then
-                                if not data.RepairingData.Ready then
-                                    local WeaponData = QBCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
-                                    local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, '_')[2]):lower()
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repair_weapon_price', { value = Config.WeaponRepairCosts[WeaponClass] }))
+                            if not data.RepairingData.Ready then
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.weapon_will_repair'))
+                            else
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
+                            end
+                        end
+                    else
+                        if HasCurrentWeapon() then
+                            if not data.RepairingData.Ready then
+                                local weaponData = QBCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
+                                local weaponClass = weaponData and weaponData.ammotype and (QBCore.Shared.SplitStr(weaponData.ammotype, '_')[2] or ''):lower()
+                                local repairCost = weaponClass and Config.WeaponRepairCosts[weaponClass]
+
+                                if repairCost then
+                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repair_weapon_price', { value = repairCost }))
                                     if IsControlJustPressed(0, 38) then
                                         QBCore.Functions.TriggerCallback('qb-weapons:server:RepairWeapon', function(HasMoney)
                                             if HasMoney then
@@ -263,33 +327,33 @@ CreateThread(function()
                                         end, k, CurrentWeaponData)
                                     end
                                 else
-                                    if data.RepairingData.CitizenId ~= PlayerData.citizenid then
-                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repairshop_not_usable'))
-                                    else
-                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
-                                        if IsControlJustPressed(0, 38) then
-                                            TriggerServerEvent('qb-weapons:server:TakeBackWeapon', k, data)
-                                        end
-                                    end
+                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('error.no_weapon_in_hand'))
                                 end
                             else
-                                if data.RepairingData.CitizenId == nil then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('error.no_weapon_in_hand'))
-                                elseif data.RepairingData.CitizenId == PlayerData.citizenid then
+                                if data.RepairingData.CitizenId ~= PlayerData.citizenid then
+                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.repairshop_not_usable'))
+                                else
                                     DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
                                     if IsControlJustPressed(0, 38) then
                                         TriggerServerEvent('qb-weapons:server:TakeBackWeapon', k, data)
                                     end
                                 end
                             end
+                        else
+                            if data.RepairingData.CitizenId == nil then
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('error.no_weapon_in_hand'))
+                            elseif data.RepairingData.CitizenId == PlayerData.citizenid then
+                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, Lang:t('info.take_weapon_back'))
+                                if IsControlJustPressed(0, 38) then
+                                    TriggerServerEvent('qb-weapons:server:TakeBackWeapon', k, data)
+                                end
+                            end
                         end
                     end
                 end
             end
-            if not inRange then
-                Wait(1000)
-            end
         end
-        Wait(0)
+
+        Wait(sleep)
     end
 end)
