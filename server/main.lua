@@ -155,13 +155,16 @@ RegisterNetEvent('qb-weapons:server:TakeBackWeapon', function(k)
     local src = source
     local Player = exports['qb-core']:GetPlayer(src)
     if not Player then return end
-    local itemdata = Config.WeaponRepairPoints[k].RepairingData.WeaponData
+    local repairPoint = Config.WeaponRepairPoints[k]
+    if not repairPoint or not repairPoint.RepairingData or not repairPoint.RepairingData.WeaponData then return end
+    if repairPoint.RepairingData.CitizenId ~= Player.PlayerData.citizenid then return end
+    local itemdata = repairPoint.RepairingData.WeaponData
     itemdata.info.quality = 100
     exports['qb-inventory']:AddItem(src, itemdata.name, 1, false, itemdata.info, 'qb-weapons:server:TakeBackWeapon')
     TriggerClientEvent('qb-inventory:client:ItemBox', src, sharedItems[itemdata.name], 'add')
-    Config.WeaponRepairPoints[k].IsRepairing = false
-    Config.WeaponRepairPoints[k].RepairingData = {}
-    TriggerClientEvent('qb-weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[k], k)
+    repairPoint.IsRepairing = false
+    repairPoint.RepairingData = {}
+    TriggerClientEvent('qb-weapons:client:SyncRepairShops', -1, repairPoint, k)
 end)
 
 RegisterNetEvent('qb-weapons:server:SetWeaponQuality', function(data, hp)
